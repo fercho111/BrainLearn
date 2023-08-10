@@ -27,7 +27,7 @@ __pycache__/
 .env.production.local
 
 # Ignore dependencies (Node.js)
-
+node_modules/
 .pnp/
 .pnp.js/
 
