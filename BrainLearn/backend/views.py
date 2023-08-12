@@ -6,7 +6,11 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import UserSerializer, CardSerializer, DeckSerializer
 from .models import User, Card, Deck
+from django.http import HttpResponse
 
+
+def home(request):
+    return HttpResponse("Home")
 
 class user_login(views.APIView):
     def post(self, request):
