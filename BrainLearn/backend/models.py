@@ -1,19 +1,13 @@
 from django.db import models
-from django.core.validators import MinValueValidator, MaxValueValidator
-from django.utils import timezone
 from django.conf import settings
+from django.utils import timezone
+from django.contrib.auth.models import AbstractUser
+from django.core.validators import MinValueValidator, MaxValueValidator
 
-#Creamos una clase por cada tabla que va a tener la base de datos
+# Creamos una clase por cada tabla que va a tener la base de datos
 # tambien se conoce como modelos
-class User(models.Model):
-    #Campos y tipos de datos
-    nombre = models.CharField(max_length=30)
-    direccion = models.CharField(max_length=50, verbose_name = "La dirección")
-    email = models.EmailField(blank = True, null = True)
-    tfno = models.CharField(max_length = 15)
-
-    def __str__(self):
-        return 'Nombre: %s - Direccion: %s - Email: %s - Telefono: %s' %(self.nombre, self.direccion , self.email, self.tfno)
+class User(AbstractUser):
+    pass
 
 
 class Card(models.Model):

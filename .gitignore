@@ -17,6 +17,7 @@ __pycache__/
 *.secret
 *.key
 *.pem
+*.sqlite3
 
 
 # Ignore build artifacts and dependencies
