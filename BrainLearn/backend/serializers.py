@@ -1,6 +1,6 @@
-from rest_framework.renderers import JSONRenderer
-from rest_framework import serializers
 from .models import User, Deck, Card
+from rest_framework import serializers
+from rest_framework.renderers import JSONRenderer
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
