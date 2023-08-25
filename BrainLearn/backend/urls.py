@@ -1,4 +1,6 @@
-from django.urls import path
+from django.urls import path, include
+
+from .api import api
 from . import views2
 
 urlpatterns = [
@@ -10,4 +12,7 @@ urlpatterns = [
     path('deckDetail/', views2.DeckDetailView.as_view(), name = "DeckDetail"),
     path('cardList/', views2.CardListView.as_view(), name = "CardList"),
     path('cardDetail/', views2.CardDetailView.as_view(), name = "CardDetail"),
+
+    #Jayk: Probando
+    path('usuarios/', include('backend.api.urls')),
 ]
