@@ -1,6 +1,6 @@
-# BrainLearn
+# *BrainLearn*
 
-Jayk:
+# Actualizaciones Jayk:
 Lo que hice es que creé el crud de los mazos y las cartas; en el de las cartas podemos editarlas solo poniendo el dato que desamos modifica (ningún campo es obligario a la hora de editar).
 Lo que no hice fue que guardara la pk del mazo
 
@@ -8,3 +8,7 @@ También hice el crud de los mazos, igualmente se puede iditar solo poniendo el 
 ```python
 request.data['user'] = request.user.id
 ```
+# Actualizaciones Camilo:
+
+# Actualizaciones Jose:
+
