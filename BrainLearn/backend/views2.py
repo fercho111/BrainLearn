@@ -112,6 +112,7 @@ def card_api_view(request):
             return Response(cards_serializer.data, status=status.HTTP_201_CREATED)
         return Response(cards_serializer.errors, status=status.HTTP_400_BAD_REQUEST)    
 
+
 @api_view(['GET', 'PUT', 'DELETE'])
 def card_detail_api_view(request, pk=None):
     # Realizamos la consulta
@@ -141,3 +142,61 @@ def card_detail_api_view(request, pk=None):
             return Response({'message': 'Carta eliminada correctamente'}, status=status.HTTP_200_OK)
 
     return Response({'message': 'No se ha encontrado una carta con estos datos'}, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET', 'POST'])
+def deck_api_view(request):
+
+    # Si el método HTTP que se está usando es GET, retornamos la lista
+    if request.method == 'GET':
+        # En la variable decks se guarda una lista de mazos
+        decks = Deck.objects.all()
+
+        # Cuando le pasamos el listado al serializador, tenemos que poner el atributo many = True para que sepa que son varios
+        decks_serializer = DeckSerializer(decks, many=True)
+
+        # Retornamos una instancia de la clase Response con la información en formato JSON
+        return Response(decks_serializer.data, status=status.HTTP_200_OK)
+    
+    # Create
+    # request.data guarda la información del POST
+    elif request.method == 'POST':
+        # Agregamos el usuario autenticado como propietario del mazo
+        #request.data['user'] = request.user.id #############################################################
+
+        # Utilizamos el serializador para validar
+        decks_serializer = DeckSerializer(data=request.data)
+        if decks_serializer.is_valid():
+            decks_serializer.save()
+            return Response(decks_serializer.data, status=status.HTTP_201_CREATED)
+        return Response(decks_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def deck_detail_api_view(request, pk=None):
+    # Realizamos la consulta
+    deck = Deck.objects.filter(id=pk).first()
+
+    # Validación
+    if deck:
+        # Retrieve
+        if request.method == 'GET':
+            # Serializamos un solo dato
+            deck_serializer = DeckSerializer(deck)
+            return Response(deck_serializer.data, status=status.HTTP_200_OK)
+
+        # Update
+        elif request.method == 'PUT':
+            request.data['modified_at'] = timezone.now()  # Agrega la fecha actual
+            # Le pasamos el mazo que se va a actualizar y la información nueva
+            deck_serializer = DeckSerializer(deck, data=request.data, partial=True)  # Usa partial=True para permitir campos no obligatorios
+            if deck_serializer.is_valid():
+                deck_serializer.save()
+                return Response(deck_serializer.data, status=status.HTTP_200_OK)
+            return Response(deck_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        # Delete
+        elif request.method == 'DELETE':
+            deck.delete()
+            return Response({'message': 'Mazo eliminado correctamente'}, status=status.HTTP_200_OK)
+
+    return Response({'message': 'No se ha encontrado un mazo con estos datos'}, status=status.HTTP_400_BAD_REQUEST)

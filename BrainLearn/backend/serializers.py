@@ -14,14 +14,15 @@ class UserSerializer(serializers.ModelSerializer):
 class CardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Card
-        #fields = ['id', 'question', 'answer', 'question_image_url', 'answer_image_url', 'created_at', 'modified_at', 'deck']
+        # fields = ['id', 'question', 'answer', 'question_image_url', 'answer_image_url', 'created_at', 'modified_at', 'deck']
         fields = ['id', 'question', 'answer', 'question_image_url', 'answer_image_url', 'created_at', 'rating', 'modified_at']
 
 class DeckSerializer(serializers.ModelSerializer):
     cards = CardSerializer(many=True, read_only=True)
     class Meta:
         model = Deck
-        fields = ['id', 'name', 'cards', 'created_at', 'modified_at']
+        # fields = ['id', 'name', 'cards', 'created_at', 'modified_at']
+        fields = ['name', 'cards', 'created_at', 'modified_at']
 
 
 # Jayk:

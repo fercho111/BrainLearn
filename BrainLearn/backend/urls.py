@@ -17,4 +17,6 @@ urlpatterns = [
     path('usuario/', include('backend.api.urls')),
     path('card/', views2.card_api_view, name = "CreateCard"),
     path('card/<int:pk>', views2.card_detail_api_view, name = "card"),    
+    path('deck/', views2.deck_api_view, name = "CreateDeck"),      
+    path('deck/<int:pk>', views2.deck_detail_api_view, name = "deck"), 
 ]

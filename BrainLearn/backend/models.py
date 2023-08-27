@@ -25,6 +25,6 @@ class Card(models.Model):
 
 class Deck(models.Model):
     name = models.CharField(max_length=200)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='decks', on_delete=models.CASCADE)
+    #user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='decks', on_delete=models.CASCADE, null=True, blank=True)
     created_at = models.DateTimeField(default=timezone.now)
     modified_at = models.DateTimeField(auto_now=True)
