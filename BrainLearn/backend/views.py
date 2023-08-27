@@ -18,7 +18,7 @@ class user_login(views.APIView):
         user = authenticate(username=username,password=password)
         if user:
             login(request, user)
-            return Response(UserSerializer(user).data)
+            return Response(UserSerializer(user).data, status = status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
 
@@ -27,7 +27,7 @@ class user_list(views.APIView):
     def get(self, request):
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status = status.HTTP_200_OK)
 
 
 class user_detail(views.APIView):

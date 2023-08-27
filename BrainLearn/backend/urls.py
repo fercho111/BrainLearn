@@ -14,5 +14,6 @@ urlpatterns = [
     path('cardDetail/', views2.CardDetailView.as_view(), name = "CardDetail"),
 
     #Jayk: Probando
-    path('usuarios/', include('backend.api.urls')),
+    path('usuario/', include('backend.api.urls')),
+    path('createCard/', views2.CardCreateView.as_view(), name = "CreateCard"),
 ]

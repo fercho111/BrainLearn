@@ -68,3 +68,17 @@ class CardDetailView(generics.RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         return Card.objects.filter(deck__user=self.request.user)
+
+
+#Jayk
+class CardCreateView(generics.CreateAPIView):
+    serializer_class = CardSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        card = serializer.save()
+        return Response(
+            {"card": CardSerializer(card, context=self.get_serializer_context()).data},
+            status=status.HTTP_201_CREATED,
+        )
