@@ -14,9 +14,11 @@ urlpatterns = [
     path('cardDetail/', views2.CardDetailView.as_view(), name = "CardDetail"),
 
     #Jayk: Probando
-    path('usuario/', include('backend.api.urls')),
-    path('card/', views2.card_api_view, name = "CreateCard"),
-    path('card/<int:pk>', views2.card_detail_api_view, name = "card"),    
-    path('deck/', views2.deck_api_view, name = "CreateDeck"),      
-    path('deck/<int:pk>', views2.deck_detail_api_view, name = "deck"), 
+    path('usuario/', include('backend.api.urls')),    
+    path('card/', views2.CardListCreateView.as_view(), name = "CreateCard"),
+    path('card/<int:pk>', views2.CardDetailAPIView.as_view(), name = "card"),            
+    path('deck/', views2.DeckListCreateView.as_view(), name = "CreateDeck"),      
+    path('deck/<int:pk>', views2.DeckDetailAPIView.as_view(), name = "deck"), 
+    path('', views2.Login.as_view(), name = "Login"), 
+
 ]

@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from .serializers import UserSerializer, CardSerializer, DeckSerializer
 from .models import User, Card, Deck
 from django.utils import timezone
+from rest_framework.authtoken.views import ObtainAuthToken
 
 @api_view(['POST'])
 class UserLoginView(generics.CreateAPIView):
@@ -87,6 +88,8 @@ class CardDetailView(generics.RetrieveUpdateDestroyAPIView):
 #            status=status.HTTP_201_CREATED,
 #        )
 
+
+
 @api_view(['GET', 'POST'])
 def card_api_view(request):
 
@@ -111,6 +114,13 @@ def card_api_view(request):
             cards_serializer.save()
             return Response(cards_serializer.data, status=status.HTTP_201_CREATED)
         return Response(cards_serializer.errors, status=status.HTTP_400_BAD_REQUEST)    
+#
+#
+#
+class CardListCreateView(generics.ListCreateAPIView):
+    queryset = Card.objects.all()
+    serializer_class = CardSerializer
+
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
@@ -142,6 +152,14 @@ def card_detail_api_view(request, pk=None):
             return Response({'message': 'Carta eliminada correctamente'}, status=status.HTTP_200_OK)
 
     return Response({'message': 'No se ha encontrado una carta con estos datos'}, status=status.HTTP_400_BAD_REQUEST)
+#
+#
+#
+class CardDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Card.objects.all()
+    serializer_class = CardSerializer
+
+
 
 @api_view(['GET', 'POST'])
 def deck_api_view(request):
@@ -161,7 +179,7 @@ def deck_api_view(request):
     # request.data guarda la información del POST
     elif request.method == 'POST':
         # Agregamos el usuario autenticado como propietario del mazo
-        #request.data['user'] = request.user.id #############################################################
+        request.data['user'] = request.user.id #############################################################
 
         # Utilizamos el serializador para validar
         decks_serializer = DeckSerializer(data=request.data)
@@ -169,7 +187,18 @@ def deck_api_view(request):
             decks_serializer.save()
             return Response(decks_serializer.data, status=status.HTTP_201_CREATED)
         return Response(decks_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+#
+#
+#
+class DeckListCreateView(generics.ListCreateAPIView):
+    queryset = Deck.objects.all()
+    serializer_class = DeckSerializer
+
+    # def perform_create(self, serializer):
+        # Agregamos el usuario autenticado como propietario del mazo
+        #serializer.save(user=self.request.user)
+
+
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def deck_detail_api_view(request, pk=None):
@@ -200,3 +229,21 @@ def deck_detail_api_view(request, pk=None):
             return Response({'message': 'Mazo eliminado correctamente'}, status=status.HTTP_200_OK)
 
     return Response({'message': 'No se ha encontrado un mazo con estos datos'}, status=status.HTTP_400_BAD_REQUEST)
+#
+#
+#
+class DeckDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Deck.objects.all()
+    serializer_class = DeckSerializer    
+
+
+
+# vista de login
+class Login(ObtainAuthToken):
+    def post(self,request,*args,**kwargs):
+        # self.serializer_class() ya está definido en ObtainAuthToken
+        # el serializador "serializer_class()" tiene un campo 'username' y uno llamado 'password'
+        login_serializer = self.serializer_class(data = request.data, contex = {'request':request})
+        if login_serializer.is_valid():
+            print("Pasó validación")
+        return Response({'mensaje':'Hola desde response'}, status = status.HTTP_200_OK)

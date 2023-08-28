@@ -39,7 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
-    'backend'    
+    'backend',
+
+    # Jayk:
+    'rest_framework.authtoken',
 ]
 
 # Sólo para producción
