@@ -9,6 +9,7 @@ También hice el crud de los mazos, igualmente se puede iditar solo poniendo el 
 request.data['user'] = request.user.id
 ```
 # Actualizaciones Camilo:
+Se añadio el archivo home.html, css, el smooth scroll de javaScripts, aun no esta conectado con Dajngo REST
 
 # Actualizaciones Jose:
 
