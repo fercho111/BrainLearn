@@ -2,6 +2,11 @@ from .models import User, Deck, Card
 from rest_framework import serializers
 from rest_framework.renderers import JSONRenderer
 
+class UserTokenSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username']
+
 #(NombreDeModelo)Serializer
 #Recibe ModelSerializer porque vamos a hacer un serializador basado en un modelo
 class UserSerializer(serializers.ModelSerializer):    

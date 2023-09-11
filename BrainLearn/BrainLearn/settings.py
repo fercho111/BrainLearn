@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'backend',
 
     # Jayk:
+    # Para poner generar token
     'rest_framework.authtoken',
 ]
 
