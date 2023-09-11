@@ -10,7 +10,10 @@ request.data['user'] = request.user.id
 ```
 
 ### 10/09/2023
-Usamos Auth token para el login
+Usamos Auth token para el login.
+
+Tambien utilizamos Postman.
+Postman es una plataforma que permite y hace más sencilla la creación y el uso de APIs. Esta herramienta es muy útil para programar porque da la posibilidad hacer pruebas y comprobar el correcto funcionamiento de los proyectos que realizan los desarrolladores web.
 
 # Actualizaciones Camilo:
 Se añadio el archivo home.html, css, el smooth scroll de javaScripts, aun no esta conectado con Dajngo REST
