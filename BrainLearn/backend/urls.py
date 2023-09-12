@@ -20,5 +20,6 @@ urlpatterns = [
     path('deck/', views2.DeckListCreateView.as_view(), name = "CreateDeck"),      
     path('deck/<int:pk>', views2.DeckDetailAPIView.as_view(), name = "deck"), 
     path('', views2.Login.as_view(), name = "Login"), 
+    path('logout/', views2.Logout.as_view(), name = "Logout"), 
 
 ]
