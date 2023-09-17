@@ -15,6 +15,10 @@ Usamos Auth token para el login.
 Tambien utilizamos Postman.
 Postman es una plataforma que permite y hace más sencilla la creación y el uso de APIs. Esta herramienta es muy útil para programar porque da la posibilidad hacer pruebas y comprobar el correcto funcionamiento de los proyectos que realizan los desarrolladores web.
 
+### ¿Qué es CORS headers?
+
+El intercambio de recursos de origen cruzado (CORS, por sus siglas en inglés), es un mecanismo basado en cabeceras HTTP que permite a un servidor indicar cualquier dominio, esquema o puerto con un origen (en-US) distinto del suyo desde el que un navegador debería permitir la carga de recursos.
+
 # Actualizaciones Camilo:
 Se añadio el archivo home.html, css, el smooth scroll de javaScripts, aun no esta conectado con Dajngo REST
 
