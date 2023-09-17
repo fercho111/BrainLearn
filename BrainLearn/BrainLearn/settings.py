@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
 ]
 
-TOKEN_EXPIRED_AFTER_SECONDS = 10
+TOKEN_EXPIRED_AFTER_SECONDS = 900
 
 # Sólo para producción
 CORS_ORIGIN_ALLOW_ALL = True

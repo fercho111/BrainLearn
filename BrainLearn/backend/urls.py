@@ -21,5 +21,5 @@ urlpatterns = [
     path('deck/<int:pk>', views2.DeckDetailAPIView.as_view(), name = "deck"), 
     path('', views2.Login.as_view(), name = "Login"), 
     path('logout/', views2.Logout.as_view(), name = "Logout"), 
-
+    path('refresh-token/', views2.UserToken.as_view(), name = "refresh_token"), 
 ]
