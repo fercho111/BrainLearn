@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework import generics, permissions, status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import UserSerializer, CardSerializer, DeckSerializer, UserTokenSerializer
+from .serializers import UserSerializer, CardSerializer, DeckSerializer, UserTokenSerializer, RegisterSerializer
 from .models import User, Card, Deck
 from django.utils import timezone
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -40,7 +40,7 @@ class UserDetailView(generics.RetrieveAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
 class UserRegisterView(generics.CreateAPIView):
-    serializer_class = UserSerializer
+    serializer_class = RegisterSerializer
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)

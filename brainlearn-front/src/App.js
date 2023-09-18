@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import './App.css';
 import FormInput from './components/FormInput';
 
@@ -54,14 +55,25 @@ function App() {
     },
   ]
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const res = await axios.post('http://localhost:8000/register/', {
+        username: values.username,
+        password: values.password,
+        email: values.email
+      });
+      localStorage.setItem('token', res.data.token);
+      // history.push('/');
+    } catch (err) {
+      ;
+    }
   }
 
   const onChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value})
-
   }
+  
   return (
     <div className="App" onSubmit={handleSubmit}>
       <form onSubmit={handleSubmit}>

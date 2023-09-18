@@ -4,4 +4,3 @@ django-cors-headers==3.13.0
 djangorestframework==3.13.1
 pytz==2022.2.1
 sqlparse==0.4.2
-pip install psycopg2-binary
