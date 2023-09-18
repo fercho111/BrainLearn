@@ -13,7 +13,12 @@ from datetime import datetime
 from rest_framework.views import APIView
 from .authentication_mixins import Authentication
 
+
 @api_view(['POST'])
+
+# class HomeView(TemplateView):
+#     home_template = 'home.html'
+
 class UserLoginView(generics.CreateAPIView):
     def create(self, request):
         username = request.data.get('username')

@@ -1,0 +1,72 @@
+body{
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background-image: linear-gradient(to right,rgba(69,106,135,1),rgba(68,185,196,1) );
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+div.formInput{
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin: 5px;
+  width: 300px;
+  height: 75px;
+}
+.formInput{
+  margin: 5px;
+  height: 55px;
+  padding: 15px 10px;
+  border-radius: 10px;
+}
+.App{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  background-image: linear-gradient(to right,rgba(69,106,135,1),rgba(68,185,196,1) );
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  
+}
+
+form{
+  background-color:#e6e6eb;
+  padding: 0px 60px;
+  border-radius: 10px;
+}
+
+form h1{
+  background-clip: padding-box;
+  background: linear-gradient(to right,rgba(69,106,135,1),rgba(68,185,196,1) );
+  -webkit-background-clip: text;
+	-webkit-text-fill-color: transparent; 
+  margin-bottom: 20px;
+  text-align: center;
+}
+ form button{
+  width: 100%;
+  min-height: 50px;
+  padding: 10px;
+  border: none;
+  background-color: linear-gradient(to right,rgba(69,106,135,1),rgba(68,185,196,1) );
+  background-clip: padding-box;
+  background: linear-gradient(to right,rgba(69,106,135,1),rgba(68,185,196,1) );
+  -webkit-background-clip: text;
+	-webkit-text-fill-color: transparent; 
+  border:rgba(68,185,196,1)  1px solid;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 20px;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  
+
+ }
+ 

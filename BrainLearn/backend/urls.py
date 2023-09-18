@@ -4,6 +4,7 @@ from .api import api
 from . import views2
 
 urlpatterns = [
+    # path('', views2.HomeView.as_view(), name = "Home"),
     path('login/', views2.UserLoginView, name = "Login"),
     path('register/', views2.UserRegisterView.as_view(), name = "UserRegister"),
     path('userList/', views2.UserListView.as_view(), name = "UserList"),
