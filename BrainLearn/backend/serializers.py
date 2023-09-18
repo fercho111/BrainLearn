@@ -28,6 +28,12 @@ class RegisterSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'password', 'email']
         extra_kwargs = {'password': {'write_only': True}}
 
+    def create(self, validated_data):
+        user = super(RegisterSerializer, self).create(validated_data)
+        user.set_password(validated_data['password'])
+        user.save()
+        return user
+
 class DeckSerializer(serializers.ModelSerializer):
     #cards = CardSerializer(many=True, read_only=True)
     class Meta:
