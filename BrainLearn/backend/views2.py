@@ -13,6 +13,7 @@ from datetime import datetime
 from rest_framework.views import APIView
 from .authentication_mixins import Authentication
 
+from django.contrib.auth.hashers import make_password
 
 @api_view(['POST'])
 
@@ -47,7 +48,7 @@ class UserRegisterView(generics.CreateAPIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
         return Response(
-            {"user": UserSerializer(user, context=self.get_serializer_context()).data},
+            {"user": RegisterSerializer(user, context=self.get_serializer_context()).data},
             status=status.HTTP_201_CREATED,
         )
 
