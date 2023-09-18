@@ -65,8 +65,35 @@ form h1{
   font-size: 20px;
   cursor: pointer;
   margin-top: 10px;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   
 
+ }
+
+ .option-container{
+   display: flex;
+   flex-direction: row;
+    justify-content: space-between;
+   margin: 10px;
+ }
+
+ .option{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 30px;
+  color:rgba(68,185,196,1) ;
+  border-radius: 5px;
+  font-size: 700;
+  font-weight: 700;
+  cursor: pointer;
+
+ }
+
+
+ .gray{
+  color:gray;
+  background-color: rgba(0, 0, 0, 0.1);
  }
  
