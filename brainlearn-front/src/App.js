@@ -77,7 +77,7 @@ function App() {
 
     try {
       const res = await axios.post('http://localhost:8000/login/', {
-        email: values.email,
+        username: values.username,
         password: values.password
       });
       if (res.data.message) {
