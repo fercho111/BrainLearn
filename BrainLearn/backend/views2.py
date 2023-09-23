@@ -1,19 +1,18 @@
-from django.contrib.auth import authenticate, login
-from django.shortcuts import get_object_or_404
-from rest_framework import generics, permissions, status
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from .serializers import UserSerializer, CardSerializer, DeckSerializer, UserTokenSerializer, RegisterSerializer
-from .models import User, Card, Deck
+from datetime import datetime
 from django.utils import timezone
+from django.contrib.sessions.models import Session
+from django.contrib.auth import authenticate, login
+from rest_framework import generics, permissions, status
+from rest_framework.views import APIView
+from rest_framework.decorators import api_view
+from django.contrib.auth.hashers import make_password
+from rest_framework.response import Response
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
-from django.contrib.sessions.models import Session
-from datetime import datetime
-from rest_framework.views import APIView
+from .models import User, Card, Deck
 from .authentication_mixins import Authentication
+from .serializers import UserSerializer, CardSerializer, DeckSerializer, UserTokenSerializer, RegisterSerializer
 
-from django.contrib.auth.hashers import make_password
 
 @api_view(['POST'])
 
