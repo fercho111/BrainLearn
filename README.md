@@ -23,4 +23,5 @@ El intercambio de recursos de origen cruzado (CORS, por sus siglas en inglés), 
 Se añadio el archivo home.html, css, el smooth scroll de javaScripts, aun no esta conectado con Dajngo REST
 
 # Actualizaciones Jose:
-
+Solucionado el problema de las peticiones del front al back, conectado el front mediante la librería Axios.
+Se corrigió el modelo de usuario para registro
