@@ -10,8 +10,6 @@ from .models import User, Card, Deck
 # revisar vistas genericas de rest_framework para las vistas
 # ej genericAPIView, CreateAPIView
 
-@api_view(['POST'])
-
 class user_login(views.APIView):
     def post(self, request):
         username = request.data.get('username')
@@ -23,13 +21,11 @@ class user_login(views.APIView):
         else:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
 
-
 class user_list(views.APIView):
     def get(self, request):
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data, status = status.HTTP_200_OK)
-
 
 class user_detail(views.APIView):
     def get(self, request, pk):
@@ -49,7 +45,6 @@ class user_detail(views.APIView):
     #         return Response(serializer.data)
     #     else:
     #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 class deck_list(views.APIView):
     def get(self, request):

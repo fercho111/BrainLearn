@@ -100,7 +100,6 @@ class CardDetailView(generics.RetrieveUpdateDestroyAPIView):
 #        )
 
 
-
 @api_view(['GET', 'POST'])
 def card_api_view(request):
 
@@ -125,13 +124,11 @@ def card_api_view(request):
             cards_serializer.save()
             return Response(cards_serializer.data, status=status.HTTP_201_CREATED)
         return Response(cards_serializer.errors, status=status.HTTP_400_BAD_REQUEST)    
-#
-#
-#
+
+
 class CardListCreateView(Authentication, generics.ListCreateAPIView):
     queryset = Card.objects.all()
     serializer_class = CardSerializer
-
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
@@ -163,14 +160,10 @@ def card_detail_api_view(request, pk=None):
             return Response({'message': 'Carta eliminada correctamente'}, status=status.HTTP_200_OK)
 
     return Response({'message': 'No se ha encontrado una carta con estos datos'}, status=status.HTTP_400_BAD_REQUEST)
-#
-#
-#
+
 class CardDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Card.objects.all()
     serializer_class = CardSerializer
-
-
 
 @api_view(['GET', 'POST'])
 def deck_api_view(request):
@@ -198,9 +191,7 @@ def deck_api_view(request):
             decks_serializer.save()
             return Response(decks_serializer.data, status=status.HTTP_201_CREATED)
         return Response(decks_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-#
-#
-#
+
 class DeckListCreateView(generics.ListCreateAPIView):
     queryset = Deck.objects.all()
     serializer_class = DeckSerializer
@@ -208,8 +199,6 @@ class DeckListCreateView(generics.ListCreateAPIView):
     # def perform_create(self, serializer):
         # Agregamos el usuario autenticado como propietario del mazo
         #serializer.save(user=self.request.user)
-
-
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def deck_detail_api_view(request, pk=None):
@@ -240,13 +229,10 @@ def deck_detail_api_view(request, pk=None):
             return Response({'message': 'Mazo eliminado correctamente'}, status=status.HTTP_200_OK)
 
     return Response({'message': 'No se ha encontrado un mazo con estos datos'}, status=status.HTTP_400_BAD_REQUEST)
-#
-#
-#
+
 class DeckDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Deck.objects.all()
     serializer_class = DeckSerializer    
-
 
 class UserToken(APIView):
     def get(self, request, *args, **kwargs):
@@ -262,7 +248,6 @@ class UserToken(APIView):
             return Response({
                 'error': 'Credenciales enviadas incorrectas'
             }, status = status.HTTP_400_BAD_REQUEST)
-
 
 # vista de login
 class Login(ObtainAuthToken):
@@ -319,7 +304,6 @@ class Login(ObtainAuthToken):
         else:
             return Response({'error':'Nombre de usuario o contraseña incorrectos.'}, status=status.HTTP_400_BAD_REQUEST)
             
-
 class Logout(APIView):
     def get(self,request,*args,**kwargs):
         try:
