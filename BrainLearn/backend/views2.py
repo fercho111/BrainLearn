@@ -15,10 +15,7 @@ from .serializers import UserSerializer, CardSerializer, DeckSerializer, UserTok
 
 
 @api_view(['POST'])
-
-# class HomeView(TemplateView):
-#     home_template = 'home.html'
-
+# eso no
 class UserLoginView(generics.CreateAPIView):
     def create(self, request):
         username = request.data.get('username')
@@ -51,19 +48,6 @@ class UserRegisterView(generics.CreateAPIView):
             status=status.HTTP_201_CREATED,
         )
 
-class DeckListView(generics.ListCreateAPIView):
-    queryset = Deck.objects.all()
-    serializer_class = DeckSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-
-class DeckDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Deck.objects.all()
-    serializer_class = DeckSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
 class CardListView(generics.ListCreateAPIView):
     # serializer_class = CardSerializer
     # permission_classes = [permissions.IsAuthenticated]
@@ -84,9 +68,41 @@ class CardDetailView(generics.RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         return Card.objects.filter(deck__user=self.request.user)
 
+class CardDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Card.objects.all()
+    serializer_class = CardSerializer
 
-#Jayk
-#class CardCreateView(generics.CreateAPIView):
+class CardListCreateView(Authentication, generics.ListCreateAPIView):
+    queryset = Card.objects.all()
+    serializer_class = CardSerializer
+
+class DeckListView(generics.ListCreateAPIView):
+    queryset = Deck.objects.all()
+    serializer_class = DeckSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+class DeckDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Deck.objects.all()
+    serializer_class = DeckSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class DeckDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Deck.objects.all()
+    serializer_class = DeckSerializer
+ 
+class DeckListCreateView(generics.ListCreateAPIView):
+    queryset = Deck.objects.all()
+    serializer_class = DeckSerializer
+
+    # def perform_create(self, serializer):
+        # Agregamos el usuario autenticado como propietario del mazo
+        #serializer.save(user=self.request.user)
+
+# Jayk
+# class CardCreateView(generics.CreateAPIView):
 #    serializer_class = CardSerializer
 #
 #    def create(self, request, *args, **kwargs):
@@ -97,7 +113,6 @@ class CardDetailView(generics.RetrieveUpdateDestroyAPIView):
 #            {"card": CardSerializer(card, context=self.get_serializer_context()).data},
 #            status=status.HTTP_201_CREATED,
 #        )
-
 
 @api_view(['GET', 'POST'])
 def card_api_view(request):
@@ -123,11 +138,6 @@ def card_api_view(request):
             cards_serializer.save()
             return Response(cards_serializer.data, status=status.HTTP_201_CREATED)
         return Response(cards_serializer.errors, status=status.HTTP_400_BAD_REQUEST)    
-
-
-class CardListCreateView(Authentication, generics.ListCreateAPIView):
-    queryset = Card.objects.all()
-    serializer_class = CardSerializer
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
@@ -160,9 +170,6 @@ def card_detail_api_view(request, pk=None):
 
     return Response({'message': 'No se ha encontrado una carta con estos datos'}, status=status.HTTP_400_BAD_REQUEST)
 
-class CardDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Card.objects.all()
-    serializer_class = CardSerializer
 
 @api_view(['GET', 'POST'])
 def deck_api_view(request):
@@ -191,13 +198,6 @@ def deck_api_view(request):
             return Response(decks_serializer.data, status=status.HTTP_201_CREATED)
         return Response(decks_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class DeckListCreateView(generics.ListCreateAPIView):
-    queryset = Deck.objects.all()
-    serializer_class = DeckSerializer
-
-    # def perform_create(self, serializer):
-        # Agregamos el usuario autenticado como propietario del mazo
-        #serializer.save(user=self.request.user)
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def deck_detail_api_view(request, pk=None):
@@ -229,9 +229,6 @@ def deck_detail_api_view(request, pk=None):
 
     return Response({'message': 'No se ha encontrado un mazo con estos datos'}, status=status.HTTP_400_BAD_REQUEST)
 
-class DeckDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Deck.objects.all()
-    serializer_class = DeckSerializer    
 
 class UserToken(APIView):
     def get(self, request, *args, **kwargs):
@@ -326,4 +323,5 @@ class Logout(APIView):
             
             return Response({'error': 'No se ha encontrado un usuario con estas credenciales.'}, status=status.HTTP_400_BAD_REQUEST)
         except:  
-            return Response({'error': 'No se ha encontrado token en la petición.'}, status=status.HTTP_409_CONFLICT)      
+            return Response({'error': 'No se ha encontrado token en la petición.'}, status=status.HTTP_409_CONFLICT)
+        
