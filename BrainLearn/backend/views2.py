@@ -15,8 +15,11 @@ from .serializers import UserSerializer, CardSerializer, DeckSerializer, UserTok
 
 
 @api_view(['POST'])
-# eso no
+
+# Vistas de Usuario
 class UserLoginView(generics.CreateAPIView):
+
+
     def create(self, request):
         username = request.data.get('username')
         password = request.data.get('password')
@@ -26,16 +29,6 @@ class UserLoginView(generics.CreateAPIView):
             return Response(UserSerializer(user).data)
         else:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
-
-class UserListView(generics.ListAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-class UserDetailView(generics.RetrieveAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
 class UserRegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
 
@@ -47,35 +40,28 @@ class UserRegisterView(generics.CreateAPIView):
             {"user": RegisterSerializer(user, context=self.get_serializer_context()).data},
             status=status.HTTP_201_CREATED,
         )
+class UserDetailView(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
-class CardListView(generics.ListCreateAPIView):
-    # serializer_class = CardSerializer
-    # permission_classes = [permissions.IsAuthenticated]
 
-    # def get_queryset(self):
-        # return Card.objects.filter(deck__user=self.request.user)
-
-    # def perform_create(self, serializer):
-        # serializer.save()
-
+# Vistas de Cartas
+class CardListCreateView(Authentication, generics.ListCreateAPIView):
     queryset = Card.objects.all()
     serializer_class = CardSerializer
-
 class CardDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CardSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         return Card.objects.filter(deck__user=self.request.user)
-
 class CardDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Card.objects.all()
     serializer_class = CardSerializer
 
-class CardListCreateView(Authentication, generics.ListCreateAPIView):
-    queryset = Card.objects.all()
-    serializer_class = CardSerializer
 
+# Vistas de Mazos
 class DeckListView(generics.ListCreateAPIView):
     queryset = Deck.objects.all()
     serializer_class = DeckSerializer
@@ -84,35 +70,101 @@ class DeckListView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
-class DeckDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Deck.objects.all()
-    serializer_class = DeckSerializer
-    permission_classes = [permissions.IsAuthenticated]
 
-class DeckDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Deck.objects.all()
-    serializer_class = DeckSerializer
- 
-class DeckListCreateView(generics.ListCreateAPIView):
-    queryset = Deck.objects.all()
-    serializer_class = DeckSerializer
+# Vistas de Auntenticación
+class Login(ObtainAuthToken):
+    def post(self,request,*args,**kwargs):
+        print(request.user)
+        # self.serializer_class() ya está definido en ObtainAuthToken
+        # el serializador "serializer_class()" tiene un campo 'username' y uno llamado 'password'
+        login_serializer = self.serializer_class(data = request.data, context = {'request':request})
+        if login_serializer.is_valid():            
+            user = login_serializer.validated_data['user']          
 
-    # def perform_create(self, serializer):
-        # Agregamos el usuario autenticado como propietario del mazo
-        #serializer.save(user=self.request.user)
+            if user.is_active:
+                # si el usuario está activo creamos un token
+                # recibimos el token en la variable token y en created un true o false si se crea el token
+                token,created = Token.objects.get_or_create(user = user) 
+                user_serializer = UserTokenSerializer(user)                            
+                if created:
+                    return Response({
+                        'token': token.key,
+                        'user': user_serializer.data,
+                        'message': 'Inicio de sesión exitoso'
+                    }, status=status.HTTP_201_CREATED)
+                else:
+                    
+                    # Cuando iniciamos sesión otra vez se borra la sesión actual y se
+                    # crea un nuevo token
+                    all_sessions = Session.objects.filter(expire_date__gte = datetime.now())
+                    if all_sessions.exists():
+                        for session in all_sessions:
+                            session_data = session.get_decoded()
+                            if user.id == int(session_data.get('_auth_user_id')):
+                                session.delete()
+                    # Actualizamos token
+                    token.delete()
+                    token = Token.objects.create(user = user)
+                                        
+                    return Response({
+                        'token': token.key,
+                        'user': user_serializer.data,
+                        'message': 'Inicio de sesión exitoso'
+                    }, status=status.HTTP_201_CREATED)
+                    
 
-# Jayk
-# class CardCreateView(generics.CreateAPIView):
-#    serializer_class = CardSerializer
-#
-#    def create(self, request, *args, **kwargs):
-#        serializer = self.get_serializer(data=request.data)
-#        serializer.is_valid(raise_exception=True)
-#        card = serializer.save()
-#        return Response(
-#            {"card": CardSerializer(card, context=self.get_serializer_context()).data},
-#            status=status.HTTP_201_CREATED,
-#        )
+                    """
+                    # No permitir iniciar sesión si ya se ha iniciado sesión
+                    token.delete()
+                    return Response({
+                        'error': 'Ya se ha iniciado sesión con este usuario'
+                    }, status=status.HTTP_409_CONFLICT)
+                    """
+            else:
+                return Response({'error':'Este usuario no puede iniciar sesión.'}, status = status.HTTP_401_UNAUTHORIZED)
+            
+        else:
+            return Response({'error':'Nombre de usuario o contraseña incorrectos.'}, status=status.HTTP_400_BAD_REQUEST)            
+class Logout(APIView):
+    def get(self,request,*args,**kwargs):
+        try:
+            token = request.GET.get('token')                    
+            token = Token.objects.filter(key = token).first()
+            if token:
+                user = token.user
+                # Cuando iniciamos sesión otra vez se borra la sesión actual y se
+                # crea un nuevo token
+                all_sessions = Session.objects.filter(expire_date__gte = datetime.now())
+                if all_sessions.exists():
+                    for session in all_sessions:
+                        session_data = session.get_decoded()
+                    if user.id == int(session_data.get('_auth_user_id')):
+                        session.delete()
+
+                token.delete()
+                session_message = 'Sesiones de usuario eliminadas.'
+                token_message = 'Token eliminado'
+                return Response({'token_message': token_message, 'session_message': session_message}, status=status.HTTP_200_OK)
+            
+            return Response({'error': 'No se ha encontrado un usuario con estas credenciales.'}, status=status.HTTP_400_BAD_REQUEST)
+        except:  
+            return Response({'error': 'No se ha encontrado token en la petición.'}, status=status.HTTP_409_CONFLICT)
+class UserToken(APIView):
+    def get(self, request, *args, **kwargs):
+        username = request.GET.get('username')
+        try:
+            user_token = Token.objects.get(
+                user = UserTokenSerializer().Meta.model.objects.filter(username = username).first()
+            )
+            return Response({
+                'token':user_token.key
+            })
+        except:
+            return Response({
+                'error': 'Credenciales enviadas incorrectas'
+            }, status = status.HTTP_400_BAD_REQUEST)
+  
+
 
 @api_view(['GET', 'POST'])
 def card_api_view(request):
@@ -228,100 +280,3 @@ def deck_detail_api_view(request, pk=None):
             return Response({'message': 'Mazo eliminado correctamente'}, status=status.HTTP_200_OK)
 
     return Response({'message': 'No se ha encontrado un mazo con estos datos'}, status=status.HTTP_400_BAD_REQUEST)
-
-
-class UserToken(APIView):
-    def get(self, request, *args, **kwargs):
-        username = request.GET.get('username')
-        try:
-            user_token = Token.objects.get(
-                user = UserTokenSerializer().Meta.model.objects.filter(username = username).first()
-            )
-            return Response({
-                'token':user_token.key
-            })
-        except:
-            return Response({
-                'error': 'Credenciales enviadas incorrectas'
-            }, status = status.HTTP_400_BAD_REQUEST)
-
-# vista de login
-class Login(ObtainAuthToken):
-    def post(self,request,*args,**kwargs):
-        print(request.user)
-        # self.serializer_class() ya está definido en ObtainAuthToken
-        # el serializador "serializer_class()" tiene un campo 'username' y uno llamado 'password'
-        login_serializer = self.serializer_class(data = request.data, context = {'request':request})
-        if login_serializer.is_valid():            
-            user = login_serializer.validated_data['user']          
-
-            if user.is_active:
-                # si el usuario está activo creamos un token
-                # recibimos el token en la variable token y en created un true o false si se crea el token
-                token,created = Token.objects.get_or_create(user = user) 
-                user_serializer = UserTokenSerializer(user)                            
-                if created:
-                    return Response({
-                        'token': token.key,
-                        'user': user_serializer.data,
-                        'message': 'Inicio de sesión exitoso'
-                    }, status=status.HTTP_201_CREATED)
-                else:
-                    
-                    # Cuando iniciamos sesión otra vez se borra la sesión actual y se
-                    # crea un nuevo token
-                    all_sessions = Session.objects.filter(expire_date__gte = datetime.now())
-                    if all_sessions.exists():
-                        for session in all_sessions:
-                            session_data = session.get_decoded()
-                            if user.id == int(session_data.get('_auth_user_id')):
-                                session.delete()
-                    # Actualizamos token
-                    token.delete()
-                    token = Token.objects.create(user = user)
-                                        
-                    return Response({
-                        'token': token.key,
-                        'user': user_serializer.data,
-                        'message': 'Inicio de sesión exitoso'
-                    }, status=status.HTTP_201_CREATED)
-                    
-
-                    """
-                    # No permitir iniciar sesión si ya se ha iniciado sesión
-                    token.delete()
-                    return Response({
-                        'error': 'Ya se ha iniciado sesión con este usuario'
-                    }, status=status.HTTP_409_CONFLICT)
-                    """
-            else:
-                return Response({'error':'Este usuario no puede iniciar sesión.'}, status = status.HTTP_401_UNAUTHORIZED)
-            
-        else:
-            return Response({'error':'Nombre de usuario o contraseña incorrectos.'}, status=status.HTTP_400_BAD_REQUEST)
-            
-class Logout(APIView):
-    def get(self,request,*args,**kwargs):
-        try:
-            token = request.GET.get('token')                    
-            token = Token.objects.filter(key = token).first()
-            if token:
-                user = token.user
-                # Cuando iniciamos sesión otra vez se borra la sesión actual y se
-                # crea un nuevo token
-                all_sessions = Session.objects.filter(expire_date__gte = datetime.now())
-                if all_sessions.exists():
-                    for session in all_sessions:
-                        session_data = session.get_decoded()
-                    if user.id == int(session_data.get('_auth_user_id')):
-                        session.delete()
-
-                token.delete()
-                session_message = 'Sesiones de usuario eliminadas.'
-                token_message = 'Token eliminado'
-                return Response({'token_message': token_message, 'session_message': session_message}, status=status.HTTP_200_OK)
-            
-            return Response({'error': 'No se ha encontrado un usuario con estas credenciales.'}, status=status.HTTP_400_BAD_REQUEST)
-        except:  
-            return Response({'error': 'No se ha encontrado token en la petición.'}, status=status.HTTP_409_CONFLICT)
-        
