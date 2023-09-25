@@ -28,6 +28,7 @@
   color: #61dafb;
 }
 
+<<<<<<< Updated upstream
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -36,3 +37,11 @@
     transform: rotate(360deg);
   }
 }
+=======
+
+ .gray{
+  color:gray;
+  
+ }
+ 
+>>>>>>> Stashed changes
