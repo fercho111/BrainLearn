@@ -13,13 +13,16 @@ div.formInput{
   text-align: left;
   margin: 5px;
   width: 300px;
-  height: 75px;
+  height: 100px;
+  margin-bottom: 10px;
 }
 .formInput{
+  flex: 1 1;
   margin: 5px;
   height: 55px;
   padding: 15px 10px;
   border-radius: 10px;
+  margin-top: 10px;
 }
 .App{
   display: flex;
@@ -88,12 +91,12 @@ form h1{
   font-size: 700;
   font-weight: 700;
   cursor: pointer;
+  text-decoration: none;
 
  }
 
 
  .gray{
   color:gray;
-  background-color: rgba(0, 0, 0, 0.1);
  }
  
