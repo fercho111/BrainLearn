@@ -7,7 +7,7 @@ urlpatterns = [
     # path('', views2.HomeView.as_view(), name = "Home"),
 
     # Vistas de Usuario
-    path('login/', views2.UserLoginView, name = "Login"),
+    # path('login/', views2.UserLoginView, name = "Login"),
     path('register/', views2.UserRegisterView.as_view(), name = "UserRegister"),
     path('userDetail/<int:pk>/', views2.UserDetailView.as_view(), name = "UserDetail"),
 
@@ -19,7 +19,7 @@ urlpatterns = [
     # Vistas de Mazos
     path('deckList/', views2.DeckListView.as_view(), name = "DeckList"), # lista de mazos 
 
-    # Vistas de Auntenticación
+    # Vistas de Autenticación
     path('usuario/', include('backend.api.urls')),    
     path('login/', views2.Login.as_view(), name = "Login"), 
     path('logout/', views2.Logout.as_view(), name = "Logout"), 
