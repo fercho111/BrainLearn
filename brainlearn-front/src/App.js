@@ -40,7 +40,7 @@ function App() {
       type: 'password',
       errorMessage: 'Se espera minimo 8 caracteres, almenos una mayuscula, una minuscula y un numero.',
       label: 'Password',
-      pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$',
+      // pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$',
       required: true
     },
     {
@@ -77,7 +77,7 @@ function App() {
 
     try {
       const res = await axios.post('http://localhost:8000/login/', {
-        email: values.email,
+        username: values.username,
         password: values.password
       });
       if (res.data.message) {

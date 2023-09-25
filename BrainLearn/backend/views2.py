@@ -15,7 +15,6 @@ from .serializers import UserSerializer, CardSerializer, DeckSerializer, UserTok
 
 
 @api_view(['POST'])
-
 # Vistas de Usuario
 class UserLoginView(generics.CreateAPIView):
 
@@ -29,6 +28,8 @@ class UserLoginView(generics.CreateAPIView):
             return Response(UserSerializer(user).data)
         else:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+
 class UserRegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
 
@@ -40,6 +41,8 @@ class UserRegisterView(generics.CreateAPIView):
             {"user": RegisterSerializer(user, context=self.get_serializer_context()).data},
             status=status.HTTP_201_CREATED,
         )
+
+
 class UserDetailView(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -50,12 +53,16 @@ class UserDetailView(generics.RetrieveAPIView):
 class CardListCreateView(Authentication, generics.ListCreateAPIView):
     queryset = Card.objects.all()
     serializer_class = CardSerializer
+
+
 class CardDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CardSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         return Card.objects.filter(deck__user=self.request.user)
+
+
 class CardDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Card.objects.all()
     serializer_class = CardSerializer
@@ -73,8 +80,7 @@ class DeckListView(generics.ListCreateAPIView):
 
 # Vistas de Auntenticación
 class Login(ObtainAuthToken):
-    def post(self,request,*args,**kwargs):
-        print(request.user)
+    def post(self, request, *args, **kwargs):
         # self.serializer_class() ya está definido en ObtainAuthToken
         # el serializador "serializer_class()" tiene un campo 'username' y uno llamado 'password'
         login_serializer = self.serializer_class(data = request.data, context = {'request':request})
@@ -91,7 +97,7 @@ class Login(ObtainAuthToken):
                         'token': token.key,
                         'user': user_serializer.data,
                         'message': 'Inicio de sesión exitoso'
-                    }, status=status.HTTP_201_CREATED)
+                    }, status=status.HTTP_200_OK)
                 else:
                     
                     # Cuando iniciamos sesión otra vez se borra la sesión actual y se
@@ -110,7 +116,7 @@ class Login(ObtainAuthToken):
                         'token': token.key,
                         'user': user_serializer.data,
                         'message': 'Inicio de sesión exitoso'
-                    }, status=status.HTTP_201_CREATED)
+                    }, status=status.HTTP_200_OK)
                     
 
                     """
@@ -125,6 +131,8 @@ class Login(ObtainAuthToken):
             
         else:
             return Response({'error':'Nombre de usuario o contraseña incorrectos.'}, status=status.HTTP_400_BAD_REQUEST)            
+
+
 class Logout(APIView):
     def get(self,request,*args,**kwargs):
         try:
@@ -149,6 +157,8 @@ class Logout(APIView):
             return Response({'error': 'No se ha encontrado un usuario con estas credenciales.'}, status=status.HTTP_400_BAD_REQUEST)
         except:  
             return Response({'error': 'No se ha encontrado token en la petición.'}, status=status.HTTP_409_CONFLICT)
+
+
 class UserToken(APIView):
     def get(self, request, *args, **kwargs):
         username = request.GET.get('username')
