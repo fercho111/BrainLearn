@@ -3,6 +3,7 @@ import axios from 'axios';
 import {Link} from 'react-router-dom';
 import './Login.css';
 import FormInput from '../components/FormInput';
+import { AiOutlineArrowLeft } from "react-icons/ai";
 
 
 function Login() {
@@ -42,7 +43,10 @@ function Login() {
         password: values.password
       });
       if (res.data.message) {
-        alert(res.data.message);
+        res.data.message.forEach((error) => {
+          alert(error.message);
+        });
+        // alert(res.data.message);
       }
       
       localStorage.setItem('token', res.data.token);
@@ -62,8 +66,11 @@ function Login() {
     <div className="App" onSubmit={handleSubmitLogin}>
       <form onSubmit={handleSubmitLogin}>
         <div className='option-container'>
-          <Link to='/login' className='option'>Login</Link>
-          <Link to='/signup' className='option gray'>Sign Up</Link>
+          <div className='row text-center'>
+            <Link to='/' className='arrow col-md-2  '><AiOutlineArrowLeft/></Link>
+            <Link to='/login' className='option col-md-5'>Login</Link>
+            <Link to='/signup' className='option gray col-md-5'>Sign Up</Link>
+          </div>
         </div>
         {inputs.map((input) => (
           <FormInput key={input.id} {...input} values={values[input.name]} onChange={onChange}/>

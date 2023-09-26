@@ -3,7 +3,7 @@ import axios from 'axios';
 import {Link} from 'react-router-dom';
 import './SignUp.css';
 import FormInput from '../components/FormInput';
-
+import { AiOutlineArrowLeft } from "react-icons/ai";
 
 
 function SignUp() {
@@ -24,7 +24,7 @@ function SignUp() {
       errorMessage: 'Se espera de 3 a 10 caracteres y no incluir caracteres especiales',
       label: 'Username',
       pattern: '^[a-zA-Z0-9]{3,10}$',
-      requited: true
+      required: true
     },
     {
       id:2,
@@ -80,8 +80,11 @@ function SignUp() {
     <div className="App" onSubmit={handleSubmitSignUp}>
       <form onSubmit={handleSubmitSignUp}>
         <div className='option-container'>
-            <Link to='/login' className='option gray'>Login</Link>
-            <Link to='/signup' className='option'>Sign Up</Link>
+        <div className='row text-center'>
+            <Link to='/' className='arrow col-md-2  '><AiOutlineArrowLeft/></Link>
+            <Link to='/login' className='option gray col-md-5'>Login</Link>
+            <Link to='/signup' className='option  col-md-5'>Sign Up</Link>
+          </div>
         </div>
         {inputs.map((input) => (
           <FormInput key={input.id} {...input} values={values[input.name]} onChange={onChange}/>
