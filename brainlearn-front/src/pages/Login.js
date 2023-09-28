@@ -46,7 +46,7 @@ function Login() {
         res.data.message.forEach((error) => {
           alert(error.message);
         });
-        // alert(res.data.message);
+         alert(res.data.message);
       }
       
       localStorage.setItem('token', res.data.token);
@@ -63,7 +63,7 @@ function Login() {
   }
 
   return (
-    <div className="App" onSubmit={handleSubmitLogin}>
+    <div className="App">
       <form onSubmit={handleSubmitLogin}>
         <div className='option-container'>
           <div className='row text-center'>

@@ -59,7 +59,7 @@ function Home() {
             la potencia de la
             <strong> inteligencia artificial</strong>.
           </p>
-          <a href="#signup" className="btn btn-primary">¡Empieza Ahora!</a>
+          <Link to="/signup" className="btn btn-primary">¡Empieza Ahora!</Link>
         </div>
         <div className="col-md-6 text-center">
           <img src={StudyGirl} alt="StudyGirl" className="img-fluid"/>
@@ -91,7 +91,7 @@ function Home() {
         <div className="col-md-6 text-center" id="activeRecall-text">
           <h2 className="aR-tittle"><strong>Recuerdo Activo </strong>con <b>IA</b></h2>
           <p className="text">Prepárate para descubrir un nuevo nivel de aprendizaje interactivo, donde la
-            <strong>tecnología</strong> y
+            <strong> tecnología</strong> y
             la <strong>cognición</strong> se unen para impulsar tu éxito académico y más allá.</p>
 
         </div>

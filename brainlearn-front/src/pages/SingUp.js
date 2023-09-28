@@ -67,6 +67,9 @@ function SignUp() {
         email: values.email
       });
       localStorage.setItem('token', res.data.token);
+      const body = await res.json();
+      console.log(body);
+      console.log(res.status)
       // history.push('/');
     } catch (err) {
       ;
@@ -77,7 +80,7 @@ function SignUp() {
 
   }
   return (
-    <div className="App" onSubmit={handleSubmitSignUp}>
+    <div className="App">
       <form onSubmit={handleSubmitSignUp}>
         <div className='option-container'>
         <div className='row text-center'>
