@@ -5,7 +5,6 @@ import './Login.css';
 import FormInput from '../components/FormInput';
 import { AiOutlineArrowLeft } from "react-icons/ai";
 
-
 function Login() {
   const [values, setValues] = useState({
     username: '',
@@ -36,7 +35,6 @@ function Login() {
   const handleSubmitLogin = async (e) => {
     e.preventDefault();
     console.log(values);
-
     try {
       
       const res = await axios.post('http://localhost:8000/login/', {
@@ -44,14 +42,18 @@ function Login() {
         password: values.password
       });
       console.log(res.data);
-      if (res.data.message) {
-         alert(res.data.message);
+      if(res.status === 200 || res.status === 201) {
+        localStorage.setItem('token', res.data.token);
+        localStorage.setItem('username', res.data.username);
+        alert(res.data.message);
+        window.location.href = 'http://localhost:3000/';
       }
       
-      localStorage.setItem('token', res.data.token);
       // history.push('/');
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.log(error)
+      alert(error.response.data.error);
+
     }
   }
 
