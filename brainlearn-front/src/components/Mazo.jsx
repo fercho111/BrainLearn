@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { BiEdit } from "react-icons/bi";
 import './Mazo.css'
+import MazoEditDialog from './MazoEditDialog';
 
-function Mazo({ id, nombre, imagen, cartas}){
+
+
+function Mazo({ id, nombre, imagenFondo}){
     const [hovered, setHovered] = useState(false);
     return(
       <div 
@@ -16,10 +18,12 @@ function Mazo({ id, nombre, imagen, cartas}){
           {hovered && (
             <div className='botones_mazo'>
               <button className='boton_start'>START</button>
-              <button className="boton_edit"><BiEdit /></button>
+              <MazoEditDialog/>
             </div>
           )}
+          
         </div>
+        
 
       </div>
     )

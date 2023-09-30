@@ -38,14 +38,13 @@ function Login() {
     console.log(values);
 
     try {
+      
       const res = await axios.post('http://localhost:8000/login/', {
         username: values.username,
         password: values.password
       });
+      console.log(res.data);
       if (res.data.message) {
-        res.data.message.forEach((error) => {
-          alert(error.message);
-        });
          alert(res.data.message);
       }
       
