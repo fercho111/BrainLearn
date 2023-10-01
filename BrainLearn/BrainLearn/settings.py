@@ -150,5 +150,5 @@ CORS_ORIGIN_WHITELIST = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Modelo de Usuario
-AUTH_USER_MODEL = "backend.User"
+# AUTH_USER_MODEL = "backend.User"
 
