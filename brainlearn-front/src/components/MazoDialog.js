@@ -2,13 +2,13 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import { BiEdit} from "react-icons/bi";
-import './MazoEditDialog.css';
+
+import './MazoDialog.css';
 
  
 
 
-function MazoEditDialog({onImageSelect, onTitleChange}) {
+function MazoEditDialog({onImageSelect, onTitleChange, modal_title, icon, className_icon,style_icon }) {
   const [show, setShow] = useState(false);
   const [selectedImage, setSelectedImage] = useState('');
   const [title, setTitle] = useState('');
@@ -49,18 +49,13 @@ function MazoEditDialog({onImageSelect, onTitleChange}) {
     
 
     <>
-      <button className="boton_edit" variant="primary" onClick={handleShow}
-      style={{
-        border: 'none',
-        color: '#e6e6eb',
-        backgroundColor: 'rgba(68,185,196,1)',
-        borderRadius: '10px',
-        padding: 'auto'
-      }}><BiEdit /></button> 
-
-      <Modal  centered="true" animation show={show} onHide={handleClose}>
+      <button className={className_icon} variant="primary" onClick={handleShow}
+      style={style_icon}>{icon}</button> 
+      
+      
+      <Modal  animation show={show} onHide={handleClose} aria-labelledby="contained-modal-title-vcenter"centered>
         <Modal.Header  closeButton>
-          <Modal.Title>Editar Mazo</Modal.Title>
+          <Modal.Title>{modal_title}</Modal.Title>
         </Modal.Header>
         <Modal.Body >
           <Form>
@@ -82,6 +77,8 @@ function MazoEditDialog({onImageSelect, onTitleChange}) {
           </Button>
         </Modal.Footer>
       </Modal>
+      
+      
     </>
   );
 }

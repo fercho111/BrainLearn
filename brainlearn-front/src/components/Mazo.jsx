@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import './Mazo.css'
-import MazoEditDialog from './MazoEditDialog';
+import MazoDialog from './MazoDialog';
+import { BiEdit} from "react-icons/bi";
 
+function icon(){
+  return(
+    <BiEdit/>
+  )
+}
 
-function Mazo({ id, nombre, imagenFondo}){
+function Mazo({ id, id_user, nombre, imagenFondo}){
     const [hovered, setHovered] = useState(false);
     const [selectedImage, setSelectedImage] = useState(imagenFondo);
     const [title, setTitle] = useState(nombre);
@@ -18,6 +24,10 @@ function Mazo({ id, nombre, imagenFondo}){
       setTitle(newTitle);
     }
 
+    
+    
+      
+
     return(
       <div 
         className="mazo"
@@ -30,7 +40,7 @@ function Mazo({ id, nombre, imagenFondo}){
           {hovered && (
             <div className='botones_mazo'>
               <button className='boton_start'>START</button>
-              <MazoEditDialog onImageSelect={handleImageSelect} onTitleChange={handleTitleChange}/>
+              <MazoDialog  className_icon="boton_edit" icon={icon()} modal_title={"Editar Mazo"}onImageSelect={handleImageSelect} onTitleChange={handleTitleChange}/>
             </div>
           )}
           
