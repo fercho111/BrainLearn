@@ -130,6 +130,7 @@ class Login(ObtainAuthToken):
                 return Response({'error':'Este usuario no puede iniciar sesión.'}, status = status.HTTP_401_UNAUTHORIZED)
             
         else:
+            print(login_serializer.data)
             return Response({'error':'Nombre de usuario o contraseña incorrectos.'}, status=status.HTTP_400_BAD_REQUEST)            
 
 
