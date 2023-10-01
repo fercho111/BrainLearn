@@ -8,7 +8,7 @@ import './MazoDialog.css';
  
 
 
-function MazoEditDialog({onImageSelect, onTitleChange, modal_title, icon, className_icon,style_icon }) {
+function MazoEditDialog({onImageSelect, onTitleChange, modal_title, icon, className_icon,style_icon, submit_text, onSubmit}) {
   const [show, setShow] = useState(false);
   const [selectedImage, setSelectedImage] = useState('');
   const [title, setTitle] = useState('');
@@ -34,14 +34,23 @@ function MazoEditDialog({onImageSelect, onTitleChange, modal_title, icon, classN
   }
 
   const handleTitleChange = (event) => {
+    event.preventDefault();
     setLocalTitle(event.target.value);
   }
 
-  const handleSaveChanges = () => {
+  const handleSaveChanges = (e) => {
+    e.preventDefault();
     onImageSelect(selectedImage);
     onTitleChange(localTitle);
-
     handleClose();
+    const deck ={
+      imagen: selectedImage,
+      title: localTitle
+    }
+    onSubmit(deck);
+    
+    
+    
   }
   
 
@@ -73,7 +82,7 @@ function MazoEditDialog({onImageSelect, onTitleChange, modal_title, icon, classN
         </Modal.Body>
         <Modal.Footer>
           <Button variant="primary" onClick={handleSaveChanges}>
-            Save Changes
+            {submit_text}
           </Button>
         </Modal.Footer>
       </Modal>

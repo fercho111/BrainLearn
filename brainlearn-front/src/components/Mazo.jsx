@@ -9,10 +9,10 @@ function icon(){
   )
 }
 
-function Mazo({ id, id_user, nombre, imagenFondo}){
+function Mazo({ id, id_user, titulo, imagen}){
     const [hovered, setHovered] = useState(false);
-    const [selectedImage, setSelectedImage] = useState(imagenFondo);
-    const [title, setTitle] = useState(nombre);
+    const [selectedImage, setSelectedImage] = useState(imagen);
+    const [title, setTitle] = useState (titulo);
     
 
     const handleImageSelect = (newImage) => {
@@ -40,7 +40,7 @@ function Mazo({ id, id_user, nombre, imagenFondo}){
           {hovered && (
             <div className='botones_mazo'>
               <button className='boton_start'>START</button>
-              <MazoDialog  className_icon="boton_edit" icon={icon()} modal_title={"Editar Mazo"}onImageSelect={handleImageSelect} onTitleChange={handleTitleChange}/>
+              <MazoDialog  className_icon="boton_edit" icon={icon()} modal_title={"Editar Mazo"}onImageSelect={handleImageSelect} onTitleChange={handleTitleChange} submit_text="Editar"/>
             </div>
           )}
           
