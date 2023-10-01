@@ -36,7 +36,7 @@ function Login() {
   const navigate = useNavigate();
   const [showAlert, setShowAlert] = useState(false);
   const [alertVariant, setAlertVariant] = useState('');
-  const [alertMessage, setAlertMessage] = useState('');
+  const [alertMessage, setAlertMessage] = useState(''); 
 
   const handleSubmitLogin = async (e) => {
     e.preventDefault();

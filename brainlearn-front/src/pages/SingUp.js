@@ -4,6 +4,8 @@ import {Link} from 'react-router-dom';
 import './SignUp.css';
 import FormInput from '../components/FormInput';
 import { AiOutlineArrowLeft } from "react-icons/ai";
+import { useNavigate } from 'react-router-dom';
+import Alert from 'react-bootstrap/Alert';
 
 
 function SignUp() {
@@ -57,6 +59,9 @@ function SignUp() {
     },
   ]
 
+  const navigate = useNavigate();
+  const [showAlert, setShowAlert] = useState(false);
+
   const handleSubmitSignUp = async (e) => {
     e.preventDefault();
     console.log(values);
@@ -67,12 +72,14 @@ function SignUp() {
         email: values.email
       });
       localStorage.setItem('token', res.data.token);
-      const body = await res.json();
-      console.log(body);
-      console.log(res.status)
+      localStorage.setItem('username', res.data.username);
+      setShowAlert(true);
+      setTimeout(() => {
+        navigate('/login');
+      }, 5000);
       // history.push('/');
     } catch (err) {
-      ;
+      console.log(err);
     }
   }
   const onChange = (e) => {
@@ -81,6 +88,7 @@ function SignUp() {
   }
   return (
     <div className="App">
+      {showAlert && (<Alert variant='success'>Usuario creado correctamente</Alert>)}
       <form onSubmit={handleSubmitSignUp}>
         <div className='option-container'>
         <div className='row text-center'>

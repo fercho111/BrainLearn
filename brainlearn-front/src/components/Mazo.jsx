@@ -7,12 +7,14 @@ function Mazo({ id, nombre, imagenFondo}){
     const [hovered, setHovered] = useState(false);
     const [selectedImage, setSelectedImage] = useState(imagenFondo);
     const [title, setTitle] = useState(nombre);
+    
 
     const handleImageSelect = (newImage) => {
       setSelectedImage(newImage);
     }
 
     const handleTitleChange = (newTitle) => {
+      if(newTitle != '')
       setTitle(newTitle);
     }
 
