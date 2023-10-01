@@ -4,6 +4,8 @@ import {Link} from 'react-router-dom';
 import './Login.css';
 import FormInput from '../components/FormInput';
 import { AiOutlineArrowLeft } from "react-icons/ai";
+import { useNavigate } from 'react-router-dom';
+import Alert from 'react-bootstrap/Alert';
 
 function Login() {
   const [values, setValues] = useState({
@@ -31,10 +33,15 @@ function Login() {
     },
   ]
 
-  
+  const navigate = useNavigate();
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertVariant, setAlertVariant] = useState('');
+  const [alertMessage, setAlertMessage] = useState('');
+
   const handleSubmitLogin = async (e) => {
     e.preventDefault();
     console.log(values);
+
     try {
       
       const res = await axios.post('http://localhost:8000/login/', {
@@ -45,15 +52,24 @@ function Login() {
       if(res.status === 200 || res.status === 201) {
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('username', res.data.username);
-        alert(res.data.message);
-        window.location.href = 'http://localhost:3000/';
+        setShowAlert(true);
+        setAlertVariant('success');
+        setAlertMessage(res.data.message);
+        setTimeout(() => {
+          navigate('/');
+        }, 5000);
       }
       
       // history.push('/');
     } catch (error) {
-      console.log(error)
-      alert(error.response.data.error);
+      setShowAlert(true);
+      setAlertVariant('danger');
+      setAlertMessage(error.response.data.error);
 
+      setTimeout(() => {
+        setShowAlert(false);
+      }, 3000);
+      
     }
   }
 
@@ -65,6 +81,11 @@ function Login() {
 
   return (
     <div className="App">
+      {showAlert && (
+        <Alert variant={alertVariant}>
+          {alertMessage}
+        </Alert>
+      )}
       <form onSubmit={handleSubmitLogin}>
         <div className='option-container'>
           <div className='row text-center'>
