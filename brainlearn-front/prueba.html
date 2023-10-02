@@ -5,78 +5,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spaced Repetition</title>
 </head>
-<body>
-    <div id="card-container">
-        <!-- Your card content here -->
-    </div>
+    <body>
+        <div id="card-container">
+        </div>
 
-    <script>
-        const ENDPOINT = 'http://localhost:8000/';
-        let currentCardIndex = 0;
-        let currentCard;
+        <script>
+            const ENDPOINT = 'http://localhost:8000/';
+            let currentCardIndex = 0;
+            let cartaActual;
 
-        async function fetchCards() {
-            try {
-                const response = await fetch(`${ENDPOINT}?rating=0`);
-                const data = await response.json();
-                if (data.length > 0) {
-                    currentCard = data[0];
-                    displayQuestion(currentCard);
-                } else {
-                    alert('No hay cartas disponibles');
+            async function fetchCartas() {
+                try {
+                    const response = await fetch(`${ENDPOINT}?rating=0`);
+                    const data = await response.json();
+                    if (data.length > 0) {
+                        cartaActual = data[0];
+                        mostrarPregunta(cartaActual);
+                    } else {
+                        alert('No hay cartas disponibles');
+                    }
+                } catch (error) {
+                    console.error('Error obteniendo cartas', error);
                 }
-            } catch (error) {
-                console.error('Error obteniendo cartas', error);
             }
-        }
 
-        function displayQuestion(card) {
-            const cardContainer = document.getElementById('card-container');
-            cardContainer.innerHTML = `
-                <div>
-                    <p>${card.question}</p>
-                    <button onclick="showAnswer(${card.id})">Mostrar respuesta</button>
-                </div>
-            `;
-        }
+            function mostrarPregunta(carta) {
+                const cardContainer = document.getElementById('card-container');
+                cardContainer.innerHTML = `
+                    <div>
+                        <p>${carta.question}</p>
+                        <button onclick="mostrarRespuesta(${carta.id})">Mostrar respuesta</button>
+                    </div>
+                `;
+            }
 
-        function showAnswer(id) {
-            const cardContainer = document.getElementById('card-container');
-            cardContainer.innerHTML = `
-                <div>
-                    <p>${currentCard.question}</p>
-                    <p>Answer: ${currentCard.answer}</p>
-                    <button onclick="rateCard(${id}, 'bad')">Bad</button>
-                    <button onclick="rateCard(${id}, 'normal')">Normal</button>
-                    <button onclick="rateCard(${id}, 'great')">Great</button>
-                </div>
-            `;
-        }
+            function mostrarRespuesta(id) {
+                const cardContainer = document.getElementById('card-container');
+                cardContainer.innerHTML = `
+                    <div>
+                        <p>${cartaActual.question}</p>
+                        <p>Respuesta: ${cartaActual.answer}</p>
+                        <button onclick="calificar(${id}, 'mal')">Mal</button>
+                        <button onclick="calificar(${id}, 'normal')">Normal</button>
+                        <button onclick="calificar(${id}, 'bien')">Bien</button>
+                    </div>
+                `;
+            }
 
-        function rateCard(cardId, feedback) {
-            fetch(`http://localhost:8000/${cardId}/`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    // autenticacion ?? 
-                },
-                body: JSON.stringify({ feedback }),
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Error de red');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log(data.message);
-                fetchCards();
-            })
-            .catch(error => {
-                console.error('Problema con el intento de fetch', error);
-            });
-        }
-        fetchCards();
-    </script>
-</body>
+            function calificar(cardId, calificacion) {
+                fetch(`${ENDPOINT}${cardId}/`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        // autenticacion ?? 
+                    },
+                    body: JSON.stringify({ calificacion }),
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error de red');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data.message);
+                    fetchCartas();
+                })
+                .catch(error => {
+                    console.error('Problema con el intento de fetch', error);
+                });
+            }
+            fetchCartas();
+        </script>
+    </body>
 </html>

@@ -33,15 +33,15 @@ class CardUpdateView(views.APIView):
         except Card.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-        feedback = request.data.get('feedback')
-        if feedback == 'bad':
+        feedback = request.data.get('calificacion')
+        if feedback == 'mal':
             card.rating = 0
         elif feedback == 'normal':
             pass  
-        elif feedback == 'great':
+        elif feedback == 'bien':
             card.rating += 1
         else:
-            return Response({"error": "Invalid feedback"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "Valor incorrecto"}, status=status.HTTP_400_BAD_REQUEST)
 
         card.save()
-        return Response({"message": "Box updated successfully"}, status=status.HTTP_200_OK)
+        return Response({"message": "Calificación actualizada exitosamente"}, status=status.HTTP_200_OK)
