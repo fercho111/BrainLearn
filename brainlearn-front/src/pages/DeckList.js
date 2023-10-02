@@ -20,6 +20,18 @@ function DeckList() {
         localStorage.setItem('decks', JSON.stringify(decksActualizados));
     };
 
+    const editarMazo = (deck) => {
+        const decksActualizados = decks.map((deckActual) => {
+            if (deckActual.id === deck.id) {
+                return deck;
+            }
+            return deckActual;
+        });
+        setDecks(decksActualizados);
+        localStorage.setItem('decks', JSON.stringify(decksActualizados));
+    };
+
+
     return (
     <div className="container" >
     <MazoCrearDialog  modal_title={"Crear Mazo"} className_icon="boton_crear mazo" submit_text="Crear" onSubmit={agregarMazo} />
@@ -30,6 +42,7 @@ function DeckList() {
             titulo={deck.title}
             imagen={deck.imagen}
             onEliminar={eliminarMazo}
+            onSubmit={editarMazo}
             
             />
         ))}

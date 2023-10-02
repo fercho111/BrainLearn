@@ -11,13 +11,14 @@ import './MazoDialog.css';
 
 function MazoEditDialog({onImageSelect, onTitleChange, modal_title, icon, className_icon,style_icon, submit_text, onSubmit}) {
   const [show, setShow] = useState(false);
-  const [selectedImage, setSelectedImage] = useState('');
+  const [selectedImage, setSelectedImage] = useState({onImageSelect});
   const [localTitle, setLocalTitle] = useState('');
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setShow(false);
+  }
   const handleShow = () => {
     setShow(true);
-    setLocalTitle('');
   }
 
   const handleImageSelect = (event) => {
@@ -42,9 +43,13 @@ function MazoEditDialog({onImageSelect, onTitleChange, modal_title, icon, classN
     e.preventDefault();
     onImageSelect(selectedImage);
     onTitleChange(localTitle);
+    const deck = {
+      title: localTitle,
+      imagen: selectedImage,
+    };
     handleClose();
+    onSubmit(deck);
     
-
   }
   
 

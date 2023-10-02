@@ -80,7 +80,7 @@ function SignUp() {
       setAlertMessage(res.data.message);
       setTimeout(() => {
         navigate('/login');
-      }, 5000);
+      }, 3000);
       // history.push('/');
     } catch (err) {
       console.log(err);

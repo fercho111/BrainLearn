@@ -40,13 +40,11 @@ class UserRegisterView(generics.CreateAPIView):
         username = request.data.get('username')
 
         # Verifica si el nombre de usuario ya existe en la base de datos
-        if User.objects.filter(username=username).exists():  
-            print("Usuario ya registrado")          
+        if User.objects.filter(username=username).exists():           
             return Response({"error": "Nombre de usuario en uso"}, status=status.HTTP_400_BAD_REQUEST)
                       
         # Verifica si el correo ya existe en la base de datos
         if User.objects.filter(email=request.data.get('email')).exists():
-            print("Correo ya registrado")
             return Response({"error": "Correo en uso"}, status=status.HTTP_400_BAD_REQUEST)
         
         serializer = self.get_serializer(data=request.data)
