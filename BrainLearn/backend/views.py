@@ -15,16 +15,33 @@ class CardListView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         rating = self.request.query_params.get('rating', None)
-        queryset = Card.objects.all()
+        queryset = Card.objects.all().order_by('?')
 
         if rating is not None:
-            queryset = queryset.filter(Q(rating__lt=rating) | Q(rating__isnull=True))
+            queryset = queryset.filter(Q(rating__lte=rating) | Q(rating__isnull=True))
 
         return queryset
 
     def perform_create(self, serializer):
         serializer.save()
 
-class CardUpdateView(generics.UpdateAPIView):
-    queryset = Card.objects.all()
-    serializer_class = CardRatingUpdateSerializer
+
+class CardUpdateView(views.APIView):
+    def put(self, request, pk):
+        try:
+            card = Card.objects.get(pk=pk)
+        except Card.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        feedback = request.data.get('feedback')
+        if feedback == 'bad':
+            card.rating = 0
+        elif feedback == 'normal':
+            pass  
+        elif feedback == 'great':
+            card.rating += 1
+        else:
+            return Response({"error": "Invalid feedback"}, status=status.HTTP_400_BAD_REQUEST)
+
+        card.save()
+        return Response({"message": "Box updated successfully"}, status=status.HTTP_200_OK)

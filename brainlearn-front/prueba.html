@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spaced Repetition</title>
+</head>
+<body>
+    <div id="card-container">
+        <!-- Your card content here -->
+    </div>
+
+    <script>
+        const ENDPOINT = 'http://localhost:8000/';
+        let currentCardIndex = 0;
+        let currentCard;
+
+        async function fetchCards() {
+            try {
+                const response = await fetch(`${ENDPOINT}?rating=0`);
+                const data = await response.json();
+                if (data.length > 0) {
+                    currentCard = data[0];
+                    displayQuestion(currentCard);
+                } else {
+                    alert('No hay cartas disponibles');
+                }
+            } catch (error) {
+                console.error('Error obteniendo cartas', error);
+            }
+        }
+
+        function displayQuestion(card) {
+            const cardContainer = document.getElementById('card-container');
+            cardContainer.innerHTML = `
+                <div>
+                    <p>${card.question}</p>
+                    <button onclick="showAnswer(${card.id})">Mostrar respuesta</button>
+                </div>
+            `;
+        }
+
+        function showAnswer(id) {
+            const cardContainer = document.getElementById('card-container');
+            cardContainer.innerHTML = `
+                <div>
+                    <p>${currentCard.question}</p>
+                    <p>Answer: ${currentCard.answer}</p>
+                    <button onclick="rateCard(${id}, 'bad')">Bad</button>
+                    <button onclick="rateCard(${id}, 'normal')">Normal</button>
+                    <button onclick="rateCard(${id}, 'great')">Great</button>
+                </div>
+            `;
+        }
+
+        function rateCard(cardId, feedback) {
+            fetch(`http://localhost:8000/${cardId}/`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // autenticacion ?? 
+                },
+                body: JSON.stringify({ feedback }),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error de red');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data.message);
+                fetchCards();
+            })
+            .catch(error => {
+                console.error('Problema con el intento de fetch', error);
+            });
+        }
+        fetchCards();
+    </script>
+</body>
+</html>
