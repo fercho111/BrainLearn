@@ -1,15 +1,10 @@
 import React, { useState } from 'react';
 import './Mazo.css'
-import MazoDialog from './MazoDialog';
-import { BiEdit} from "react-icons/bi";
+import MazoDialog from './MazoEditDialog';
+import { AiFillDelete} from "react-icons/ai";
 
-function icon(){
-  return(
-    <BiEdit/>
-  )
-}
 
-function Mazo({ id, id_user, titulo, imagen}){
+function Mazo({ id, id_user, titulo, imagen, onEliminar}){
     const [hovered, setHovered] = useState(false);
     const [selectedImage, setSelectedImage] = useState(imagen);
     const [title, setTitle] = useState (titulo);
@@ -25,8 +20,7 @@ function Mazo({ id, id_user, titulo, imagen}){
     }
 
     
-    
-      
+
 
     return(
       <div 
@@ -40,7 +34,8 @@ function Mazo({ id, id_user, titulo, imagen}){
           {hovered && (
             <div className='botones_mazo'>
               <button className='boton_start'>START</button>
-              <MazoDialog  className_icon="boton_edit" icon={icon()} modal_title={"Editar Mazo"}onImageSelect={handleImageSelect} onTitleChange={handleTitleChange} submit_text="Editar"/>
+              <MazoDialog  className_icon="boton_edit"  modal_title={"Editar Mazo"}onImageSelect={handleImageSelect} onTitleChange={handleTitleChange} submit_text="Editar" />
+              <button className='boton_delete' onClick={() => onEliminar(id)}><AiFillDelete/></button>
             </div>
           )}
           

@@ -32,6 +32,7 @@
     align-items: center;
     width: 100%;
     margin-top: 10px;
+    gap: 5px;
 }
 .boton_start{
     border: none;
@@ -53,6 +54,18 @@
     padding: auto;
 }
 .boton_edit:hover{
+    background-color: rgb(68,185,196,0.5);
+    cursor: pointer;
+}
+.boton_delete{
+    border: none;
+    color: #e6e6eb;
+    background-color: rgb(68,185,196,1);
+    border-radius: 10px;
+    padding: auto;
+}
+
+.boton_delete:hover{
     background-color: rgb(68,185,196,0.5);
     cursor: pointer;
 }

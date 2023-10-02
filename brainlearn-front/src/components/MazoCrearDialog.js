@@ -2,22 +2,30 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-
+import { IoMdAdd} from "react-icons/io";
 import './MazoDialog.css';
+import { v4 as uuidv4 } from 'uuid';
 
  
 
 
-function MazoEditDialog({onImageSelect, onTitleChange, modal_title, icon, className_icon,style_icon, submit_text, onSubmit}) {
+function MazoCrearDialog({onImageSelect, onTitleChange, modal_title, className_icon,style_icon, submit_text, onSubmit}) {
   const [show, setShow] = useState(false);
   const [selectedImage, setSelectedImage] = useState('');
   const [title, setTitle] = useState('');
-  const [localTitle, setLocalTitle] = useState('');
+  const [isTitleValid, setIsTitleValid] = useState(false);
+  
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setShow(false);
+    setSelectedImage('');
+    setTitle('');
+    setIsTitleValid(false);
+    }
+
   const handleShow = () => {
     setShow(true);
-    setLocalTitle(title);
+    
   }
 
   const handleImageSelect = (event) => {
@@ -35,22 +43,21 @@ function MazoEditDialog({onImageSelect, onTitleChange, modal_title, icon, classN
 
   const handleTitleChange = (event) => {
     event.preventDefault();
-    setLocalTitle(event.target.value);
+    setTitle(event.target.value);
+    setIsTitleValid(event.target.value.trim() !== '');
   }
 
   const handleSaveChanges = (e) => {
     e.preventDefault();
-    onImageSelect(selectedImage);
-    onTitleChange(localTitle);
-    handleClose();
-    const deck ={
-      imagen: selectedImage,
-      title: localTitle
+    if(isTitleValid){
+        const deckNuevo ={
+        id: uuidv4(),
+        imagen: selectedImage,
+        title: title
+        }
+        onSubmit(deckNuevo);
+        handleClose();
     }
-    onSubmit(deck);
-    
-    
-    
   }
   
 
@@ -59,7 +66,7 @@ function MazoEditDialog({onImageSelect, onTitleChange, modal_title, icon, classN
 
     <>
       <button className={className_icon} variant="primary" onClick={handleShow}
-      style={style_icon}>{icon}</button> 
+      style={style_icon}><IoMdAdd size={70}/></button> 
       
       
       <Modal  animation show={show} onHide={handleClose} aria-labelledby="contained-modal-title-vcenter"centered>
@@ -67,7 +74,7 @@ function MazoEditDialog({onImageSelect, onTitleChange, modal_title, icon, classN
           <Modal.Title>{modal_title}</Modal.Title>
         </Modal.Header>
         <Modal.Body >
-          <Form>
+          <Form onSubmit={handleSaveChanges}>
             <Form.Group controlId="formFile" className="mb-3">
               <Form.Label>Imagen de fondo</Form.Label>
               <Form.Control type="file" accept=".jpg, .jpeg, .png"
@@ -92,4 +99,4 @@ function MazoEditDialog({onImageSelect, onTitleChange, modal_title, icon, classN
   );
 }
 
-export default MazoEditDialog;
+export default MazoCrearDialog;
