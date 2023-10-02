@@ -30,10 +30,20 @@ class UserLoginView(generics.CreateAPIView):
             return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 
+from rest_framework.response import Response
+from rest_framework import status
+
 class UserRegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
 
     def create(self, request, *args, **kwargs):
+        username = request.data.get('username')
+
+        # Verifica si el nombre de usuario ya existe en la base de datos
+        if User.objects.filter(username=username).exists():  
+            print("Usuario ya registrado")          
+            return Response({"error": "Usuario ya registrado"}, status=status.HTTP_400_BAD_REQUEST)
+
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
