@@ -10,6 +10,7 @@
     border-radius: 10px;
     margin: 10px;
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+    position: relative;
 }
 
 .mazo_texto{
@@ -60,12 +61,15 @@
 .boton_delete{
     border: none;
     color: #e6e6eb;
-    background-color: rgb(68,185,196,1);
+    background-color: rgb(196, 68, 89);
     border-radius: 10px;
-    padding: auto;
+    padding: 5px 10px; /* Ajusta el padding según tus necesidades */
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
 .boton_delete:hover{
-    background-color: rgb(68,185,196,0.5);
+    background-color: rgb(196, 68, 89,0.5);
     cursor: pointer;
 }

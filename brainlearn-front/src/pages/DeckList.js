@@ -22,9 +22,9 @@ function DeckList() {
 
     return (
     <div className="container" >
-    <MazoCrearDialog  modal_title={"Crear Mazo"} className_icon="boton_crear" submit_text="Crear" onSubmit={agregarMazo} />
+    <MazoCrearDialog  modal_title={"Crear Mazo"} className_icon="boton_crear mazo" submit_text="Crear" onSubmit={agregarMazo} />
         {decks.map((deck) => (
-            <Mazo 
+            <Mazo className="mazo"
             key={deck.id}
             id={deck.id}
             titulo={deck.title}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Mazo.css'
-import MazoDialog from './MazoEditDialog';
+import MazoEditDialog from './MazoEditDialog';
 import { AiFillDelete} from "react-icons/ai";
 
 
@@ -15,7 +15,7 @@ function Mazo({ id, id_user, titulo, imagen, onEliminar}){
     }
 
     const handleTitleChange = (newTitle) => {
-      if(newTitle != '')
+      if(newTitle !== '')
       setTitle(newTitle);
     }
 
@@ -29,13 +29,15 @@ function Mazo({ id, id_user, titulo, imagen, onEliminar}){
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
+        <button className='boton_delete' onClick={() => onEliminar(id)}><AiFillDelete/></button>
         <div className="mazo_texto">
           <p>{title}</p>
           {hovered && (
+            
             <div className='botones_mazo'>
               <button className='boton_start'>START</button>
-              <MazoDialog  className_icon="boton_edit"  modal_title={"Editar Mazo"}onImageSelect={handleImageSelect} onTitleChange={handleTitleChange} submit_text="Editar" />
-              <button className='boton_delete' onClick={() => onEliminar(id)}><AiFillDelete/></button>
+              <MazoEditDialog className_icon="boton_edit"  modal_title={"Editar Mazo"}onImageSelect={handleImageSelect} onTitleChange={handleTitleChange} submit_text="Editar" />
+              
             </div>
           )}
           

@@ -3,8 +3,9 @@
     flex-direction: row;
     align-items:flex-start;
     justify-content:flex-start;
-    height: 100vh;
     flex-wrap: wrap;
+    gap: 20px;
+    
 }
 
 .boton_crear{

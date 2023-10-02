@@ -61,6 +61,8 @@ function SignUp() {
 
   const navigate = useNavigate();
   const [showAlert, setShowAlert] = useState(false);
+  const [alertVariant, setAlertVariant] = useState('');
+  const [alertMessage, setAlertMessage] = useState(''); 
 
   const handleSubmitSignUp = async (e) => {
     e.preventDefault();
@@ -74,12 +76,21 @@ function SignUp() {
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('username', res.data.username);
       setShowAlert(true);
+      setAlertVariant('success');
+      setAlertMessage(res.data.message);
       setTimeout(() => {
         navigate('/login');
       }, 5000);
       // history.push('/');
     } catch (err) {
       console.log(err);
+      setShowAlert(true);
+      setAlertVariant('danger');
+      setAlertMessage(err.response.data.error);
+
+      setTimeout(() => {
+        setShowAlert(false);
+      }, 3000);
     }
   }
   const onChange = (e) => {
@@ -88,7 +99,7 @@ function SignUp() {
   }
   return (
     <div className="App">
-      {showAlert && (<Alert variant='success'>Usuario creado correctamente</Alert>)}
+      {showAlert && (<Alert variant={alertVariant}>{alertMessage}</Alert>)}
       <form onSubmit={handleSubmitSignUp}>
         <div className='option-container'>
         <div className='row text-center'>

@@ -18,7 +18,7 @@ function Home() {
             <section id="nav-bar">
     <nav className="navbar navbar-expand-lg bg-body-tertiary navbar-light">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#"><img src={Rsf} alt=""/>BrainLearn</a>
+        <div className="navbar-brand" href="#"><img src={Rsf} alt=""/>BrainLearn</div>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
           aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <i className="fa-solid fa-bars" style={{color: '#fff'}}></i>
@@ -184,7 +184,7 @@ function Home() {
     </svg>
     <div className="row justify-content-md-center">
       <div className="col-md-6 footer-box text-center bL-footer">
-        <a className="footer-logo" href="#"><img src={ Rsf } alt=""/>BrainLearn</a>
+        <div className="footer-logo" href="#"><img src={ Rsf } alt=""/>BrainLearn</div>
         <p>Nuestra misión es ayudarte a alcanzar
           tus metas educativas de manera eficiente y enriquecedora.</p>
 

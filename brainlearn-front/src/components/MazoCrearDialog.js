@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
  
 
 
-function MazoCrearDialog({onImageSelect, onTitleChange, modal_title, className_icon,style_icon, submit_text, onSubmit}) {
+function MazoCrearDialog({modal_title, className_icon,style_icon, submit_text, onSubmit}) {
   const [show, setShow] = useState(false);
   const [selectedImage, setSelectedImage] = useState('');
   const [title, setTitle] = useState('');

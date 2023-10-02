@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { BiEdit} from "react-icons/bi";
 import './MazoDialog.css';
-import { IoIosCheckmarkCircleOutline } from 'react-icons/io';
+
 
  
 
@@ -12,17 +12,15 @@ import { IoIosCheckmarkCircleOutline } from 'react-icons/io';
 function MazoEditDialog({onImageSelect, onTitleChange, modal_title, icon, className_icon,style_icon, submit_text, onSubmit}) {
   const [show, setShow] = useState(false);
   const [selectedImage, setSelectedImage] = useState('');
-  const [title, setTitle] = useState('');
   const [localTitle, setLocalTitle] = useState('');
 
   const handleClose = () => setShow(false);
   const handleShow = () => {
     setShow(true);
-    setLocalTitle(title);
+    setLocalTitle('');
   }
 
   const handleImageSelect = (event) => {
-    event.preventDefault();
     const file = event.target.files[0];
     const reader = new FileReader();
 
