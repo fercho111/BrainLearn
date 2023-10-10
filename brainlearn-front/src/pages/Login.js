@@ -57,7 +57,7 @@ function Login() {
         setAlertMessage(res.data.message);
         setTimeout(() => {
           navigate('/');
-        }, 5000);
+        }, 0.5);
       }
       
       // history.push('/');

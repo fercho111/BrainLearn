@@ -111,9 +111,9 @@ class Login(ObtainAuthToken):
                         'token': token.key,
                         'user': user_serializer.data,
                         'message': 'Inicio de sesión exitoso'
-                    }, status=status.HTTP_200_OK)
+                    }, status=status.HTTP_201_CREATED)
                 else:
-                    
+                    """                    
                     # Cuando iniciamos sesión otra vez se borra la sesión actual y se
                     # crea un nuevo token
                     all_sessions = Session.objects.filter(expire_date__gte = datetime.now())
@@ -132,14 +132,14 @@ class Login(ObtainAuthToken):
                         'message': 'Inicio de sesión exitoso'
                     }, status=status.HTTP_200_OK)
                     
-
                     """
+                                        
                     # No permitir iniciar sesión si ya se ha iniciado sesión
                     token.delete()
                     return Response({
                         'error': 'Ya se ha iniciado sesión con este usuario'
                     }, status=status.HTTP_409_CONFLICT)
-                    """
+                    
             else:
                 return Response({'error':'Este usuario no puede iniciar sesión.'}, status = status.HTTP_401_UNAUTHORIZED)
             

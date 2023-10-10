@@ -6,12 +6,13 @@ import SignUp from './pages/SingUp';
 import DeckList from './pages/DeckList';
 import ListaCartas from './pages/ListaCartas';
 
-function App() {
+function App() { 
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<Home/>}/>
-        <Route path="/" element={<Home/>}/>
+        <Route index element={<Login/>}/>
+        <Route path="/" element={<Login/>}/>
         <Route path="/home" element={<Home/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/signup" element={<SignUp/>}/>
