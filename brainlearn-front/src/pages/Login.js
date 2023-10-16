@@ -50,8 +50,8 @@ function Login() {
       });
       console.log(res.data);
       if(res.status === 200 || res.status === 201) {
-        localStorage.setItem('token', res.data.token);
-        localStorage.setItem('username', res.data.username);
+        localStorage.setItem('token', res.data.access);
+        // localStorage.setItem('username', res.data.username);
         setShowAlert(true);
         setAlertVariant('success');
         setAlertMessage(res.data.message);
