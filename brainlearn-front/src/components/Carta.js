@@ -29,7 +29,6 @@ export default function Carta({res, pre,imgRespuesta, imgPregunta}) {
   return (
     <div
       className={`card ${flip ? 'flip' : ''}`}
-      onClick={() => setFlip(!flip)}
       style={{
         backgroundImage: flip ? `url(${imagenRespuesta})` : `url(${imagenPregunta})`
       }}
@@ -51,8 +50,8 @@ export default function Carta({res, pre,imgRespuesta, imgPregunta}) {
       <div className="front">
         <p>{pregunta}</p>
       </div>
-    )
-    }
+    )};
+    <button className='boton_flip' onClick={() => setFlip(!flip)}>Flip</button>
     </div>
   )
 }

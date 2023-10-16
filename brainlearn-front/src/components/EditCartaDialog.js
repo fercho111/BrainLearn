@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { BiEdit} from "react-icons/bi";
+import './MazoDialog.css';
 
 export default function EditCartaDialog({className_icon, style_icon, submit_text, onSubmit, modal_title, onImagePregunta, onImageRespuesta, onPregunta, onRespuesta}) {
 
@@ -80,11 +81,11 @@ export default function EditCartaDialog({className_icon, style_icon, submit_text
         </Modal.Header>
         <Modal.Body >
           <Form onSubmit={handleSaveChanges}>
-            <Form.Text className="mb-3  form_pregunta">
+            <Form.Text className="mb-3  form_pregunta formcito">
               <Form.Label>Pregunta</Form.Label>
               <Form.Control type="text" placeholder="pregunta" onChange={handlePregunta}/>
             </Form.Text>
-            <Form.Group controlId="formFile" className="mb-3">
+            <Form.Group controlId="formFile" className="mb-3 formcito">
               <Form.Label>Imagen de pregunta</Form.Label>
               <Form.Control type="file" accept=".jpg, .jpeg, .png"
               onChange={handleImagePregunta} />
