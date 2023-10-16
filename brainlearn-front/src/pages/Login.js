@@ -80,13 +80,13 @@ function Login() {
   }
 
   return (
-    <div className="App">
+    <div className="Applog">
       {showAlert && (
         <Alert variant={alertVariant}>
           {alertMessage}
         </Alert>
       )}
-      <form onSubmit={handleSubmitLogin}>
+      <form onSubmit={handleSubmitLogin} className='form'>
         <div className='option-container'>
           <div className='row text-center'>
             <Link to='/' className='arrow col-md-2  '><AiOutlineArrowLeft/></Link>
@@ -99,7 +99,7 @@ function Login() {
           
         ))}
 
-        <button type='submit'>submit</button>
+        <button type='submit' className='submit_button'>submit</button>
 
       </form>
     </div>

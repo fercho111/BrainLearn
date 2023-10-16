@@ -35,30 +35,33 @@ function DeckList() {
 
 
     return (
-        <div className="body">
+        <>
             <NavBar/>
-            <div className="texto">
-                <h1>¡Bienvenido!</h1>
-                <h2>Aqui podras crear tus mazos</h2>
-            </div>
-
+                <div className="texto_cont">
+                    <h1 className='textoC'>¡Bienvenido!</h1>
+                    <h2 className='textoC'>Aqui podras crear tus mazos</h2>
+                </div>
+            <div className="body">
             
-        </div>
+                <div className="container" >
+                    
+                <MazoCrearDialog  modal_title={"Crear Mazo"} className_icon="boton_crear mazo" submit_text="Crear" onSubmit={agregarMazo} />
+                    {decks.map((deck) => (
+                        <Mazo className="mazo"
+                        key={deck.id}
+                        id={deck.id}
+                        titulo={deck.title}
+                        imagen={deck.imagen}
+                        onEliminar={eliminarMazo}
+                        onSubmit={editarMazo}
+                        
+                        />
+                    ))}
+
+                </div>   
+            </div>
+        </>
     );
 }
 export default DeckList;
-{/* <div className="container" >
-            <MazoCrearDialog  modal_title={"Crear Mazo"} className_icon="boton_crear mazo" submit_text="Crear" onSubmit={agregarMazo} />
-                {decks.map((deck) => (
-                    <Mazo className="mazo"
-                    key={deck.id}
-                    id={deck.id}
-                    titulo={deck.title}
-                    imagen={deck.imagen}
-                    onEliminar={eliminarMazo}
-                    onSubmit={editarMazo}
-                    
-                    />
-                ))}
-
-            </div> */}
+ 
