@@ -17,13 +17,6 @@ class CardSerializer(serializers.ModelSerializer):
         fields = ['id', 'question', 'answer', 'question_image_url', 'answer_image_url',
                   'created_at', 'reviewed_at', 'modified_at', 'rating', 'deck']
 
-    def create(self, validated_data):
-        deck_data = validated_data.pop('deck')
-        deck = Deck.objects.create(**deck_data)
-        card = Card.objects.create(deck=deck, **validated_data)
-        return card
-
-
 # no tocar hasta saber como funciona esta vuelta
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
