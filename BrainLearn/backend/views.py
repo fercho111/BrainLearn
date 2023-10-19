@@ -8,32 +8,66 @@ from .models import User, Deck, Card
 from .serializers import UserSerializer, LoginSerializer, DeckSerializer, CardSerializer
 
 @api_view(['GET', 'POST'])
-def testview(request):
-    print(request.user)
-    return Response({"a": "2"})
+def mazos(request):
+    if request.method == "GET":
+        if request.user is None:
+            return Response({"message": "No se han proporcionado credenciales"}, status=status.HTTP_401_UNAUTHORIZED)
 
-@api_view(['GET', 'POST'])
-def cartas(request):
+        user_decks = Deck.objects.filter(user=request.user)
+        serializer = DeckSerializer(user_decks, many=True)
+        return Response(serializer.data)
     if request.method == "POST":
         if request.user is None:
             return Response({"message": "No se han proporcionado credenciales"}, status=status.HTTP_401_UNAUTHORIZED)
-        mazos = Deck.objects.filter(user=request.user)
+
+        serializer = DeckSerializer(data=request.data)
+        if serializer.is_valid():
+            deck_name = serializer.validated_data.get("name")
+            user_decks = Deck.objects.filter(user=request.user, name=deck_name)
+            if user_decks.exists():
+                return Response({"error": "El mazo ya existe para este usuario"}, status=status.HTTP_400_BAD_REQUEST)
+
+            serializer.save(user=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+@api_view(['GET', 'POST'])
+def cartas(request):
+    if request.method == "GET":
+        if request.user is None:
+            return Response({"message": "No se han proporcionado credenciales"}, status=status.HTTP_401_UNAUTHORIZED)
+
+        deck_name = request.query_params.get('deck_name')
+        if not deck_name:
+            return Response({"error": "El nombre del mazo no ha sido proporcionado"}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            mazo = Deck.objects.get(user=request.user, name=deck_name)
+        except Deck.DoesNotExist:
+            return Response({"error": "El mazo no existe para este usuario"}, status=status.HTTP_404_NOT_FOUND)
+
+        user_cards = Card.objects.filter(deck=mazo)
+        serializer = CardSerializer(user_cards, many=True)
+        return Response(serializer.data)
+    if request.method == "POST":
+        if request.user is None:
+            return Response({"message": "No se han proporcionado credenciales"}, status=status.HTTP_401_UNAUTHORIZED)
         serializer = CardSerializer(data=request.data)
         if serializer.is_valid():
-            print(serializer.validated_data["deck"])
-            # Ensure the user of the deck is the same as the user making the request
-            if serializer.validated_data['deck'].user != request.user:
-                return Response({"message": "Usuario no autorizado para agregar una carta a este mazo"}, status=status.HTTP_403_FORBIDDEN)
-
+            mazos = Deck.objects.filter(user=request.user)
+            try:
+                mazo = mazos.get(name=serializer.validated_data["deck"]["name"])
+            except Deck.DoesNotExist:
+                return Response({"error": "El mazo no existe"}, status=status.HTTP_404_NOT_FOUND)
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-
-
 # esto tambien hay que entender como funciona
-
 class UserRegisterView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
     serializer_class = UserSerializer
