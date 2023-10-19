@@ -16,14 +16,15 @@ class Card(models.Model):
     question_image_url = models.URLField(blank=True, null=True)
     answer_image_url = models.URLField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    reviewed_at = models.DateTimeField(auto_now=True)
-    rating = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(10)])
-    deck = models.ForeignKey('Deck', related_name='cards', on_delete=models.CASCADE)
+    reviewed_at = models.DateTimeField(auto_now=True) 
+    modified_at = models.DateTimeField(auto_now=True)    
+    rating = models.FloatField(null=True, blank=True, validators=[MinValueValidator(0), MaxValueValidator(10)])
+    #deck = models.ForeignKey('Deck', related_name='cards', on_delete=models.CASCADE, blank=True, null=True)
     def __str__(self):
         return f"{self.question}"
 
 class Deck(models.Model):
     name = models.CharField(max_length=200)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='decks', on_delete=models.CASCADE)
-    created_at = models.DateTimeField(default=timezone.now)
+    #user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='decks', on_delete=models.CASCADE, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)

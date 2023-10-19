@@ -1,0 +1,77 @@
+
+
+body{
+    display: flex;
+    flex-direction: column;
+    font-family: 'Roboto', sans-serif;
+    min-height: 100vh; ;
+}
+
+.container{
+    display: flex;
+    flex-direction: row;
+    align-items:flex-start;
+    justify-content:flex-start;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    
+}
+
+.boton_crear{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 150px;
+    background-color: #e6e6eb;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 10px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+    border:none;
+}
+.body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+.lista_decks{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    
+}
+
+.texto_cont{
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-start;
+    align-items: flex-start;
+    margin: 1rem;
+    padding: 2rem;
+    color: #e6e6eb ;
+    font-weight: 600;
+    
+    
+}
+
+.texto_cont h1{
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 900;
+    padding-left: 5.2rem;
+}
+
+.texto_cont h2{
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 900;
+    padding-left:5.2rem ;
+}
+
