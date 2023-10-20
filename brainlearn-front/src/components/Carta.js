@@ -2,8 +2,9 @@ import React from 'react'
 import { useState } from 'react'
 import EditCartaDialog from './EditCartaDialog';
 import { AiFillDelete} from "react-icons/ai";
+import './Carta.css';
 
-export default function Carta({res, pre,imgRespuesta, imgPregunta}) {
+export default function Carta({res, pre,imgRespuesta, imgPregunta,id}) {
   const [flip, setFlip] = useState(false);
   const [respuesta, setRespuesta] = useState(res);
   const [pregunta, setPregunta] = useState(pre);

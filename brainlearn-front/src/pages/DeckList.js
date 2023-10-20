@@ -1,46 +1,90 @@
 import Mazo from '../components/Mazo';
 import './DeckList.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MazoCrearDialog from '../components/MazoCrearDialog';
 import NavBar from '../components/Navbar';
+import axios from 'axios';
 
 
 
 
 function DeckList() {
     const[decks, setDecks] = useState(JSON.parse(localStorage.getItem('decks')) || []);
-    console.log(decks);
-    const agregarMazo = (deck) => {
-        const decksActualizados = [deck, ...decks];
-        setDecks(decksActualizados);
-        localStorage.setItem('decks', JSON.stringify(decksActualizados));
-    }
-
-    const eliminarMazo = id => {
-        const decksActualizados = decks.filter(deck => deck.id !== id);
-        setDecks(decksActualizados);
-        localStorage.setItem('decks', JSON.stringify(decksActualizados));
-    };
-
-    const editarMazo = (deck) => {
-        const decksActualizados = decks.map((deckActual) => {
-            if (deckActual.id === deck.id) {
-                return deck;
+    useEffect(() => {
+        try{
+            const obtenerDecks = async () => {
+                const res = await axios.get('http://localhost:8000/deckList/');
+                const decks = res.data;
+                setDecks(decks);
+                
             }
-            return deckActual;
-        });
-        setDecks(decksActualizados);
-        localStorage.setItem('decks', JSON.stringify(decksActualizados));
+            obtenerDecks();
+        }catch(error){
+            console.log(error);
+        }
+
+    }, [decks]);
+
+    console.log(decks);
+    const agregarMazo = async (deck) => {
+        
+        //axios post
+        try{
+            const res = await axios.post('http://localhost:8000/deckList/', deck);
+            console.log(res);
+            const decksActualizados = [deck, ...decks];
+            setDecks(decksActualizados);
+
+        }catch(error){
+            console.log(error);
+        }
     };
+
+    const eliminarMazo = async id => {
+        try {
+          // Envía la petición DELETE
+          await axios.delete(`http://localhost:8000/deckList/${id}`);
+          // Obtiene la lista actualizada de mazos desde la base de datos
+          const nuevaListaDeMazos = await axios.get('http://localhost:8000/deckList');
+    
+          // Actualiza el estado local con la nueva lista
+          setDecks(nuevaListaDeMazos.data);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      
+
+      const editarMazo = async (deck) => {
+        try {
+            // Envía la petición PUT al servidor para actualizar el mazo
+            const response = await axios.put(`http://localhost:8000/deckList/${deck.id}`, deck);
+    
+            // Si la actualización es exitosa, actualiza el estado local
+            if (response.status === 200) {
+                const decksActualizados = decks.map((deckActual) => {
+                    if (deckActual.id === deck.id) {
+                        return deck;
+                    }
+                    return deckActual;
+                });
+                setDecks(decksActualizados);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    
+
 
 
     return (
         <>
             <NavBar/>
-                <div className="texto_cont">
-                    <h1 className='textoC'>¡Bienvenido!</h1>
-                    <h2 className='textoC'>Aqui podras crear tus mazos</h2>
-                </div>
+            <div className="texto_cont">
+                <h1 className='textoC'>¡Bienvenido!</h1>
+                <h2 className='textoC'>Aqui podras crear tus mazos</h2>
+            </div>
             <div className="body">
             
                 <div className="container" >

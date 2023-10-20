@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import SignUp from './pages/SingUp';
 import DeckList from './pages/DeckList';
 import ListaCartas from './pages/ListaCartas';
+import Memo from './pages/memo';
 
 function App() { 
 
@@ -17,6 +18,7 @@ function App() {
         <Route path="/signup" element={<SignUp/>}/>
         <Route path="/deckList" element={<DeckList/>}/>
         <Route path="/listaCartas" element={<ListaCartas/>}/>
+        <Route path="/memo" element={<Memo/>}/>
       </Routes>
     </BrowserRouter>
 

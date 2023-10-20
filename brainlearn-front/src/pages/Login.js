@@ -56,7 +56,7 @@ function Login() {
         setAlertVariant('success');
         setAlertMessage(res.data.message);
         setTimeout(() => {
-          navigate('/');
+          navigate('/deckList');
         }, 0.5);
       }
       
