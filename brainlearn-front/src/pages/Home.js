@@ -13,7 +13,8 @@ function Home() {
 
   const handleLogout = () => {
     // Borra el token de autenticación almacenado en localStorage
-    localStorage.removeItem('token');
+    localStorage.removeItem('access');
+    localStorage.removeItem('refresh');
 
     // Redirige al usuario a la página de inicio de sesión
     navigate('/login');
@@ -24,7 +25,7 @@ function Home() {
     waveElement.style.transform = 'rotate(180deg)';
     waveElement.style.transition = '0.3s';
     // Comprobar si el usuario ha iniciado sesión
-    const authToken = localStorage.getItem('token');
+    const authToken = localStorage.getItem('access');
     console.log("??????????", authToken);
     if (!authToken) {
       // Si no ha iniciado sesión, redirigir a la página de inicio de sesión

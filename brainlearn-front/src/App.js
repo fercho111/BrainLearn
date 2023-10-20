@@ -2,7 +2,7 @@
 import {BrowserRouter,Navigate,Route, Routes} from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
-import SignUp from './pages/SingUp';
+import SignUp from './pages/SignUp';
 import DeckList from './pages/DeckList';
 import ListaCartas from './pages/ListaCartas';
 
