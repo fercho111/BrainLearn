@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'backend',
+    'rest_framework_simplejwt.token_blacklist',
 ]
 
 TOKEN_EXPIRED_AFTER_SECONDS = 900

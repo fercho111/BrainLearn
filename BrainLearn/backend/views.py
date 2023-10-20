@@ -117,11 +117,11 @@ class UserLoginView(generics.CreateAPIView):
         }, status=status.HTTP_200_OK)
 
 class UserLogoutView(generics.GenericAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
         try:
-            refresh_token = request.data['refresh_token']
+            refresh_token = request.data['refresh']
             token = RefreshToken(refresh_token)
             token.blacklist()
             return Response({"message": "Successfully logged out."}, status=status.HTTP_200_OK)
