@@ -1,64 +1,46 @@
-from .models import User, Deck, Card
+# serializers.py
 from rest_framework import serializers
-from rest_framework.renderers import JSONRenderer
+from django.contrib.auth import get_user_model
+from .models import Deck, Card
 
-class UserTokenSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['username']
 
-#(NombreDeModelo)Serializer
-#Recibe ModelSerializer porque vamos a hacer un serializador basado en un modelo
-class UserSerializer(serializers.ModelSerializer):    
+class DeckSerializer(serializers.ModelSerializer):
     class Meta:
-        #El modelo que vamos a serializar en User
-        model = User
-        #Solo serializamos los campos que queremos retornar al cliente (frontend)
-        fields = ['id', 'username', 'email']
+        model = Deck
+        fields = ['name']
 
 class CardSerializer(serializers.ModelSerializer):
+    deck = DeckSerializer()
+
     class Meta:
         model = Card
-        # fields = ['id', 'question', 'answer', 'question_image_url', 'answer_image_url', 'created_at', 'modified_at', 'deck']
-        fields = ['id', 'question', 'answer', 'question_image_url', 'answer_image_url', 'created_at', 'rating', 'modified_at']
+        fields = ['id', 'question', 'answer', 'question_image_url', 'answer_image_url',
+                  'created_at', 'reviewed_at', 'modified_at', 'rating', 'deck']
 
-class RegisterSerializer(serializers.ModelSerializer):
+# no tocar hasta saber como funciona esta vuelta
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
-        fields = ['id', 'username', 'password', 'email']
+        model = get_user_model()
+        fields = ['id', 'username', 'email', 'password']
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
-        user = super(RegisterSerializer, self).create(validated_data)
-        user.set_password(validated_data['password'])
-        user.save()
+        user = get_user_model().objects.create_user(**validated_data)
         return user
 
-class DeckSerializer(serializers.ModelSerializer):
-    #cards = CardSerializer(many=True, read_only=True)
-    class Meta:
-        model = Deck
-        fields = ['id', 'name', 'created_at', 'modified_at']        
+class LoginSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField(write_only=True)
 
-
-# Jayk:
-class TestUserSerializer(serializers.Serializer):
-    username  = serializers.CharField(max_length = 200)
-    email = serializers.EmailField()
-
-    def validate_name(self,value):                        
-        print(value)
-        return value
-    
-    def validate_email(self,value):
-        if value == '':
-            raise serializers.ValidationError('Campo vacío')
-        print(value)
-        return value
-    
     def validate(self, data):
-        print("Validate general")        
+        username = data.get('username')
+        password = data.get('password')
+
+        user = get_user_model().objects.filter(username=username).first()
+
+        if user and user.check_password(password):
+            data['user'] = user
+        else:
+            raise serializers.ValidationError("Invalid credentials")
+
         return data
-    
-    def create(self, validated_data):
-        return User.objects.create(**validated_data)

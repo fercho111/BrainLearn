@@ -1,73 +1,129 @@
-from django.contrib.auth import authenticate, login
-from django.shortcuts import get_object_or_404
-from django.utils import timezone
-from rest_framework import views, status
-from rest_framework.decorators import api_view
+# Create your views here.
+from rest_framework import generics, permissions, status
 from rest_framework.response import Response
-from .serializers import UserSerializer, CardSerializer, DeckSerializer
-from .models import User, Card, Deck
+from rest_framework.decorators import api_view
+from rest_framework_simplejwt.tokens import RefreshToken
+from .models import User, Deck, Card
+from .serializers import UserSerializer, LoginSerializer, DeckSerializer, CardSerializer
 
-# revisar vistas genericas de rest_framework para las vistas
-# ej genericAPIView, CreateAPIView
+@api_view(['GET', 'POST'])
+def mazos(request):
+    if request.method == "GET":
+        if request.user is None:
+            return Response({"message": "No se han proporcionado credenciales"}, status=status.HTTP_401_UNAUTHORIZED)
 
-class user_login(views.APIView):
-    def post(self, request):
-        username = request.data.get('username')
-        password = request.data.get('password')
-        user = authenticate(username=username,password=password)
-        if user:
-            login(request, user)
-            return Response(UserSerializer(user).data, status = status.HTTP_200_OK)
-        else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-
-class user_list(views.APIView):
-    def get(self, request):
-        users = User.objects.all()
-        serializer = UserSerializer(users, many=True)
-        return Response(serializer.data, status = status.HTTP_200_OK)
-
-class user_detail(views.APIView):
-    def get(self, request, pk):
-        user = get_object_or_404(User, pk=pk)
-        if request.user != user:
-            return Response(status=status.HTTP_403_FORBIDDEN)
-        serializer = UserSerializer(user)
+        user_decks = Deck.objects.filter(user=request.user)
+        serializer = DeckSerializer(user_decks, many=True)
         return Response(serializer.data)
+    if request.method == "POST":
+        if request.user is None:
+            return Response({"message": "No se han proporcionado credenciales"}, status=status.HTTP_401_UNAUTHORIZED)
 
-    # def post(self, request, pk):
-    #     user = get_object_or_404(User, pk=pk)
-    #     serializer = UserSerializer(data=request.data)
-    #     if serializer.is_valid():
-    #         if not user.check_password(request.data['password']):
-    #             return Response(status=status.HTTP_401_UNAUTHORIZED)
-    #         login(request, user)
-    #         return Response(serializer.data)
-    #     else:
-    #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer = DeckSerializer(data=request.data)
+        if serializer.is_valid():
+            deck_name = serializer.validated_data.get("name")
+            user_decks = Deck.objects.filter(user=request.user, name=deck_name)
+            if user_decks.exists():
+                return Response({"error": "El mazo ya existe para este usuario"}, status=status.HTTP_400_BAD_REQUEST)
 
-class deck_list(views.APIView):
-    def get(self, request):
-        decks = Deck.objects.filter(user=request.user)
-        serializer = DeckSerializer(decks, many=True)
+            serializer.save(user=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+@api_view(['GET', 'POST', 'PUT'])
+def cartas(request):
+    if request.method == "GET":
+        if request.user is None:
+            return Response({"message": "No se han proporcionado credenciales"}, status=status.HTTP_401_UNAUTHORIZED)
+        deck_name = request.query_params.get('deck_name')
+        if not deck_name:
+            return Response({"error": "El nombre del mazo no ha sido proporcionado"}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            mazo = Deck.objects.get(user=request.user, name=deck_name)
+        except Deck.DoesNotExist:
+            return Response({"error": "El mazo no existe para este usuario"}, status=status.HTTP_404_NOT_FOUND)
+
+        user_cards = Card.objects.filter(deck=mazo)
+        serializer = CardSerializer(user_cards, many=True)
         return Response(serializer.data)
+    if request.method == "POST":
+        if request.user is None:
+            return Response({"message": "No se han proporcionado credenciales"}, status=status.HTTP_401_UNAUTHORIZED)
+        serializer = CardSerializer(data=request.data)
+        if serializer.is_valid():
+            mazos = Deck.objects.filter(user=request.user)
+            try:
+                mazo = mazos.get(name=serializer.validated_data["deck"]["name"])
+            except Deck.DoesNotExist:
+                return Response({"error": "El mazo no existe"}, status=status.HTTP_404_NOT_FOUND)
+            print(mazo)
+            serializer.save(deck=mazo)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class deck_detail(views.APIView):
-    def get(self, request, pk):
-        deck = get_object_or_404(Deck, pk=pk)
-        if request.user != deck.user:
-            return Response(status=status.HTTP_403_FORBIDDEN)
-        serializer = DeckSerializer(deck)
-        return Response(serializer.data)
 
-class card_list(views.APIView):
-    def get(self, request):
-        cards = Card.objects.filter(deck__user=request.user)
-        serializer = CardSerializer(cards, many=True)
-        return Response(serializer.data)
+@api_view(['PUT'])
+def actualizar_carta(request, card_id):
+    if request.method == "PUT":
+        # Check if the user is authenticated
+        if request.user is None:
+            return Response({"message": "No se han proporcionado credenciales"}, status=status.HTTP_401_UNAUTHORIZED)
 
-class card_detail(views.APIView):
-    def get(self, request, pk):
-        card = get_object_or_404(Card, pk=pk)
-        serializer = CardSerializer(card)
-        return Response(serializer.data)
+        # Get the card with the specified ID
+        try:
+            card = Card.objects.get(id=card_id)
+        except Card.DoesNotExist:
+            return Response({"error": "La tarjeta no existe"}, status=status.HTTP_404_NOT_FOUND)
+
+        # Check if the card's deck belongs to the authenticated user
+        if card.deck.user != request.user:
+            return Response({"error": "No tiene permiso para actualizar esta tarjeta"}, status=status.HTTP_403_FORBIDDEN)
+
+        # Extract the new rating from the request data
+        new_rating = request.data.get("rating")
+
+        # Check that the new_rating is within the valid range (0 to 10)
+        if new_rating is not None and (new_rating < 0 or new_rating > 10):
+            return Response({"error": "La calificación debe estar en el rango de 0 a 10"}, status=status.HTTP_400_BAD_REQUEST)
+
+        card.rating = new_rating
+        card.save()
+
+        return Response({"message": "La tarjeta se ha actualizado correctamente"}, status=status.HTTP_200_OK)
+
+
+# esto tambien hay que entender como funciona
+class UserRegisterView(generics.CreateAPIView):
+    permission_classes = [permissions.AllowAny]
+    serializer_class = UserSerializer
+
+class UserLoginView(generics.CreateAPIView):
+    permission_classes = [permissions.AllowAny]
+    serializer_class = LoginSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        # Instead of 'user', use 'validated_data'
+        refresh = RefreshToken.for_user(serializer.validated_data['user'])
+        return Response({
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+        }, status=status.HTTP_200_OK)
+
+class UserLogoutView(generics.GenericAPIView):
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        try:
+            refresh_token = request.data['refresh']
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+            return Response({"message": "Successfully logged out."}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"message": "Invalid token."}, status=status.HTTP_401_UNAUTHORIZED)

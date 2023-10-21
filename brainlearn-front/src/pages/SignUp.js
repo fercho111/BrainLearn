@@ -73,8 +73,8 @@ function SignUp() {
         password: values.password,
         email: values.email
       });
-      localStorage.setItem('token', res.data.token);
-      localStorage.setItem('username', res.data.username);
+      localStorage.setItem('access', res.data.access);
+      localStorage.setItem('refresh', res.data.refresh);
       setShowAlert(true);
       setAlertVariant('success');
       setAlertMessage(res.data.message);
