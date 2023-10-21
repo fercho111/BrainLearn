@@ -117,7 +117,7 @@ class UserLoginView(generics.CreateAPIView):
         }, status=status.HTTP_200_OK)
 
 class UserLogoutView(generics.GenericAPIView):
-    permission_classes = [permissions.AllowAny]
+    # permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
         try:
