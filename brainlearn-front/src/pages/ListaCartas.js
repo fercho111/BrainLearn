@@ -1,13 +1,57 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Carta from '../components/Carta';
 import CrearCartaDialog from '../components/CrearCartaDialog';
 import './ListaCartas.css';
 import NavBar from '../components/Navbar';
 import { useState } from 'react';
+import axios from 'axios';
 
 
 export default function ListaCartas() {
   const [cartas, setCartas] = useState([]);
+
+
+  const agregarCarta = async (carta) => {
+    try{
+      const res = await axios.post('http://localhost:8000/listaCartas/', carta);
+      console.log(res);
+      const cartasActualizadas = [carta, ...cartas];
+      setCartas(cartasActualizadas);
+    }catch(error){
+      console.log(error);
+    }
+  }
+
+  const eliminarCarta = async id => {
+    try {
+      // Envía la petición DELETE
+      await axios.delete(`http://localhost:8000/listaCartas/${id}`);
+      // Obtiene la lista actualizada de mazos desde la base de datos
+      const nuevaListaDeCartas = await axios.get('http://localhost:8000/listaCartas');
+
+      // Actualiza el estado local con la nueva lista
+      setCartas(nuevaListaDeCartas.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const editarCarta = async (carta) => {
+    try {
+      // Envía la petición PUT al servidor para actualizar el mazo
+      const response = await axios.put(`http://localhost:8000/listaCartas/${carta.id}`, carta);
+
+      // Obtiene la lista actualizada de mazos desde la base de datos
+      const nuevaListaDeCartas = await axios.get('http://localhost:8000/listaCartas');
+
+      // Actualiza el estado local con la nueva lista
+      setCartas(nuevaListaDeCartas.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  
 
   return (
     <div >

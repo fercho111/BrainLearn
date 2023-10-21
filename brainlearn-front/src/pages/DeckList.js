@@ -14,8 +14,7 @@ function DeckList() {
         try{
             const obtenerDecks = async () => {
                 const res = await axios.get('http://localhost:8000/deckList/');
-                const decks = res.data;
-                setDecks(decks);
+                setDecks(res.data);
                 
             }
             obtenerDecks();
@@ -23,7 +22,7 @@ function DeckList() {
             console.log(error);
         }
 
-    }, [decks]);
+    }, []);
 
     console.log(decks);
     const agregarMazo = async (deck) => {
@@ -97,7 +96,7 @@ function DeckList() {
                         titulo={deck.title}
                         imagen={deck.imagen}
                         onEliminar={eliminarMazo}
-                        onSubmit={editarMazo}
+                        onEditar={editarMazo}
                         
                         />
                     ))}
