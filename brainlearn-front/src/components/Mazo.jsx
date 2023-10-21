@@ -4,7 +4,7 @@ import MazoEditDialog from './MazoEditDialog';
 import { AiFillDelete} from "react-icons/ai";
 
 
-function Mazo({ id, id_user, titulo, imagen, onEliminar}){
+function Mazo({ id, id_user, titulo, imagen, onEliminar, onEditar}){
     const [hovered, setHovered] = useState(false);
     const [selectedImage, setSelectedImage] = useState(imagen);
     const [title, setTitle] = useState (titulo);

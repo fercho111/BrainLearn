@@ -6,18 +6,19 @@ import StudyGirl from "../images/StudyGirl.svg"
 import activeRecall from "../images/activeRecall.svg"
 import { useNavigate } from 'react-router-dom';
 import NavBar from "../components/NavbarHome";
-import http from '../http-common.js'
+import http from "../http-common"
 
 function Home() {
   const navigate = useNavigate();
 
-
   const handleLogout = () => {
+    // Get the refresh token from localStorage
     const access = localStorage.getItem('access');
     const refresh = localStorage.getItem('refresh');
   
+    // Send a POST request using the configured Axios instance
     http.post('/logout/', {
-      refresh: refresh
+      'refresh': refresh
     }, {
       headers: {
         'Authorization': `Bearer ${access}`,
@@ -36,13 +37,14 @@ function Home() {
         console.error('Network error during logout:', error);
       });
   };
+  
 
   useEffect(() => {
     const waveElement = document.getElementById('wave-footer');
     waveElement.style.transform = 'rotate(180deg)';
     waveElement.style.transition = '0.3s';
     // Comprobar si el usuario ha iniciado sesión
-    const authToken = localStorage.getItem('access');
+    const authToken = localStorage.getItem('token');
     console.log("??????????", authToken);
     if (!authToken) {
       // Si no ha iniciado sesión, redirigir a la página de inicio de sesión

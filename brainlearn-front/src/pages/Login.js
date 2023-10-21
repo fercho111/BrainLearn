@@ -43,19 +43,20 @@ function Login() {
     // console.log(values);
 
     try {
+      
       const res = await axios.post('http://localhost:8000/login/', {
         username: values.username,
         password: values.password
       });
       console.log(res.data);
       if(res.status === 200 || res.status === 201) {
-        localStorage.setItem('access', res.data.access);
-        localStorage.setItem('refresh', res.data.refresh);
+        localStorage.setItem('token', res.data.token);
+        localStorage.setItem('username', res.data.username);
         setShowAlert(true);
         setAlertVariant('success');
         setAlertMessage(res.data.message);
         setTimeout(() => {
-          navigate('/');
+          navigate('/deckList');
         }, 0.5);
       }
       

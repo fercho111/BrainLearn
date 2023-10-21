@@ -15,7 +15,8 @@ const Login = () => {
         username,
         password,
       });
-      localStorage.setItem('token', res.data.token);
+      localStorage.setItem('access', res.data.access);
+      localStorage.setItem('refresh', res.data.refresh);
       // history.push('/');
     } catch (err) {
       setError(err);
