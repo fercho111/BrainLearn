@@ -57,28 +57,38 @@ function DeckList() {
         // } catch (error) {
         //   console.log(error);
         // }
-      };
+    };
       
 
       const editarMazo = async (deck) => {
-        try {
-            // Envía la petición PUT al servidor para actualizar el mazo
-            const response = await axios.put(`http://localhost:8000/deckList/${deck.id}`, deck);
-    
-            // Si la actualización es exitosa, actualiza el estado local
-            if (response.status === 200) {
-                const decksActualizados = decks.map((deckActual) => {
-                    if (deckActual.id === deck.id) {
-                        return deck;
-                    }
-                    return deckActual;
-                });
-                setDecks(decksActualizados);
+        // Actualiza el mazo en el estado local con los nuevos datos
+        const decksActualizados = decks.map((deckActual) => {
+            if (deckActual.nombre === deck.nombre) {
+                return deck;
             }
-        } catch (error) {
-            console.log(error);
-        }
-    };
+            return deckActual;
+        
+        });
+        setDecks(decksActualizados);
+
+        // try {
+        //     // Envía la petición PUT al servidor para actualizar el mazo
+        //     const response = await axios.put(`http://localhost:8000/deckList/${deck.id}`, deck);
+    
+        //     // Si la actualización es exitosa, actualiza el estado local
+        //     if (response.status === 200) {
+        //         const decksActualizados = decks.map((deckActual) => {
+        //             if (deckActual.id === deck.id) {
+        //                 return deck;
+        //             }
+        //             return deckActual;
+        //         });
+        //         setDecks(decksActualizados);
+        //     }
+        // } catch (error) {
+        //     console.log(error);
+        // }
+      };
     
 
 
@@ -97,9 +107,8 @@ function DeckList() {
                 <MazoCrearDialog  modal_title={"Crear Mazo"} className_icon="boton_crear mazo" submit_text="Crear" onSubmit={agregarMazo} />
                     {decks.map((deck) => (
                         <Mazo className="mazo"
-                        key={deck.id}
-                        id={deck.id}
-                        nombre={deck.nombre}
+                        key={deck.name}
+                        name={deck.name}
                         onEliminar={eliminarMazo}
                         onEditar={editarMazo}
                         

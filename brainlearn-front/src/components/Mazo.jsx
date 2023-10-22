@@ -6,10 +6,10 @@ import { AiFillDelete} from "react-icons/ai";
 
 
 
-function Mazo({ id, nombre,imagen, onEliminar, onEditar}){
+function Mazo({ id, name,imagen, onEliminar, onEditar}){
     const [hovered, setHovered] = useState(false);
     const [selectedImage, setSelectedImage] = useState(imagen);
-    const [name, setName] = useState (nombre);
+    const [nombre, setNombre] = useState (name);
     
     const navigate = useNavigate();
 
@@ -19,11 +19,11 @@ function Mazo({ id, nombre,imagen, onEliminar, onEditar}){
 
     const handlenameChange = (newname) => {
       if(newname !== '')
-      setName(newname);
+      setNombre(newname);
     }
     
     const handleStart = () => {
-      navigate(`/deckList/${nombre}`);
+      navigate(`/deckList/${name}`);
     }
     
 
@@ -37,7 +37,7 @@ function Mazo({ id, nombre,imagen, onEliminar, onEditar}){
       >
         <button className='boton_delete_mazo' onClick={() => onEliminar(id)}><AiFillDelete/></button>
         <div className="mazo_texto">
-          <p>{name}</p>
+          <p>{nombre}</p>
           {hovered && (
             
             <div className='botones_mazo'>
