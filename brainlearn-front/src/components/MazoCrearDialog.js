@@ -51,7 +51,7 @@ function MazoCrearDialog({modal_title, className_icon,style_icon, submit_text, o
     e.preventDefault();
     if(isTitleValid){
         const deckNuevo ={
-        name: title
+        nombre: title
         }
         onSubmit(deckNuevo);
         handleClose();

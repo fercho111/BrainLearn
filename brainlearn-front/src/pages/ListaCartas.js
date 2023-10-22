@@ -5,10 +5,12 @@ import './ListaCartas.css';
 import NavBar from '../components/Navbar';
 import { useState } from 'react';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 
 export default function ListaCartas() {
   const [cartas, setCartas] = useState([]);
+  const {nombre} = useParams();
 
 
   const agregarCarta = async (carta) => {
@@ -59,7 +61,7 @@ export default function ListaCartas() {
       <div className="body">
             
                 <div className="container" >
-                    
+                <h1 className="titulo">Lista de Cartas del Mazo {nombre}</h1>
                 <CrearCartaDialog  modal_title={"Crear Carta"} className_icon="boton_crear mazo" submit_text="Crear" /* onSubmit={agregarMazo}*/ /> 
                     {cartas.map((carta) => (
                         <Carta className="carta"

@@ -26,31 +26,37 @@ function DeckList() {
 
     console.log(decks);
     const agregarMazo = async (deck) => {
-        
-        //axios post
-        try{
-            const res = await axios.post('http://localhost:8000/deckList/', deck);
-            console.log(res);
-            const decksActualizados = [deck, ...decks];
-            setDecks(decksActualizados);
+        const decksActualizados = [deck, ...decks];
+        setDecks(decksActualizados);
+    //     //axios post
+    //     try{
+    //         const res = await axios.post('http://localhost:8000/deckList/', deck);
+    //         console.log(res);
+    //         const decksActualizados = [deck, ...decks];
+    //         setDecks(decksActualizados);
 
-        }catch(error){
-            console.log(error);
-        }
+    //     }catch(error){
+    //         console.log(error);
+    //     }
+    // };
     };
 
     const eliminarMazo = async id => {
-        try {
-          // Envía la petición DELETE
-          await axios.delete(`http://localhost:8000/deckList/${id}`);
-          // Obtiene la lista actualizada de mazos desde la base de datos
-          const nuevaListaDeMazos = await axios.get('http://localhost:8000/deckList');
+        // Elimina el mazo del estado local
+        const decksActualizados = decks.filter((deck) => deck.id !== id);
+        setDecks(decksActualizados);
+
+        // try {
+        //   // Envía la petición DELETE
+        //   await axios.delete(`http://localhost:8000/deckList/${id}`);
+        //   // Obtiene la lista actualizada de mazos desde la base de datos
+        //   const nuevaListaDeMazos = await axios.get('http://localhost:8000/deckList');
     
-          // Actualiza el estado local con la nueva lista
-          setDecks(nuevaListaDeMazos.data);
-        } catch (error) {
-          console.log(error);
-        }
+        //   // Actualiza el estado local con la nueva lista
+        //   setDecks(nuevaListaDeMazos.data);
+        // } catch (error) {
+        //   console.log(error);
+        // }
       };
       
 
@@ -93,8 +99,7 @@ function DeckList() {
                         <Mazo className="mazo"
                         key={deck.id}
                         id={deck.id}
-                        titulo={deck.title}
-                        imagen={deck.imagen}
+                        nombre={deck.nombre}
                         onEliminar={eliminarMazo}
                         onEditar={editarMazo}
                         
