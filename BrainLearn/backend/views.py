@@ -25,8 +25,8 @@ def mazos(request):
         print(request.data)
         serializer = DeckSerializer(data=request.data)
         if serializer.is_valid():
-            deck_name = serializer.validated_data.get("name")
-            user_decks = Deck.objects.filter(user=request.user, name=deck_name)
+            deck_name = serializer.validated_data.get("title")
+            user_decks = Deck.objects.filter(user=request.user, title=deck_name)
             if user_decks.exists():
                 return Response({"error": "El mazo ya existe para este usuario"}, status=status.HTTP_400_BAD_REQUEST)
 

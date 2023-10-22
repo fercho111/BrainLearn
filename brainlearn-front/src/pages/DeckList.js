@@ -7,7 +7,7 @@ import axios from 'axios';
 import http from '../http-common'
 
 function DeckList() {
-    const[decks, setDecks] = useState(JSON.parse(localStorage.getItem('decks')) || []);
+    const[decks, setDecks] = useState([]);
     useEffect(() => {
         try {
             const obtenerDecks = async () => {
@@ -99,7 +99,7 @@ function DeckList() {
                         <Mazo className="mazo"
                         key={deck.id}
                         id={deck.id}
-                        titulo={deck.name}
+                        titulo={deck.title}
                         imagen={deck.imagen}
                         onEliminar={eliminarMazo}
                         onEditar={editarMazo}
