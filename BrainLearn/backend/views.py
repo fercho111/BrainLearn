@@ -14,10 +14,8 @@ def mazos(request):
     if request.method == "GET":
         if request.user is None:
             return Response({"message": "No se han proporcionado credenciales"}, status=status.HTTP_401_UNAUTHORIZED)
-
         user_decks = Deck.objects.filter(user=request.user)
         serializer = DeckSerializer(user_decks, many=True)
-        print(serializer.data)
         return Response(serializer.data)
     if request.method == "POST":
         if request.user is None:

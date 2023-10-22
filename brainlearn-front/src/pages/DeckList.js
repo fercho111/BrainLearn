@@ -7,7 +7,7 @@ import axios from 'axios';
 import http from '../http-common'
 
 function DeckList() {
-    const[decks, setDecks] = useState([]);
+    const[decks, setDecks] = useState(JSON.parse(localStorage.getItem('decks')) || []);
     useEffect(() => {
         try {
             const obtenerDecks = async () => {
@@ -21,10 +21,9 @@ function DeckList() {
                 // descomentar este setDecks tira error
                 console.log(res.data);
                 // setDecks(res.data);
-                
             }
             obtenerDecks();
-        } catch(error) {
+        } catch (error){
             console.log(error);
         }
 
@@ -34,13 +33,13 @@ function DeckList() {
     const agregarMazo = async (deck) => {
         
         //axios post
-        try {
+        try{
             const res = await axios.post('http://localhost:8000/deckList/', deck);
             console.log(res);
             const decksActualizados = [deck, ...decks];
             setDecks(decksActualizados);
 
-        } catch(error) {
+        }catch(error){
             console.log(error);
         }
     };
@@ -112,5 +111,5 @@ function DeckList() {
         </>
     );
 }
-
 export default DeckList;
+ 
