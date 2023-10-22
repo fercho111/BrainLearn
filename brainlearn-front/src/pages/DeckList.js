@@ -94,27 +94,34 @@ function DeckList() {
     return (
         <>
             <NavBar/>
-            <div className="texto_cont">
-                <h1 className='textoC'>¡Bienvenido!</h1>
-                <h2 className='textoC'>Aqui podras crear tus mazos</h2>
-            </div>
+            
             <div className="body">
             
                 <div className="container" >
-                    
-                <MazoCrearDialog  modal_title={"Crear Mazo"} className_icon="boton_crear mazo" submit_text="Crear" onSubmit={agregarMazo} />
-                    {decks.map((deck) => (
-                        <Mazo className="mazo"
-                        key={deck.id}
-                        // id={deck.id}
-                        titulo={deck.name}
-                        // imagen={deck.imagen}
-                        onEliminar={eliminarMazo}
-                        onEditar={editarMazo}
-                        
-                        />
-                    ))}
+                    <div className="row">
+                        <div className="col texto_cont">
+                            <h1 className='textoC'>¡Bienvenido!</h1>
+                            <h2 className='textoC'>Aqui podras crear tus mazos</h2>
+                        </div>
+                    </div>
+                <div className='container'>
+                    <div className="row ">
+                        <div className="col">
+                            <MazoCrearDialog  modal_title={"Crear Mazo"} className_icon="boton_crear mazo" submit_text="Crear" onSubmit={agregarMazo} />
+                                {decks.map((deck) => (
+                                <Mazo className="mazo"
+                                key={deck.id}
+                                // id={deck.id}
+                                titulo={deck.name}
+                                // imagen={deck.imagen}
+                                onEliminar={eliminarMazo}
+                                onEditar={editarMazo}
+                                />
+                            ))};
 
+                        </div>
+                        </div>
+                    </div>
                 </div>   
             </div>
         </>

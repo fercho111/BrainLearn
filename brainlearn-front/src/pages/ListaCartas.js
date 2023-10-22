@@ -5,10 +5,14 @@ import './ListaCartas.css';
 import NavBar from '../components/Navbar';
 import { useState } from 'react';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
 
 
 export default function ListaCartas() {
   const [cartas, setCartas] = useState([]);
+  const {name} = useParams();
 
 
   const agregarCarta = async (carta) => {
@@ -56,11 +60,23 @@ export default function ListaCartas() {
   return (
     <div >
       <NavBar/>
-      <div className="body">
-            
-                <div className="container" >
-                    
-                <CrearCartaDialog  modal_title={"Crear Carta"} className_icon="boton_crear mazo" submit_text="Crear" /* onSubmit={agregarMazo}*/ /> 
+      <div className="row">
+        
+        <div className="texto_cont">
+          <div>
+            <h1 className='textoC'>Mazo: {name}</h1>
+            <h2 className='textoC'>Estas son tus cartas</h2>
+        
+         </div>
+        
+        </div>
+        <div className="row mb-4 row-comenzar">
+          <Link to="/Memo" className="comenzar">Comenzar</Link>
+        </div>
+            <div className='body'>
+                <div className="container " >
+                <div className="row">
+                <CrearCartaDialog  modal_title={"Crear Carta"} className_icon="boton_crear_carta" submit_text="Crear" /* onSubmit={agregarMazo}*/ /> 
                     {cartas.map((carta) => (
                         <Carta className="carta"
                         key={carta.id}
@@ -72,9 +88,10 @@ export default function ListaCartas() {
                         
                         />
                     ))}
-
+                </div>
                 </div>   
-            </div>
+                </div>
+      </div>
     </div>
   )
 }

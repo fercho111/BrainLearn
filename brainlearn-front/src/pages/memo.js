@@ -1,5 +1,5 @@
 import React from 'react'
-import NavBar from '../components/NavbarHome'
+import NavBar from '../components/Navbar'
 import './memo.css'
 import { useState } from 'react';
 
@@ -10,8 +10,10 @@ export default function Memo() {
     }
     return (
         <>
+          <NavBar/>
           <div className='body_memo'>
-            <div className='container container_memo'>
+            
+            <div className='container_memo'>
               {verRespuesta ? 'Respuesta' : 'Pregunta'}
             </div>
     

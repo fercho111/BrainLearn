@@ -52,10 +52,10 @@ body{
     flex-direction: column;
     justify-content:flex-start;
     align-items: flex-start;
-    margin: 1rem;
-    padding: 2rem;
+    
     color: #e6e6eb ;
     font-weight: 600;
+    flex-wrap: wrap;
     
     
 }
@@ -64,13 +64,13 @@ body{
     font-size: 2rem;
     margin-bottom: 1rem;
     font-weight: 900;
-    padding-left: 5.2rem;
+    /* padding-left: 5.2rem; */
 }
 
 .texto_cont h2{
     font-size: 1.5rem;
     margin-bottom: 1rem;
     font-weight: 900;
-    padding-left:5.2rem ;
+    /* padding-left:5.2rem ; */
 }
 

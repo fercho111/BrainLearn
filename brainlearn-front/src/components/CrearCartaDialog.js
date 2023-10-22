@@ -73,9 +73,9 @@ export default function CrearCartaDialog({className_icon, style_icon, submit_tex
         e.preventDefault();
         if(isPreguntaValid && isRespuestaValid){
             const cartaNueva ={
-            id: uuidv4(),
-            imagenPregunta: selectedImagePregunta,
-            imagenRespuesta: selectedImageRespuesta,
+            // id: uuidv4(),
+            // imagenPregunta: selectedImagePregunta,
+            // imagenRespuesta: selectedImageRespuesta,
             pregunta: pregunta,
             respuesta: respuesta
             }
