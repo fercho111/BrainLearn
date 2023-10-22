@@ -1,14 +1,13 @@
 
-import {BrowserRouter,Navigate,Route, Routes} from 'react-router-dom';
-import Home from './pages/Home';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
-import SignUp from './pages/SingUp';
+import SignUp from './pages/SignUp';
+import Home from './pages/Home';
 import DeckList from './pages/DeckList';
 import ListaCartas from './pages/ListaCartas';
-import Memo from './pages/memo';
+import Memo from './pages/Memo';
 
 function App() { 
-
   return (
     <BrowserRouter>
       <Routes>
@@ -21,8 +20,6 @@ function App() {
         <Route path="/memo" element={<Memo/>}/>
       </Routes>
     </BrowserRouter>
-
-
   );
 }
 export default App;

@@ -51,8 +51,6 @@ function MazoCrearDialog({modal_title, className_icon,style_icon, submit_text, o
     e.preventDefault();
     if(isTitleValid){
         const deckNuevo ={
-        id: uuidv4(),
-        imagen: selectedImage,
         title: title
         }
         onSubmit(deckNuevo);
