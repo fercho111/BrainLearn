@@ -9,7 +9,7 @@ import axios from 'axios';
 
 
 function DeckList() {
-    const[decks, setDecks] = useState(JSON.parse(localStorage.getItem('decks')) || []);
+    const[decks, setDecks] = useState([]);
     useEffect(() => {
         try{
             const obtenerDecks = async () => {
