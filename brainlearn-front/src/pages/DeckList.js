@@ -32,14 +32,21 @@ function DeckList() {
     console.log(decks);
     const agregarMazo = async (deck) => {
         
-        //axios post
-        try{
-            const res = await axios.post('http://localhost:8000/deckList/', deck);
+        // axios post
+        try {
+            console.log(deck);
+            const access = localStorage.getItem('access');
+            const refresh = localStorage.getItem('refresh');
+            const res = await axios.post('http://localhost:8000/deckList/', deck, { 
+                headers: {
+                  'Authorization': `Bearer ${access}`,
+                }
+            });
             console.log(res);
             const decksActualizados = [deck, ...decks];
             setDecks(decksActualizados);
 
-        }catch(error){
+        } catch (error){
             console.log(error);
         }
     };
