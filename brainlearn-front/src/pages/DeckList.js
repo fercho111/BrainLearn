@@ -13,17 +13,15 @@ function DeckList() {
             const obtenerDecks = async () => {
                 const access = localStorage.getItem('access');
                 const refresh = localStorage.getItem('refresh');
-                const res = http.get('/deckList/', { 
+                const res = await http.get('/deckList/', { 
                     headers: {
                       'Authorization': `Bearer ${access}`,
                     }
                   });
-                // descomentar este setDecks tira error
-                console.log(res.data);
-                // setDecks(res.data);
+                setDecks(res.data);
             }
             obtenerDecks();
-        } catch (error){
+        } catch (error) {
             console.log(error);
         }
 
