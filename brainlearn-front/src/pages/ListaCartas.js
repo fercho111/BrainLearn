@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import Carta from '../components/Carta';
 import CrearCartaDialog from '../components/CrearCartaDialog';
 import './ListaCartas.css';
