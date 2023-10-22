@@ -27,7 +27,6 @@ function DeckList() {
 
     }, []);
 
-    console.log(decks);
     const agregarMazo = async (deck) => {
         
         // axios post
@@ -40,7 +39,6 @@ function DeckList() {
                   'Authorization': `Bearer ${access}`,
                 }
             });
-            console.log(res);
             const decksActualizados = [deck, ...decks];
             setDecks(decksActualizados);
 
@@ -52,9 +50,15 @@ function DeckList() {
     const eliminarMazo = async id => {
         try {
           // Envía la petición DELETE
+          const access = localStorage.getItem('access');
+          const refresh = localStorage.getItem('refresh');
           await axios.delete(`http://localhost:8000/deckList/${id}`);
           // Obtiene la lista actualizada de mazos desde la base de datos
-          const nuevaListaDeMazos = await axios.get('http://localhost:8000/deckList');
+          const nuevaListaDeMazos = await axios.get('http://localhost:8000/deckList', { 
+            headers: {
+              'Authorization': `Bearer ${access}`,
+            }
+        });
     
           // Actualiza el estado local con la nueva lista
           setDecks(nuevaListaDeMazos.data);
