@@ -22,8 +22,8 @@ function Mazo({ id, id_user, titulo, imagen, onEliminar, onEditar}) {
       setTitle(newTitle);
     }
 
-    const HandleStart = () => {
-      navigate("/mazo/${name}");
+    const HandleStart = (name) => {
+      navigate(`/mazo/${name}`);
     }
 
     return(
@@ -39,7 +39,7 @@ function Mazo({ id, id_user, titulo, imagen, onEliminar, onEditar}) {
           {hovered && (
             
             <div className='botones_mazo'>
-              <button className='boton_start' onClick={ HandleStart }>START</button>
+              <button className='boton_start' onClick={ () => HandleStart(titulo) }>START</button>
               <MazoEditDialog className_icon="boton_edit"  modal_title={"Editar Mazo"}onImageSelect={handleImageSelect} onTitleChange={handleTitleChange} submit_text="Editar" />
               
             </div>
