@@ -4,21 +4,27 @@ import { useEffect, useState } from 'react';
 import MazoCrearDialog from '../components/MazoCrearDialog';
 import NavBar from '../components/Navbar';
 import axios from 'axios';
-
-
-
+import http from '../http-common'
 
 function DeckList() {
     const[decks, setDecks] = useState(JSON.parse(localStorage.getItem('decks')) || []);
     useEffect(() => {
-        try{
+        try {
             const obtenerDecks = async () => {
-                const res = await axios.get('http://localhost:8000/deckList/');
-                setDecks(res.data);
+                const access = localStorage.getItem('access');
+                const refresh = localStorage.getItem('refresh');
+                const res = http.get('/deckList/', { 
+                    headers: {
+                      'Authorization': `Bearer ${access}`,
+                    }
+                  });
+                // descomentar este setDecks tira error
+                console.log(res.data);
+                // setDecks(res.data);
                 
             }
             obtenerDecks();
-        }catch(error){
+        } catch(error) {
             console.log(error);
         }
 
@@ -28,13 +34,13 @@ function DeckList() {
     const agregarMazo = async (deck) => {
         
         //axios post
-        try{
+        try {
             const res = await axios.post('http://localhost:8000/deckList/', deck);
             console.log(res);
             const decksActualizados = [deck, ...decks];
             setDecks(decksActualizados);
 
-        }catch(error){
+        } catch(error) {
             console.log(error);
         }
     };
@@ -93,7 +99,7 @@ function DeckList() {
                         <Mazo className="mazo"
                         key={deck.id}
                         id={deck.id}
-                        titulo={deck.title}
+                        titulo={deck.name}
                         imagen={deck.imagen}
                         onEliminar={eliminarMazo}
                         onEditar={editarMazo}
@@ -106,5 +112,5 @@ function DeckList() {
         </>
     );
 }
+
 export default DeckList;
- 

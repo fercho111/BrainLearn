@@ -3,7 +3,8 @@ from django.urls import path
 from .views import UserRegisterView, UserLoginView, UserLogoutView, cartas, mazos, actualizar_carta
 
 urlpatterns = [
-    path('mazos/', mazos, name='mazos'),
+    path('deckList/', mazos, name='mazos'),
+    path('mazos/', mazos, name='mazos_alt'),
     path('cartas/actualizar/<int:card_id>/', actualizar_carta, name='cartas'),
     path('cartas/', cartas, name='cartas'),
     path('register/', UserRegisterView.as_view(), name='register'),

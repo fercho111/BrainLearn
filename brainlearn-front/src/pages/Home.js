@@ -44,8 +44,7 @@ function Home() {
     waveElement.style.transform = 'rotate(180deg)';
     waveElement.style.transition = '0.3s';
     // Comprobar si el usuario ha iniciado sesión
-    const authToken = localStorage.getItem('token');
-    console.log("??????????", authToken);
+    const authToken = localStorage.getItem('access');
     if (!authToken) {
       // Si no ha iniciado sesión, redirigir a la página de inicio de sesión
       navigate('/login');
