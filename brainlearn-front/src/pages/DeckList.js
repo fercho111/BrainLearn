@@ -102,9 +102,9 @@ function DeckList() {
                     {decks.map((deck) => (
                         <Mazo className="mazo"
                         key={deck.id}
-                        id={deck.id}
-                        titulo={deck.title}
-                        imagen={deck.imagen}
+                        // id={deck.id}
+                        titulo={deck.name}
+                        // imagen={deck.imagen}
                         onEliminar={eliminarMazo}
                         onEditar={editarMazo}
                         
