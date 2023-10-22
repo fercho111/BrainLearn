@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './Mazo.css'
 import MazoEditDialog from './MazoEditDialog';
 import { AiFillDelete} from "react-icons/ai";
+import { useNavigate } from 'react-router-dom';
 
 
 function Mazo({ id, id_user, titulo, imagen, onEliminar, onEditar}){
@@ -19,6 +20,10 @@ function Mazo({ id, id_user, titulo, imagen, onEliminar, onEditar}){
       setTitle(newTitle);
     }
 
+    const HandleStart = () => {
+      const navigate = useNavigate();
+      navigate("/mazo/${name}");
+    }
     
 
 
@@ -35,7 +40,7 @@ function Mazo({ id, id_user, titulo, imagen, onEliminar, onEditar}){
           {hovered && (
             
             <div className='botones_mazo'>
-              <button className='boton_start'>START</button>
+              <button className='boton_start' onClick={ HandleStart }>START</button>
               <MazoEditDialog className_icon="boton_edit"  modal_title={"Editar Mazo"}onImageSelect={handleImageSelect} onTitleChange={handleTitleChange} submit_text="Editar" />
               
             </div>
