@@ -88,7 +88,7 @@ def actualizar_carta(request, card_id):
         new_rating = request.data.get("rating")
 
         # Check that the new_rating is within the valid range (0 to 10)
-        if new_rating is not None and (new_rating < 0 or new_rating > 10):
+        if new_rating is None or (new_rating < 0 or new_rating > 10):
             return Response({"error": "La calificación debe estar en el rango de 0 a 10"}, status=status.HTTP_400_BAD_REQUEST)
 
         card.rating = new_rating

@@ -19,6 +19,7 @@ function App() {
         <Route path="/deckList" element={<DeckList/>}/>
         <Route path="/listaCartas" element={<ListaCartas/>}/>
         <Route path="/memo" element={<Memo/>}/>
+        {/* <Route path="/deckList/:nombre" element={<ListaCartas/>}/> */}
       </Routes>
     </BrowserRouter>
 
