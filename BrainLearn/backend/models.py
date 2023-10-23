@@ -23,7 +23,7 @@ class Card(models.Model):
     rating = models.FloatField(null=True, blank=True, validators=[MinValueValidator(0), MaxValueValidator(10)])
     deck = models.ForeignKey('Deck', related_name='cards', on_delete=models.CASCADE, blank=True, null=True)
     def __str__(self):
-        return f"{self.question}"
+        return f"{self.question} {self.rating}"
 
 
 class Deck(models.Model):
