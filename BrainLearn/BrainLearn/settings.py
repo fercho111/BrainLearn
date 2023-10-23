@@ -43,8 +43,6 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
 ]
 
-TOKEN_EXPIRED_AFTER_SECONDS = 900
-
 # Sólo para producción
 CORS_ORIGIN_ALLOW_ALL = True
 

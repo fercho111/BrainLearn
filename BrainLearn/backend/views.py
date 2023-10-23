@@ -5,6 +5,7 @@ from rest_framework.decorators import api_view
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import User, Deck, Card
 from .serializers import UserSerializer, LoginSerializer, DeckSerializer, CardSerializer
+from django.utils import timezone
 
 
 
@@ -32,9 +33,7 @@ def mazos(request):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-
-@api_view(['GET', 'POST', 'PUT'])
+@api_view(['GET', 'POST'])
 def cartas(request):
     if request.method == "GET":
         if request.user is None:
@@ -68,6 +67,31 @@ def cartas(request):
 
 
 @api_view(['PUT'])
+def update_card(request, card_id):
+    if request.user is None:
+        return Response({"message": "No se han proporcionado credenciales"}, status=status.HTTP_401_UNAUTHORIZED)
+    
+    try:
+        card = Card.objects.get(pk=card_id)
+    except Card.DoesNotExist:
+        return Response({"error": "La carta no existe"}, status=status.HTTP_404_NOT_FOUND)
+
+    if request.user != card.deck.user:
+        return Response({"error": "No tienes permiso para modificar esta carta"}, status=status.HTTP_403_FORBIDDEN)
+
+    if 'question' in request.data:
+        card.question = request.data['question']
+    if 'answer' in request.data:
+        card.answer = request.data['answer']
+
+    card.modified_at = timezone.now()
+    card.save()
+    
+    return Response({"message": "Carta actualizada correctamente"}, status=status.HTTP_200_OK)
+ 
+
+
+@api_view(['PUT'])
 def actualizar_carta(request, card_id):
     if request.method == "PUT":
         # Check if the user is authenticated
@@ -83,15 +107,17 @@ def actualizar_carta(request, card_id):
         # Check if the card's deck belongs to the authenticated user
         if card.deck.user != request.user:
             return Response({"error": "No tiene permiso para actualizar esta tarjeta"}, status=status.HTTP_403_FORBIDDEN)
-
         # Extract the new rating from the request data
-        new_rating = request.data.get("rating")
-
+        try:
+            new_rating = int(request.GET.get("rating"))
+        except ValueError:
+            return Response({"error": "La calificación debe ser un número"}, status=status.HTTP_400_BAD_REQUEST)
         # Check that the new_rating is within the valid range (0 to 10)
         if new_rating is not None and (new_rating < 0 or new_rating > 10):
             return Response({"error": "La calificación debe estar en el rango de 0 a 10"}, status=status.HTTP_400_BAD_REQUEST)
 
         card.rating = new_rating
+        card.modified_at = timezone.now()
         card.save()
 
         return Response({"message": "La tarjeta se ha actualizado correctamente"}, status=status.HTTP_200_OK)
