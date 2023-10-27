@@ -31,7 +31,27 @@ def mazos(request):
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)    
+ 
+@api_view(['PUT', 'DELETE'])
+def actualizar_eliminar_mazo(request, mazo_id):
+    try:
+        mazo = Deck.objects.get(pk=mazo_id, user=request.user)
+    except Deck.DoesNotExist:
+        return Response({"error": "El mazo no existe para este usuario"}, status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == "PUT":
+        new_name = request.data.get("name")
+        if new_name:
+            mazo.name = new_name
+            mazo.save()
+            return Response({"message": "Nombre del mazo actualizado correctamente"}, status=status.HTTP_200_OK)
+        else:
+            return Response({"error": "El nuevo nombre del mazo no ha sido proporcionado"}, status=status.HTTP_400_BAD_REQUEST)
+    if request.method == "DELETE":
+        mazo.delete()
+        return Response({"message": "Mazo eliminado correctamente"}, status=status.HTTP_204_NO_CONTENT)
+
 
 @api_view(['GET', 'POST'])
 def cartas(request):
@@ -66,62 +86,47 @@ def cartas(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['PUT'])
-def update_card(request, card_id):
+@api_view(['PUT', 'DELETE'])
+def actualizar_carta(request, card_id):
     if request.user is None:
         return Response({"message": "No se han proporcionado credenciales"}, status=status.HTTP_401_UNAUTHORIZED)
-    
+        
     try:
         card = Card.objects.get(pk=card_id)
     except Card.DoesNotExist:
         return Response({"error": "La carta no existe"}, status=status.HTTP_404_NOT_FOUND)
 
     if request.user != card.deck.user:
-        return Response({"error": "No tienes permiso para modificar esta carta"}, status=status.HTTP_403_FORBIDDEN)
-
-    if 'question' in request.data:
-        card.question = request.data['question']
-    if 'answer' in request.data:
-        card.answer = request.data['answer']
-
-    card.modified_at = timezone.now()
-    card.save()
-    
-    return Response({"message": "Carta actualizada correctamente"}, status=status.HTTP_200_OK)
- 
-
-
-@api_view(['PUT'])
-def actualizar_carta(request, card_id):
+        return Response({"error": "No tienes permiso para modificar esta carta"}, status=status.HTTP_403_FORBIDDEN)    
     if request.method == "PUT":
-        # Check if the user is authenticated
-        if request.user is None:
-            return Response({"message": "No se han proporcionado credenciales"}, status=status.HTTP_401_UNAUTHORIZED)
 
-        # Get the card with the specified ID
-        try:
-            card = Card.objects.get(id=card_id)
-        except Card.DoesNotExist:
-            return Response({"error": "La tarjeta no existe"}, status=status.HTTP_404_NOT_FOUND)
+        if 'rating' in request.data:
+            try:
+                new_rating = None
+                rating_str = request.data.get("rating")  # Cambio aquí a request.data
+                if rating_str is not None:
+                    new_rating = int(rating_str)
+            except ValueError:
+                return Response({"error": "La calificación debe ser un número"}, status=status.HTTP_400_BAD_REQUEST)
+                # Check that the new_rating is within the valid range (0 to 10)
+            if new_rating is None or (new_rating < 0 or new_rating > 10):
+                return Response({"error": "La calificación debe estar en el rango de 0 a 10"}, status=status.HTTP_400_BAD_REQUEST)
+            
+            card.rating = new_rating 
+        if 'question' in request.data:
+            card.question = request.data['question']
+        if 'answer' in request.data:
+            card.answer = request.data['answer']
 
-        # Check if the card's deck belongs to the authenticated user
-        if card.deck.user != request.user:
-            return Response({"error": "No tiene permiso para actualizar esta tarjeta"}, status=status.HTTP_403_FORBIDDEN)
-        # Extract the new rating from the request data
-        try:
-            new_rating = int(request.GET.get("rating"))
-        except ValueError:
-            return Response({"error": "La calificación debe ser un número"}, status=status.HTTP_400_BAD_REQUEST)
-        # Check that the new_rating is within the valid range (0 to 10)
-        if new_rating is None or (new_rating < 0 or new_rating > 10):
-            return Response({"error": "La calificación debe estar en el rango de 0 a 10"}, status=status.HTTP_400_BAD_REQUEST)
-
-        card.rating = new_rating
         card.modified_at = timezone.now()
-        card.save()
+        card.save()    
+        return Response({"message": "Carta actualizada correctamente"}, status=status.HTTP_200_OK)
+    if request.method == "DELETE":
+        card.delete()
+        return Response({"message": "Carta eliminada correctamente"}, status=status.HTTP_204_NO_CONTENT)
 
-        return Response({"message": "La tarjeta se ha actualizado correctamente"}, status=status.HTTP_200_OK)
 
+ 
 
 # esto tambien hay que entender como funciona
 class UserRegisterView(generics.CreateAPIView):

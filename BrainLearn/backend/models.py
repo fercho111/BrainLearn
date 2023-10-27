@@ -7,13 +7,6 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 class User(AbstractUser):
     pass
 
-
-# question: pregunta
-# answer: respuesta
-# deck: {
-#     name: nombre de deck
-# }
-
 class Card(models.Model):
     question = models.CharField(max_length=200)
     answer = models.CharField(max_length=200)
