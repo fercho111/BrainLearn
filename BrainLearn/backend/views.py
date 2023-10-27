@@ -87,7 +87,7 @@ def cartas(request):
 
 
 @api_view(['PUT', 'DELETE'])
-def actualizar_carta(request, card_id):
+def actualizar_eliminar_carta(request, card_id):
     if request.user is None:
         return Response({"message": "No se han proporcionado credenciales"}, status=status.HTTP_401_UNAUTHORIZED)
         
