@@ -8,6 +8,7 @@ import http from '../http-common'
 
 function DeckList() {
     const[decks, setDecks] = useState(JSON.parse(localStorage.getItem('decks')) || []);
+
     useEffect(() => {
         try {
             const obtenerDecks = async () => {
@@ -52,15 +53,17 @@ function DeckList() {
           // Envía la petición DELETE
           const access = localStorage.getItem('access');
           const refresh = localStorage.getItem('refresh');
-          await axios.delete(`http://localhost:8000/deckList/${id}`);
+          await axios.delete(`http://localhost:8000/mazos/${id}/`, { 
+            headers: {
+              'Authorization': `Bearer ${access}`,
+            }
+          });
           // Obtiene la lista actualizada de mazos desde la base de datos
           const nuevaListaDeMazos = await axios.get('http://localhost:8000/deckList', { 
             headers: {
               'Authorization': `Bearer ${access}`,
             }
         });
-    
-          // Actualiza el estado local con la nueva lista
           setDecks(nuevaListaDeMazos.data);
         } catch (error) {
           console.log(error);
@@ -71,7 +74,12 @@ function DeckList() {
       const editarMazo = async (deck) => {
         try {
             // Envía la petición PUT al servidor para actualizar el mazo
-            const response = await axios.put(`http://localhost:8000/deckList/${deck.id}`, deck);
+            const access = localStorage.getItem('access');
+            const response = await axios.put(`http://localhost:8000/mazos/${deck.id}`, deck, { 
+                headers: {
+                  'Authorization': `Bearer ${access}`,
+                }
+            });
     
             // Si la actualización es exitosa, actualiza el estado local
             if (response.status === 200) {
@@ -89,8 +97,6 @@ function DeckList() {
     };
     
 
-
-
     return (
         <>
             <NavBar/>
@@ -104,22 +110,21 @@ function DeckList() {
                             <h2 className='textoC'>Aqui podras crear tus mazos</h2>
                         </div>
                     </div>
-                <div className='container'>
-                    <div className="row ">
-                        <div className="col">
-                            <MazoCrearDialog  modal_title={"Crear Mazo"} className_icon="boton_crear mazo" submit_text="Crear" onSubmit={agregarMazo} />
+                    <div className='container'>
+                        <div className="row ">
+                            <div className="col">
+                                <MazoCrearDialog modal_title={"Crear Mazo"} className_icon="boton_crear mazo" submit_text="Crear" onSubmit={agregarMazo} />
                                 {decks.map((deck) => (
-                                <Mazo className="mazo"
+                                <Mazo
+                                className="mazo"
                                 key={deck.id}
                                 // id={deck.id}
                                 titulo={deck.name}
                                 // imagen={deck.imagen}
-                                onEliminar={eliminarMazo}
-                                onEditar={editarMazo}
-                                />
-                            ))};
-
-                        </div>
+                                onEliminar={() => eliminarMazo(deck.id)}
+                                onEditar={() => editarMazo(deck)}
+                                />))};
+                            </div>
                         </div>
                     </div>
                 </div>   

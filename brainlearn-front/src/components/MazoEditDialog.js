@@ -6,10 +6,7 @@ import { BiEdit} from "react-icons/bi";
 import './MazoDialog.css';
 
 
- 
-
-
-function MazoEditDialog({onImageSelect, onTitleChange, modal_title, icon, className_icon,style_icon, submit_text, onSubmit}) {
+function MazoEditDialog({onImageSelect, onTitleChange, modal_title, icon, className_icon, style_icon, submit_text, onSubmit}) {
   const [show, setShow] = useState(false);
   const [selectedImage, setSelectedImage] = useState({onImageSelect});
   const [localTitle, setLocalTitle] = useState('');
@@ -17,6 +14,7 @@ function MazoEditDialog({onImageSelect, onTitleChange, modal_title, icon, classN
   const handleClose = () => {
     setShow(false);
   }
+
   const handleShow = () => {
     setShow(true);
   }
@@ -45,23 +43,21 @@ function MazoEditDialog({onImageSelect, onTitleChange, modal_title, icon, classN
     onTitleChange(localTitle);
     const deck = {
       title: localTitle,
-      imagen: selectedImage,
+      // imagen: selectedImage,
     };
     handleClose();
     onSubmit(deck);
     
   }
   
-
   return (
     
-
     <>
       <button className={className_icon} variant="primary" onClick={handleShow}
       style={style_icon}><BiEdit/></button> 
       
       
-      <Modal  animation show={show} onHide={handleClose} aria-labelledby="contained-modal-title-vcenter"centered>
+      <Modal animation show={show} onHide={handleClose} aria-labelledby="contained-modal-title-vcenter"centered>
         <Modal.Header  closeButton>
           <Modal.Title>{modal_title}</Modal.Title>
         </Modal.Header>

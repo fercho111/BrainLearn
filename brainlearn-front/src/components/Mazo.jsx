@@ -5,7 +5,7 @@ import { AiFillDelete} from "react-icons/ai";
 import { useNavigate } from 'react-router-dom';
 
 
-function Mazo({ id, id_user, titulo, imagen, onEliminar, onEditar}) {
+function Mazo({ id, titulo, imagen, onEliminar, onEditar}) {
   
     const navigate = useNavigate();
     const [hovered, setHovered] = useState(false);
@@ -22,7 +22,7 @@ function Mazo({ id, id_user, titulo, imagen, onEliminar, onEditar}) {
       setTitle(newTitle);
     }
 
-    const HandleStart = (name) => {
+    const handleStart = (name) => {
       navigate(`/mazo/${name}`);
     }
 
@@ -39,8 +39,8 @@ function Mazo({ id, id_user, titulo, imagen, onEliminar, onEditar}) {
           {hovered && (
             
             <div className='botones_mazo'>
-              <button className='boton_start' onClick={ () => HandleStart(titulo) }>START</button>
-              <MazoEditDialog className_icon="boton_edit"  modal_title={"Editar Mazo"}onImageSelect={handleImageSelect} onTitleChange={handleTitleChange} submit_text="Editar" />
+              <button className='boton_start' onClick={ () => handleStart(titulo) }>START</button>
+              <MazoEditDialog className_icon="boton_edit"  modal_title={"Editar Mazo"} onImageSelect={handleImageSelect} onEditar={onEditar} onTitleChange={handleTitleChange} submit_text="Editar" />
               
             </div>
           )}

@@ -9,6 +9,11 @@ class DeckSerializer(serializers.ModelSerializer):
         model = Deck
         fields = ['name']
 
+class DeckSerializerReturn(serializers.ModelSerializer):
+    class Meta:
+        model = Deck
+        fields = ['id', 'name']
+
 class CardSerializer(serializers.ModelSerializer):
     deck = DeckSerializer()
 

@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import User, Deck, Card
-from .serializers import UserSerializer, LoginSerializer, DeckSerializer, CardSerializer
+from .serializers import UserSerializer, LoginSerializer, DeckSerializer, DeckSerializerReturn, CardSerializer
 from django.utils import timezone
 
 
@@ -16,7 +16,7 @@ def mazos(request):
         if request.user is None:
             return Response({"message": "No se han proporcionado credenciales"}, status=status.HTTP_401_UNAUTHORIZED)
         user_decks = Deck.objects.filter(user=request.user)
-        serializer = DeckSerializer(user_decks, many=True)
+        serializer = DeckSerializerReturn(user_decks, many=True)
         return Response(serializer.data)
     if request.method == "POST":
         if request.user is None:
@@ -36,6 +36,7 @@ def mazos(request):
 @api_view(['PUT', 'DELETE'])
 def actualizar_eliminar_mazo(request, mazo_id):
     try:
+        print(request.user)
         mazo = Deck.objects.get(pk=mazo_id, user=request.user)
     except Deck.DoesNotExist:
         return Response({"error": "El mazo no existe para este usuario"}, status=status.HTTP_404_NOT_FOUND)
