@@ -15,7 +15,7 @@ function NavBar() {
             <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="navbar-nav ms-auto">
                 <li className="nav-item">
-                  <Link to="/deckList" className="nav-link">Logout</Link>
+                  <Link to="/home" className="nav-link">Logout</Link>
                 </li>
               </ul>
             </div>

@@ -54,7 +54,7 @@
     transform: rotateY(180deg);
   }
   
-  .boton_edit, .boton_delete{
+  .boton_edit_carta, .boton_delete_carta{
     position: absolute;
     top: 0;
     right: 0;
@@ -65,7 +65,7 @@
     cursor: pointer;
   }
   
-  .boton_delete {
+  .boton_delete_carta {
     top: 60px; /* Ajusta la posición vertical según sea necesario */
     background-color: rgb(196, 68, 89);
   }

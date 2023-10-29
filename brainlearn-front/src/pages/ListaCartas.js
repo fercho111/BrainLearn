@@ -58,9 +58,9 @@ export default function ListaCartas() {
   
 
   return (
-    <div >
+    < >
       <NavBar/>
-      <div className="row">
+      <div className="row row-listaCarta">
         
         <div className="texto_cont">
           <div>
@@ -92,6 +92,6 @@ export default function ListaCartas() {
                 </div>   
                 </div>
       </div>
-    </div>
+    </>
   )
 }

@@ -10,7 +10,13 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    flex:1;
 
+
+}
+
+.row-listaCarta{
+    flex:1;
 }
 
 .body_cartas{
@@ -108,4 +114,8 @@ body{
     justify-content: center;
     align-items: center;
     
+}
+
+#root{
+    min-height: 100vh;
 }
