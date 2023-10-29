@@ -6,15 +6,7 @@ body{
     min-height: 100vh; ;
 }
 
-.container{
-    display: flex;
-    flex-direction: row;
-    align-items:flex-start;
-    justify-content:flex-start;
-    flex-wrap: wrap;
-    gap: 1.25rem;
-    
-}
+
 
 .boton_crear{
     display: flex;
@@ -32,9 +24,11 @@ body{
 }
 .body{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
+    background-color: #e6e6eb;
+    flex:1;
 
 }
 .lista_decks{
@@ -47,30 +41,56 @@ body{
     
 }
 
-.texto_cont{
-    display: flex;
+.texto_cont_Deck{
+    display:flex;
     flex-direction: column;
-    justify-content:flex-start;
+    justify-content: flex-start;
     align-items: flex-start;
-    
     color: #e6e6eb ;
     font-weight: 600;
     flex-wrap: wrap;
-    
+    margin-top: 15px;
+    padding-top: 20px;
+
     
 }
 
-.texto_cont h1{
+.texto_cont_Deck h1{
     font-size: 2rem;
     margin-bottom: 1rem;
     font-weight: 900;
     /* padding-left: 5.2rem; */
 }
 
-.texto_cont h2{
+.texto_cont_Deck h2{
     font-size: 1.5rem;
     margin-bottom: 1rem;
     font-weight: 900;
     /* padding-left:5.2rem ; */
 }
+.texto_cont_Deck h4{
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 900;
+    /* padding-left:5.2rem ; */
+}
+.wave-decklist{
+    width: 100vw;
+    
+}
 
+#root{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container{
+    display: flex;
+    flex-direction: row;
+    align-items:flex-start;
+    justify-content:flex-start;
+    flex-wrap: wrap;
+    gap: 2rem;
+    
+}

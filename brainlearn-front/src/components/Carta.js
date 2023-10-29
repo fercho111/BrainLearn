@@ -35,13 +35,13 @@ export default function Carta({res, pre,imgRespuesta, imgPregunta,id}) {
       }}
     >
     <div className='botones-carta'>
-      <EditCartaDialog          className_icon="boton_edit"  modal_title=   {"Editar Carta"}onImagePregunta=  {handleImagePregunta} 
+      <EditCartaDialog          className_icon="boton_edit_carta"  modal_title=   {"Editar Carta"}onImagePregunta=  {handleImagePregunta} 
       onImageRespuesta={handleImageRespuesta} 
       onPregunta={handlePregunta}
       onRespuesta={handleRespuesta}
       submit_text="Editar" 
       /> 
-      <button className='boton_delete' ><AiFillDelete/></button>
+      <button className='boton_delete_carta' ><AiFillDelete/></button>
     </div>
     {flip ?(
       <div className="back">
