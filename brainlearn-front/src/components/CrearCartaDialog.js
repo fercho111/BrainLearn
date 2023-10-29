@@ -7,7 +7,7 @@ import './MazoDialog.css';
 import { v4 as uuidv4 } from 'uuid';
 
 
-export default function CrearCartaDialog({className_icon, style_icon, submit_text, onSubmit, modal_title}) {
+export default function CrearCartaDialog({className_icon, style_icon, submit_text, onSubmit, modal_title, deck_name}) {
 
     const [show, setShow] = useState(false);
     const [selectedImagePregunta, setSelectedImagePregunta] = useState('');
@@ -76,8 +76,11 @@ export default function CrearCartaDialog({className_icon, style_icon, submit_tex
             // id: uuidv4(),
             // imagenPregunta: selectedImagePregunta,
             // imagenRespuesta: selectedImageRespuesta,
-            pregunta: pregunta,
-            respuesta: respuesta
+            question: pregunta,
+            answer: respuesta, 
+            deck: {
+              name: deck_name,
+            },
             }
             onSubmit(cartaNueva);
             handleClose();

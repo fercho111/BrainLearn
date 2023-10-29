@@ -71,7 +71,7 @@ function DeckList() {
     };
       
 
-      const editarMazo = async (deck) => {
+    const editarMazo = async (deck) => {
         try {
             // Envía la petición PUT al servidor para actualizar el mazo
             const access = localStorage.getItem('access');

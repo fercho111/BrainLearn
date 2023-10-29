@@ -16,8 +16,12 @@ export default function ListaCartas() {
 
 
   const agregarCarta = async (carta) => {
-    try{
-      const res = await axios.post('http://localhost:8000/listaCartas/', carta);
+    try {
+      const access = localStorage.getItem('access');
+      const res = await axios.post('http://localhost:8000/listaCartas/', carta, {
+        headers: {
+        'Authorization': `Bearer ${access}`,
+      }});
       console.log(res);
       const cartasActualizadas = [carta, ...cartas];
       setCartas(cartasActualizadas);
@@ -55,10 +59,9 @@ export default function ListaCartas() {
     }
   }
 
-  
 
   return (
-    < >
+    <>
       <NavBar/>
       <div className="row row-listaCarta">
         
@@ -76,7 +79,7 @@ export default function ListaCartas() {
             <div className='body'>
                 <div className="container " >
                 <div className="row">
-                <CrearCartaDialog  modal_title={"Crear Carta"} className_icon="boton_crear_carta" submit_text="Crear" /* onSubmit={agregarMazo}*/ /> 
+                <CrearCartaDialog  modal_title={"Crear Carta"} className_icon="boton_crear_carta" submit_text="Crear" onSubmit={agregarCarta} deck_name={name} /> 
                     {cartas.map((carta) => (
                         <Carta className="carta"
                         key={carta.id}

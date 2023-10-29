@@ -11,6 +11,7 @@ urlpatterns = [
 
     # Cartas
     path('cartas/', cartas, name='cartas'),
+    path('listaCartas/', cartas, name='crear_cartas'),
     path('cartas/<int:card_id>/', actualizar_eliminar_carta, name='cartas'),    
 
     # Usuarios

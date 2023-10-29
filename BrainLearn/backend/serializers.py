@@ -14,6 +14,14 @@ class DeckSerializerReturn(serializers.ModelSerializer):
         model = Deck
         fields = ['id', 'name']
 
+
+class CardSerializerReceive(serializers.ModelSerializer):
+    deck = DeckSerializer()
+
+    class Meta:
+        model = Card
+        fields = ['question', 'answer', 'deck']
+
 class CardSerializer(serializers.ModelSerializer):
     deck = DeckSerializer()
 
