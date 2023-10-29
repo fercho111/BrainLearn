@@ -97,6 +97,7 @@ export default function ListaCartas() {
                 <div className="container " >
                 <div className="row">
                 <CrearCartaDialog  modal_title={"Crear Carta"} className_icon="boton_crear_carta" submit_text="Crear" onSubmit={agregarCarta} deck_name={name} /> 
+                <Carta className="carta" res={"answer"} pre={"question"}/>
                     {cartas.map((carta) => (
                         <Carta className="carta"
                         key={carta.id}

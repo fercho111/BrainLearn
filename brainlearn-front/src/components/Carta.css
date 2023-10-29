@@ -3,8 +3,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 250px;
-    height: 350px;
+    width: 160px;
+    height: 200px;
     background-color: #e6e6eb;
     padding: 20px;
     border-radius: 10px;
@@ -15,8 +15,8 @@
 
 .card {
     transform-style: preserve-3d;
-    width: 200px;
-    height: 300px;
+    width: 160px;
+    height: 200px;
     position: relative;
     transition: 150ms;
     background-size: cover;
@@ -44,6 +44,11 @@
     align-items: center;
     border-radius: 10px;
     font-size: 18px;
+    transform:translateZ(0);
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
   
   .card .front {
@@ -54,23 +59,36 @@
     transform: rotateY(180deg);
   }
   
-  .boton_edit_carta, .boton_delete_carta{
+  .boton_delete_carta{
     position: absolute;
     top: 0;
     right: 0;
     border: none;
     color: #e6e6eb;
     border-radius: 10px;
-    padding: 8px 16px;
+    padding: 10px;
     cursor: pointer;
-  }
-  
-  .boton_delete_carta {
-    top: 60px; /* Ajusta la posición vertical según sea necesario */
     background-color: rgb(196, 68, 89);
+    
   }
 
-  .boton_edit {
+  .boton_edit_carta{
+    position: absolute;
+    top: 0;
+    right: inherit;
+    border: none;
+    color: #e6e6eb;
+    border-radius: 10px;
+    padding:10px;
+    cursor: pointer;
+    background-color: rgba(68,185,196,1);
+
+    
+  }
+  
+  
+
+  .boton_edit_carta {
     background-color: rgba(68,185,196,1);
   }
   
@@ -78,4 +96,17 @@
     background-color: rgba(68,185,196,0.5);
   }
   
-  
+  .boton_flip{
+    position: absolute;
+    bottom: 0;
+    border: none;
+    color: #e6e6eb;
+    border-radius: 10px;
+    padding: 8px 16px;
+    cursor: pointer;
+    background-color: #B6C61A;
+  }
+
+  .boton_flip:hover{
+    background-color: rgba(182,198,26,0.5);
+  }
