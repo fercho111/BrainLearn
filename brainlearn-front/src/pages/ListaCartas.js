@@ -80,7 +80,7 @@ export default function ListaCartas() {
   return (
     <>
       <NavBar/>
-      <div className="row row-listaCarta">
+      <div className=" row-listaCarta">
         
         <div className="texto_cont">
           <div>
@@ -88,11 +88,12 @@ export default function ListaCartas() {
             <h2 className='textoC'>Estas son tus cartas</h2>
         
          </div>
-        
-        </div>
-        <div className="row mb-4 row-comenzar">
+      </div>
+      </div>
+        <div className=" row-comenzar">
           <Link to="/Memo" className="comenzar">Comenzar</Link>
         </div>
+        
             <div className='body'>
                 <div className="container " >
                 <div className="row">
@@ -111,7 +112,7 @@ export default function ListaCartas() {
                     ))}
                 </div>
                 </div>   
-                </div>
+                
       </div>
     </>
   )
