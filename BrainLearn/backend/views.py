@@ -67,8 +67,15 @@ def cartas(request):
         except Deck.DoesNotExist:
             return Response({"error": "El mazo no existe para este usuario"}, status=status.HTTP_404_NOT_FOUND)
 
-        user_cards = Card.objects.filter(deck=mazo)
-        serializer = CardSerializer(user_cards, many=True)
+        user_cards = Card.objects.filter(deck=mazo).order_by('rating')
+
+        cards_to_show = user_cards[:5]
+
+        for card in user_cards[5:]:
+            card.rating = max(0, card.rating - 1)
+            card.save()
+
+        serializer = CardSerializer(cards_to_show, many=True)
         return Response(serializer.data)
     if request.method == "POST":
         if request.user is None:
