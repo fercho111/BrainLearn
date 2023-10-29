@@ -6,7 +6,7 @@ import { BiEdit} from "react-icons/bi";
 import './MazoDialog.css';
 
 
-function MazoEditDialog({onImageSelect, onTitleChange, modal_title, icon, className_icon, style_icon, submit_text, onSubmit}) {
+function MazoEditDialog({onImageSelect, onTitleChange, modal_title, id, icon, className_icon, style_icon, submit_text, onSubmit}) {
   const [show, setShow] = useState(false);
   const [selectedImage, setSelectedImage] = useState({onImageSelect});
   const [localTitle, setLocalTitle] = useState('');
@@ -39,14 +39,14 @@ function MazoEditDialog({onImageSelect, onTitleChange, modal_title, icon, classN
 
   const handleSaveChanges = (e) => {
     e.preventDefault();
-    // onImageSelect(selectedImage);
     onTitleChange(localTitle);
-    const deck = {
-      title: localTitle,
+    const deck_nuevo = {
+      id: id,
+      name: localTitle,
       // imagen: selectedImage,
     };
     handleClose();
-    onSubmit(deck);
+    onSubmit(deck_nuevo);
     
   }
   

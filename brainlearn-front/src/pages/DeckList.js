@@ -68,13 +68,14 @@ function DeckList() {
         } catch (error) {
           console.log(error);
         }
-      };
+    };
       
 
       const editarMazo = async (deck) => {
         try {
             // Envía la petición PUT al servidor para actualizar el mazo
             const access = localStorage.getItem('access');
+            console.log(deck)
             const response = await axios.put(`http://localhost:8000/mazos/${deck.id}/`, deck, { 
                 headers: {
                   'Authorization': `Bearer ${access}`,
@@ -118,11 +119,11 @@ function DeckList() {
                                 <Mazo
                                 className="mazo"
                                 key={deck.id}
-                                // id={deck.id}
+                                id={deck.id}
                                 titulo={deck.name}
                                 // imagen={deck.imagen}
                                 onEliminar={() => eliminarMazo(deck.id)}
-                                onEditar={() => editarMazo(deck)}
+                                onEditar={editarMazo}
                                 />))};
                             </div>
                         </div>

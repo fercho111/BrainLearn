@@ -43,8 +43,9 @@ function Mazo({ id, titulo, imagen, onEliminar, onEditar}) {
               <MazoEditDialog 
               className_icon="boton_edit"  
               modal_title={"Editar Mazo"} 
+              id={id}
               onImageSelect={handleImageSelect} 
-              onSubmit={() => onEditar({ id, titulo: title })}
+              onSubmit={ onEditar }
               onTitleChange={handleTitleChange} 
               submit_text="Editar" 
               />

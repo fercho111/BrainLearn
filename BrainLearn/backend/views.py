@@ -36,7 +36,6 @@ def mazos(request):
 @api_view(['PUT', 'DELETE'])
 def actualizar_eliminar_mazo(request, mazo_id):
     try:
-        print(request.user)
         mazo = Deck.objects.get(pk=mazo_id, user=request.user)
     except Deck.DoesNotExist:
         return Response({"error": "El mazo no existe para este usuario"}, status=status.HTTP_404_NOT_FOUND)
