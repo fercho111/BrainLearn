@@ -39,7 +39,7 @@ function MazoEditDialog({onImageSelect, onTitleChange, modal_title, icon, classN
 
   const handleSaveChanges = (e) => {
     e.preventDefault();
-    onImageSelect(selectedImage);
+    // onImageSelect(selectedImage);
     onTitleChange(localTitle);
     const deck = {
       title: localTitle,
