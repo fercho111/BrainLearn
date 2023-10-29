@@ -7,13 +7,30 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-
+import http from '../http-common'
 
 
 export default function ListaCartas() {
   const [cartas, setCartas] = useState([]);
   const {name} = useParams();
 
+  useEffect(() => {
+    try {
+        const obtenerCartas = async () => {
+            const access = localStorage.getItem('access');
+            const refresh = localStorage.getItem('refresh');
+            const res = await http.get(`/cartas/?deck_name=${name}`, { 
+                headers: {
+                  'Authorization': `Bearer ${access}`,
+                }
+              });
+            setCartas(res.data);
+        }
+        obtenerCartas();
+    } catch (error) {
+        console.log(error);
+    }
+  }, []);
 
   const agregarCarta = async (carta) => {
     try {
@@ -84,8 +101,8 @@ export default function ListaCartas() {
                         <Carta className="carta"
                         key={carta.id}
                         id={carta.id}
-                        res={carta.title}
-                        pre={carta.imagen}
+                        res={carta.answer}
+                        pre={carta.question}
                         // onEliminar={eliminarMazo}
                         // onSubmit={editarMazo}
                         
