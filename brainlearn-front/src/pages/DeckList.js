@@ -75,7 +75,7 @@ function DeckList() {
         try {
             // Envía la petición PUT al servidor para actualizar el mazo
             const access = localStorage.getItem('access');
-            const response = await axios.put(`http://localhost:8000/mazos/${deck.id}`, deck, { 
+            const response = await axios.put(`http://localhost:8000/mazos/${deck.id}/`, deck, { 
                 headers: {
                   'Authorization': `Bearer ${access}`,
                 }
