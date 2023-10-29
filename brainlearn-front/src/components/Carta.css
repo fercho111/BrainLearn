@@ -1,81 +1,80 @@
 .card{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 250px;
-    height: 350px;
-    background-color: #e6e6eb;
-    padding: 20px;
-    border-radius: 10px;
-    margin: 10px;
-    box-shadow: 0px 0px 10px 0px rgba(0,    0,0.75);
-    position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 250px;
+  height: 350px;
+  background-color: #e6e6eb;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 10px;
+  box-shadow: 0px 0px 10px 0px rgba(0,    0,0.75);
+  position: relative;
 }
 
 .card {
-    transform-style: preserve-3d;
-    width: 200px;
-    height: 300px;
-    position: relative;
-    transition: 150ms;
-    background-size: cover;
-    transform: perspective(1000px) rotateY(var(--rotate-y, 0deg))
-    translateY(var(--translate-y, 0px));
-  }
+  transform-style: preserve-3d;
+  width: 200px;
+  height: 300px;
+  position: relative;
+  transition: 150ms;
+  background-size: cover;
+  transform: perspective(1000px) rotateY(var(--rotate-y, 0deg))
+  translateY(var(--translate-y, 0px));
+}
 
-  .card:hoover{
-    --translate-y: -2px;
-    box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.5);
-  }
-  
-  .card.flip {
-    --rotate-y: 180deg;
-  }
-  
-  .front, .back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    padding: 5px;
-    backface-visibility: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
-    font-size: 18px;
-  }
-  
-  .card .front {
-    left:0;
-  }
-  
-  .card .back {
-    transform: rotateY(180deg);
-  }
-  
-  .boton_edit, .boton_delete{
-    position: absolute;
-    top: 0;
-    right: 0;
-    border: none;
-    color: #e6e6eb;
-    border-radius: 10px;
-    padding: 8px 16px;
-    cursor: pointer;
-  }
-  
-  .boton_delete {
-    top: 60px; /* Ajusta la posición vertical según sea necesario */
-    background-color: rgb(196, 68, 89);
-  }
+.card:hoover{
+  --translate-y: -2px;
+  box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.5);
+}
 
-  .boton_edit {
-    background-color: rgba(68,185,196,1);
-  }
-  
-  .boton_delete:hover, .botones-carta:hover {
-    background-color: rgba(68,185,196,0.5);
-  }
-  
-  
+.card.flip {
+  --rotate-y: 180deg;
+}
+
+.front, .back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding: 5px;
+  backface-visibility: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  font-size: 18px;
+}
+
+.card .front {
+  left:0;
+}
+
+.card .back {
+  transform: rotateY(180deg);
+}
+
+.boton_edit, .boton_delete{
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: none;
+  color: #e6e6eb;
+  border-radius: 10px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.boton_delete {
+  top: 60px; /* Ajusta la posición vertical según sea necesario */
+  background-color: rgb(196, 68, 89);
+}
+
+.boton_edit {
+  background-color: rgba(68,185,196,1);
+}
+
+.boton_delete:hover, .botones-carta:hover {
+  background-color: rgba(68,185,196,0.5);
+}
+

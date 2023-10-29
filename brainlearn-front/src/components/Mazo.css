@@ -47,7 +47,7 @@
     cursor: pointer;
 }
 
-.boton_edit{
+.boton_edit_mazo{
     border: none;
     color: #e6e6eb;
     background-color: rgb(68,185,196,1);
@@ -58,7 +58,7 @@
     background-color: rgb(68,185,196,0.5);
     cursor: pointer;
 }
-.boton_delete{
+.boton_delete_mazo{
     border: none;
     color: #e6e6eb;
     background-color: rgb(196, 68, 89);

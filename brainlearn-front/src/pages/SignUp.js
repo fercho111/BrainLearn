@@ -90,7 +90,7 @@ function SignUp() {
 
       setTimeout(() => {
         setShowAlert(false);
-      }, 3000);
+      }, 1000);
     }
   }
   const onChange = (e) => {

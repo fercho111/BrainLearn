@@ -1,0 +1,64 @@
+.container_memo{
+    margin: 10px;
+    padding: 10px;
+    width: 50vw;
+    height: 50vh;
+    background-color: #e6e6eb;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+    
+}
+
+.body_memo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 10px;
+    padding: 10px;
+    width: 100vw;
+    height: 100vh;
+    gap:10px;
+
+}
+
+.ranking_memo{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 10px;
+    padding: 10px;
+    width: 100vw;
+    gap: 1rem;
+}
+
+.boton_ranking{
+    /* circulos */
+    width: 50px; /* Ajusta el tamaño del círculo según tus preferencias */
+  height: 50px; /* Igual que el ancho para hacer un círculo perfecto */
+  border-radius: 50%; /* Hace que el div tenga forma de círculo */
+  cursor: pointer; /* Cambia el cursor al pasar sobre el círculo */
+  border-color: transparent;
+}
+
+.boton{
+    /* boton rojo claro redondeado sin bordes */
+    background-color: #e6e6eb;
+    border-radius: 10px;
+    border-color: transparent;
+    padding: 10px;
+    margin: 10px;
+    cursor: pointer;
+
+}

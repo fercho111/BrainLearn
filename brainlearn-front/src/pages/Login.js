@@ -43,6 +43,7 @@ function Login() {
     // console.log(values);
 
     try {
+      
       const res = await axios.post('http://localhost:8000/login/', {
         username: values.username,
         password: values.password
@@ -55,7 +56,7 @@ function Login() {
         setAlertVariant('success');
         setAlertMessage(res.data.message);
         setTimeout(() => {
-          navigate('/');
+          navigate('/deckList');
         }, 0.5);
       }
       

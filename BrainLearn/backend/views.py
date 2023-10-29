@@ -6,19 +6,20 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .models import User, Deck, Card
 from .serializers import UserSerializer, LoginSerializer, DeckSerializer, CardSerializer
 
+
+
+# pendientes los delete
 @api_view(['GET', 'POST'])
 def mazos(request):
     if request.method == "GET":
         if request.user is None:
             return Response({"message": "No se han proporcionado credenciales"}, status=status.HTTP_401_UNAUTHORIZED)
-
         user_decks = Deck.objects.filter(user=request.user)
         serializer = DeckSerializer(user_decks, many=True)
         return Response(serializer.data)
     if request.method == "POST":
         if request.user is None:
             return Response({"message": "No se han proporcionado credenciales"}, status=status.HTTP_401_UNAUTHORIZED)
-
         serializer = DeckSerializer(data=request.data)
         if serializer.is_valid():
             deck_name = serializer.validated_data.get("name")

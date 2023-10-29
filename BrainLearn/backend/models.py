@@ -8,11 +8,15 @@ class User(AbstractUser):
     pass
 
 
+# question: pregunta
+# answer: respuesta
+# deck: {
+#     name: nombre de deck
+# }
+
 class Card(models.Model):
     question = models.CharField(max_length=200)
     answer = models.CharField(max_length=200)
-    question_image_url = models.URLField(blank=True, null=True)
-    answer_image_url = models.URLField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     reviewed_at = models.DateTimeField(auto_now=True) 
     modified_at = models.DateTimeField(auto_now=True)    
@@ -20,6 +24,7 @@ class Card(models.Model):
     deck = models.ForeignKey('Deck', related_name='cards', on_delete=models.CASCADE, blank=True, null=True)
     def __str__(self):
         return f"{self.question}"
+
 
 class Deck(models.Model):
     name = models.CharField(max_length=200)

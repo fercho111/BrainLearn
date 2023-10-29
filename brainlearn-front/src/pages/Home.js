@@ -6,35 +6,17 @@ import StudyGirl from "../images/StudyGirl.svg"
 import activeRecall from "../images/activeRecall.svg"
 import { useNavigate } from 'react-router-dom';
 import NavBar from "../components/NavbarHome";
-import http from '../http-common.js'
+
 
 function Home() {
   const navigate = useNavigate();
 
-
   const handleLogout = () => {
-    const access = localStorage.getItem('access');
-    const refresh = localStorage.getItem('refresh');
-  
-    http.post('/logout/', {
-      refresh: refresh
-    }, {
-      headers: {
-        'Authorization': `Bearer ${access}`,
-      },
-    })
-      .then((response) => {
-        if (response.status === 200) {
-          localStorage.removeItem('access');
-          localStorage.removeItem('refresh');
-          navigate('/login');
-        } else {
-          console.error('Logout failed:', response.status, response.statusText);
-        }
-      })
-      .catch((error) => {
-        console.error('Network error during logout:', error);
-      });
+    // Borra el token de autenticación almacenado en localStorage
+    localStorage.removeItem('token');
+
+    // Redirige al usuario a la página de inicio de sesión
+    navigate('/login');
   };
 
   useEffect(() => {
@@ -42,7 +24,7 @@ function Home() {
     waveElement.style.transform = 'rotate(180deg)';
     waveElement.style.transition = '0.3s';
     // Comprobar si el usuario ha iniciado sesión
-    const authToken = localStorage.getItem('access');
+    const authToken = localStorage.getItem('token');
     console.log("??????????", authToken);
     if (!authToken) {
       // Si no ha iniciado sesión, redirigir a la página de inicio de sesión
