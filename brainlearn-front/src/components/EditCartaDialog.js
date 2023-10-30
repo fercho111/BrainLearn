@@ -6,7 +6,7 @@ import Modal from 'react-bootstrap/Modal';
 import { BiEdit} from "react-icons/bi";
 import './MazoDialog.css';
 
-export default function EditCartaDialog({className_icon, style_icon, submit_text, onSubmit, modal_title, onImagePregunta, onImageRespuesta, onPregunta, onRespuesta}) {
+export default function EditCartaDialog({id, className_icon, style_icon, submit_text, onSubmit, modal_title, onImagePregunta, onImageRespuesta, onPregunta, onRespuesta}) {
 
     const [show, setShow] = useState(false);
     const [selectedImagePregunta, setSelectedImagePregunta] = useState('');
@@ -65,7 +65,7 @@ export default function EditCartaDialog({className_icon, style_icon, submit_text
         onPregunta(pregunta);
         onRespuesta(respuesta);
         const carta_nueva = {
-            // id: id,
+            id: id,
             question: pregunta,
             answer: respuesta,
             

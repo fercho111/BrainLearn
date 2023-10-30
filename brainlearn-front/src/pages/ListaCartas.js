@@ -79,14 +79,18 @@ export default function ListaCartas() {
     try {
       // Envía la petición PUT al servidor para actualizar el mazo
       const access = localStorage.getItem('access');
-      const response = await axios.put(`http://localhost:8000/listaCartas/${carta.id}`, carta,{ 
+      const response = await axios.put(`http://localhost:8000/listaCartas/${carta.id}/`, carta, { 
         headers: {
           'Authorization': `Bearer ${access}`,
         }
       });
 
       // Obtiene la lista actualizada de mazos desde la base de datos
-      const nuevaListaDeCartas = await axios.get('http://localhost:8000/listaCartas');
+      const nuevaListaDeCartas = await axios.get(`http://localhost:8000/listaCartas/?deck_name=${name}`, { 
+        headers: {
+          'Authorization': `Bearer ${access}`,
+        }
+      });
 
       // Actualiza el estado local con la nueva lista
       setCartas(nuevaListaDeCartas.data);
@@ -100,7 +104,6 @@ export default function ListaCartas() {
     <>
       <NavBar/>
       <div className=" row-listaCarta">
-        
         <div className="texto_cont">
           <div>
             <h1 className='textoC'>Mazo: {name}</h1>
@@ -109,28 +112,25 @@ export default function ListaCartas() {
          </div>
       </div>
       </div>
-        <div className=" row-comenzar">
+      <div className=" row-comenzar">
           <Link to="/Memo" className="comenzar">Comenzar</Link>
+      </div>  
+      <div className='body'>
+        <div className="container " >
+          <div className="row">
+            <CrearCartaDialog  modal_title={"Crear Carta"} className_icon="boton_crear_carta" submit_text="Crear" onSubmit={agregarCarta} deck_name={name} /> 
+              {cartas.map((carta) => (
+              <Carta className="carta"
+                key={carta.id}
+                    id={carta.id}
+                    res={carta.answer}
+                    pre={carta.question}
+                    onEliminar={() => eliminarCarta(carta.id)}
+                    onEditar={editarCarta}              
+                    />
+                ))}
+          </div>
         </div>
-        
-            <div className='body'>
-                <div className="container " >
-                <div className="row">
-                <CrearCartaDialog  modal_title={"Crear Carta"} className_icon="boton_crear_carta" submit_text="Crear" onSubmit={agregarCarta} deck_name={name} /> 
-                    {cartas.map((carta) => (
-                        <Carta className="carta"
-                        key={carta.id}
-                        id={carta.id}
-                        res={carta.answer}
-                        pre={carta.question}
-                        onEliminar={() => eliminarCarta(carta.id)}
-                        onEditar={editarCarta}
-                        
-                        />
-                    ))}
-                </div>
-                </div>   
-                
       </div>
     </>
   )
