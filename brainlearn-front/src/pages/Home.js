@@ -36,7 +36,6 @@ function Home() {
   return (
     <>
       <NavBar />
-      <button onClick={handleLogout}>Cerrar Sesión</button>
 
       <section id="banner">
         <div className="container">
