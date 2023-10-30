@@ -29,26 +29,25 @@ function DeckList() {
     }, []);
 
     const agregarMazo = async (deck) => {
-        
         // axios post
-        try {
-            console.log(deck);
-            const access = localStorage.getItem('access');
-            const refresh = localStorage.getItem('refresh');
-            const res = await axios.post('http://localhost:8000/deckList/', deck, { 
-                headers: {
-                  'Authorization': `Bearer ${access}`,
-                }
-            });
-            const nuevaListaDeMazos = await axios.get('http://localhost:8000/deckList', { 
-                headers: {
-                  'Authorization': `Bearer ${access}`,
-                }
-            });
-              setDecks(nuevaListaDeMazos.data);
-            } catch (error) {
-              console.log(error);
+      try {
+        console.log(deck);
+        const access = localStorage.getItem('access');
+        const refresh = localStorage.getItem('refresh');
+        const res = await axios.post('http://localhost:8000/deckList/', deck, { 
+            headers: {
+              'Authorization': `Bearer ${access}`,
             }
+        });
+        const nuevaListaDeMazos = await axios.get('http://localhost:8000/deckList/', { 
+            headers: {
+              'Authorization': `Bearer ${access}`,
+          }
+        });
+        setDecks(nuevaListaDeMazos.data);
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     const eliminarMazo = async id => {

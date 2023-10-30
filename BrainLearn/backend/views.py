@@ -87,7 +87,6 @@ def cartas(request):
                 mazo = mazos.get(name=serializer.validated_data["deck"]["name"])
             except Deck.DoesNotExist:
                 return Response({"error": "El mazo no existe"}, status=status.HTTP_404_NOT_FOUND)
-            print(mazo)
             serializer.save(deck=mazo)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
