@@ -138,10 +138,7 @@ def actualizar_eliminar_carta(request, card_id):
 # esto tambien hay que entender como funciona
 class UserRegisterView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
-    serializer_class = UserSerializer
-    return Response({            
-            'message':'Registro exitoso'
-        }, status=status.HTTP_200_OK)
+    serializer_class = UserSerializer    
 
 class UserLoginView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
@@ -156,7 +153,6 @@ class UserLoginView(generics.CreateAPIView):
         return Response({
             'refresh': str(refresh),
             'access': str(refresh.access_token),
-            'message':'Inicio de sesión exitoso'
         }, status=status.HTTP_200_OK)
 
 class UserLogoutView(generics.GenericAPIView):
