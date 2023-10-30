@@ -138,7 +138,7 @@ def actualizar_eliminar_carta(request, card_id):
 # esto tambien hay que entender como funciona
 class UserRegisterView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
-    serializer_class = UserSerializer
+    serializer_class = UserSerializer    
 
 class UserLoginView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
