@@ -39,10 +39,15 @@ export default function ListaCartas() {
         headers: {
         'Authorization': `Bearer ${access}`,
       }});
-      console.log(res);
-      const cartasActualizadas = [carta, ...cartas];
-      setCartas(cartasActualizadas);
-    }catch(error){
+      const nuevaListaDeCartas = await axios.get(`http://localhost:8000/listaCartas/?deck_name=${name}`, { 
+        headers: {
+          'Authorization': `Bearer ${access}`,
+        }
+      });
+
+      // Actualiza el estado local con la nueva lista
+      setCartas(nuevaListaDeCartas.data);
+    } catch (error) {
       console.log(error);
     }
   }
@@ -50,9 +55,18 @@ export default function ListaCartas() {
   const eliminarCarta = async id => {
     try {
       // Envía la petición DELETE
-      await axios.delete(`http://localhost:8000/listaCartas/${id}`);
+      const access = localStorage.getItem('access');
+      await axios.delete(`http://localhost:8000/listaCartas/${id}/`, { 
+        headers: {
+          'Authorization': `Bearer ${access}`,
+        }
+      });
       // Obtiene la lista actualizada de mazos desde la base de datos
-      const nuevaListaDeCartas = await axios.get('http://localhost:8000/listaCartas');
+      const nuevaListaDeCartas = await axios.get(`http://localhost:8000/listaCartas/?deck_name=${name}`, { 
+        headers: {
+          'Authorization': `Bearer ${access}`,
+        }
+      });
 
       // Actualiza el estado local con la nueva lista
       setCartas(nuevaListaDeCartas.data);
@@ -64,7 +78,12 @@ export default function ListaCartas() {
   const editarCarta = async (carta) => {
     try {
       // Envía la petición PUT al servidor para actualizar el mazo
-      const response = await axios.put(`http://localhost:8000/listaCartas/${carta.id}`, carta);
+      const access = localStorage.getItem('access');
+      const response = await axios.put(`http://localhost:8000/listaCartas/${carta.id}`, carta,{ 
+        headers: {
+          'Authorization': `Bearer ${access}`,
+        }
+      });
 
       // Obtiene la lista actualizada de mazos desde la base de datos
       const nuevaListaDeCartas = await axios.get('http://localhost:8000/listaCartas');
@@ -98,7 +117,6 @@ export default function ListaCartas() {
                 <div className="container " >
                 <div className="row">
                 <CrearCartaDialog  modal_title={"Crear Carta"} className_icon="boton_crear_carta" submit_text="Crear" onSubmit={agregarCarta} deck_name={name} /> 
-                <Carta className="carta" res={"answer"} pre={"question"}/>
                     {cartas.map((carta) => (
                         <Carta className="carta"
                         key={carta.id}
@@ -106,7 +124,7 @@ export default function ListaCartas() {
                         res={carta.answer}
                         pre={carta.question}
                         onEliminar={() => eliminarCarta(carta.id)}
-                        onSubmit={editarCarta}
+                        onEditar={editarCarta}
                         
                         />
                     ))}

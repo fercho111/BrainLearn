@@ -40,12 +40,15 @@ function DeckList() {
                   'Authorization': `Bearer ${access}`,
                 }
             });
-            const decksActualizados = [deck, ...decks];
-            setDecks(decksActualizados);
-
-        } catch (error){
-            console.log(error);
-        }
+            const nuevaListaDeMazos = await axios.get('http://localhost:8000/deckList', { 
+                headers: {
+                  'Authorization': `Bearer ${access}`,
+                }
+            });
+              setDecks(nuevaListaDeMazos.data);
+            } catch (error) {
+              console.log(error);
+            }
     };
 
     const eliminarMazo = async id => {

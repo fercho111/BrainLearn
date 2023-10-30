@@ -4,10 +4,11 @@ import EditCartaDialog from './EditCartaDialog';
 import { AiFillDelete} from "react-icons/ai";
 import './Carta.css';
 
-export default function Carta({res, pre,imgRespuesta, imgPregunta,id}) {
+export default function Carta({id, res, pre, imgRespuesta, imgPregunta, onEliminar, onEditar}) {
   const [flip, setFlip] = useState(false);
   const [respuesta, setRespuesta] = useState(res);
   const [pregunta, setPregunta] = useState(pre);
+
   // const [imagenRespuesta, setImagenRespuesta] = useState(imgRespuesta);
   // const [imagenPregunta, setImagenPregunta] = useState(imgPregunta);
 
@@ -18,6 +19,7 @@ export default function Carta({res, pre,imgRespuesta, imgPregunta,id}) {
   // const handleImageRespuesta = (newImgRes) => {
   //   setImagenRespuesta(newImgRes);
   // }
+
   const handlePregunta = (newPreg) => {
     setPregunta(newPreg);
   }
@@ -46,13 +48,15 @@ export default function Carta({res, pre,imgRespuesta, imgPregunta,id}) {
       </div>
     )};
     
-    <EditCartaDialog          className_icon="boton_edit_carta"  modal_title=   {"Editar Carta"}/*onImagePregunta=  {handleImagePregunta} */
+    <EditCartaDialog className_icon="boton_edit_carta"  modal_title=   {"Editar Carta"}/*onImagePregunta=  {handleImagePregunta} */
       /*onImageRespuesta={handleImageRespuesta}*/ 
+      id = {id}
       onPregunta={handlePregunta}
       onRespuesta={handleRespuesta}
+      onSubmit={onEditar}
       submit_text="Editar" 
       /> 
-      <button className='boton_delete_carta'><AiFillDelete/></button>
+      <button className='boton_delete_carta' onClick={() => onEliminar(id)}><AiFillDelete/></button>
     
     <button className='boton_flip' onClick={() => setFlip(!flip)}>Flip</button>
     

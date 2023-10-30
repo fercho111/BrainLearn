@@ -11,8 +11,9 @@ urlpatterns = [
 
     # Cartas
     path('cartas/', cartas, name='cartas'),
-    path('listaCartas/', cartas, name='crear_cartas'),
     path('cartas/<int:card_id>/', actualizar_eliminar_carta, name='cartas'),    
+    path('listaCartas/', cartas, name='crear_cartas'),
+    path('listaCartas/<int:card_id>/', actualizar_eliminar_carta, name='crear_cartas'),
 
     # Usuarios
     path('register/', UserRegisterView.as_view(), name='register'),

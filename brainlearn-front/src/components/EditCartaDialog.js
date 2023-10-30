@@ -60,12 +60,12 @@ export default function EditCartaDialog({className_icon, style_icon, submit_text
 
     const handleSaveChanges = (e) => {
         e.preventDefault();
-        onImagePregunta(selectedImagePregunta);
-        onImageRespuesta(selectedImageRespuesta);
+        // onImagePregunta(selectedImagePregunta);
+        // onImageRespuesta(selectedImageRespuesta);
         onPregunta(pregunta);
         onRespuesta(respuesta);
         const carta_nueva = {
-            id: id,
+            // id: id,
             question: pregunta,
             answer: respuesta,
             
