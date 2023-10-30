@@ -105,8 +105,8 @@ export default function ListaCartas() {
                         id={carta.id}
                         res={carta.answer}
                         pre={carta.question}
-                        // onEliminar={eliminarMazo}
-                        // onSubmit={editarMazo}
+                        onEliminar={() => eliminarCarta(carta.id)}
+                        onSubmit={editarCarta}
                         
                         />
                     ))}

@@ -14,11 +14,12 @@ export default function EditCartaDialog({className_icon, style_icon, submit_text
     const [pregunta, setPregunta] = useState('');
     const [respuesta, setRespuesta] = useState('');
 
-    const handleClose = () => setShow(false);
+    const handleClose = () => {
+      setShow(false);
+    }
+
     const handleShow = () => {
         setShow(true);
-        setPregunta('');
-        setRespuesta('');
     }
 
     const handleImagePregunta = (event) => {
@@ -63,7 +64,14 @@ export default function EditCartaDialog({className_icon, style_icon, submit_text
         onImageRespuesta(selectedImageRespuesta);
         onPregunta(pregunta);
         onRespuesta(respuesta);
+        const carta_nueva = {
+            id: id,
+            question: pregunta,
+            answer: respuesta,
+            
+        };
         handleClose();
+        onSubmit(carta_nueva);
     }
 
 
