@@ -93,6 +93,17 @@ DATABASES = {
 
 }
 
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#        'NAME': 'brainlearn',
+#        'USER': 'postgres',
+#        'PASSWORD': 'admin',        
+#        'HOST': '127.0.0.1',
+#        'DATABASE_PORT':'5432',
+#    }
+#}
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
