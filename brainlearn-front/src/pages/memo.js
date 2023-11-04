@@ -1,13 +1,22 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import NavBar from '../components/Navbar'
 import './memo.css'
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Memo() {
     const [verRespuesta, setVerRespuesta] = useState(false);
     const handleClickVerRespuesta = () => {
         setVerRespuesta(true);
     }
+    const navigate = useNavigate();
+
+
+    useEffect(() => {
+        if (!localStorage.getItem('access')) {
+          navigate('/home');
+        }
+      }, []);
     return (
         <>
           <NavBar/>

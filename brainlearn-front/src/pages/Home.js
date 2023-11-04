@@ -4,32 +4,15 @@ import './Home.css'
 import Rsf from "../images/Logo RsF (1).svg"
 import StudyGirl from "../images/StudyGirl.svg"
 import activeRecall from "../images/activeRecall.svg"
-import { useNavigate } from 'react-router-dom';
 import NavBar from "../components/NavbarHome";
 
 
 function Home() {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    // Borra el token de autenticación almacenado en localStorage
-    localStorage.removeItem('token');
-
-    // Redirige al usuario a la página de inicio de sesión
-    navigate('/login');
-  };
 
   useEffect(() => {
     const waveElement = document.getElementById('wave-footer');
     waveElement.style.transform = 'rotate(180deg)';
     waveElement.style.transition = '0.3s';
-    // Comprobar si el usuario ha iniciado sesión
-    const authToken = localStorage.getItem('token');
-    console.log("??????????", authToken);
-    if (!authToken) {
-      // Si no ha iniciado sesión, redirigir a la página de inicio de sesión
-      navigate('/login');
-    }
   }, []);
 
 

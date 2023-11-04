@@ -5,11 +5,16 @@ import MazoCrearDialog from '../components/MazoCrearDialog';
 import NavBar from '../components/Navbar';
 import axios from 'axios';
 import http from '../http-common'
+import { useNavigate } from 'react-router-dom';
 
 function DeckList() {
     const[decks, setDecks] = useState(JSON.parse(localStorage.getItem('decks')) || []);
-
+    const navigate = useNavigate();
     useEffect(() => {
+        if (!localStorage.getItem('access')) {
+            navigate('/home');
+        }
+
         try {
             const obtenerDecks = async () => {
                 const access = localStorage.getItem('access');

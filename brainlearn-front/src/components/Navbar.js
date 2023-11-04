@@ -1,9 +1,17 @@
 import Rsf from "../images/Logo RsF (1).svg"
 import { Link } from "react-router-dom";
 
+
 function NavBar() {
+  const HandleLogout = () => {
+    localStorage.removeItem('access');
+    localStorage.removeItem('refresh');
+    window.location.href = '/';
+  }
+    
   return (
     <>
+    
       <section id="nav-bar">
         <nav className="navbar navbar-expand-sm bg-body-tertiary navbar-light">
           <div className="container-fluid">
@@ -15,7 +23,7 @@ function NavBar() {
             <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="navbar-nav ms-auto">
                 <li className="nav-item">
-                  <Link to="/home" className="nav-link">Logout</Link>
+                  <button className="nav-link" onClick={HandleLogout }>Logout</button>
                 </li>
               </ul>
             </div>

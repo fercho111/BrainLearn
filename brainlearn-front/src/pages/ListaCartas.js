@@ -8,13 +8,18 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import http from '../http-common'
+import { useNavigate } from 'react-router-dom';
 
 
 export default function ListaCartas() {
   const [cartas, setCartas] = useState([]);
   const {name} = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!localStorage.getItem('access')) {
+      navigate('/home');
+    }
     try {
         const obtenerCartas = async () => {
             const access = localStorage.getItem('access');
