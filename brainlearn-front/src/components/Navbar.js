@@ -5,10 +5,9 @@ import { Link } from "react-router-dom";
 function NavBar() {
   const HandleLogout = () => {
     localStorage.removeItem('access');
-    localStorage.removeItem('refresh');
     window.location.href = '/';
   }
-    
+
   return (
     <>
     
@@ -23,7 +22,7 @@ function NavBar() {
             <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="navbar-nav ms-auto">
                 <li className="nav-item">
-                  <button className="nav-link" onClick={HandleLogout }>Logout</button>
+                  <Link className="nav-link" onClick={HandleLogout }>Logout</Link>
                 </li>
               </ul>
             </div>

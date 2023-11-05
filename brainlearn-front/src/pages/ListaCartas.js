@@ -17,11 +17,9 @@ export default function ListaCartas() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!localStorage.getItem('access')) {
-      navigate('/home');
-    }
-    try {
-        const obtenerCartas = async () => {
+    const obtenerCartas = async () => {
+      try {
+        
             const access = localStorage.getItem('access');
             const refresh = localStorage.getItem('refresh');
             const res = await http.get(`/cartas/?deck_name=${name}`, { 
@@ -30,10 +28,16 @@ export default function ListaCartas() {
                 }
               });
             setCartas(res.data);
-        }
-        obtenerCartas();
-    } catch (error) {
-        console.log(error);
+          } catch (error) {
+            if ( error.response.status === 401 ) {
+                navigate('/home');
+            }
+          }
+    }
+    if (!localStorage.getItem('access')) {
+      navigate('/home');
+    } else {
+      obtenerCartas();
     }
   }, []);
 

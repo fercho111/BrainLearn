@@ -98,7 +98,7 @@ function SignUp() {
 
   }
   return (
-    <div className="App">
+    <div className="container-signup">
       {showAlert && (<Alert variant={alertVariant}>{alertMessage}</Alert>)}
       <form onSubmit={handleSubmitSignUp}>
         <div className='option-container'>

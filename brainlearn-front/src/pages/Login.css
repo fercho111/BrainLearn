@@ -20,11 +20,11 @@ div.formInput{
   flex: 1 1;
   margin: 5px;
   height: 55px;
-  padding: 15px 10px;
+  padding: 3px 10px;
   border-radius: 10px;
   margin-top: 10px;
-  min-height: 20vh;
-  max-width: 50vw;
+  margin-bottom: 10px;
+  max-width: 30vw;
 }
 .Applog{
   display: flex;
