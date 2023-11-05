@@ -7,7 +7,7 @@ function NavBar() {
       <section id="nav-bar">
         <nav className="navbar navbar-expand-lg bg-body-tertiary navbar-light">
           <div className="container-fluid">
-            <div className="navbar-brand" href="#"><img src={Rsf} alt="" />BrainLearn</div>
+            <div className="navbar-brand" ><a className="nav-link"href="#banner"><img src={Rsf} alt="" />BrainLearn</a></div>
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
               aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <i className="fa-solid fa-bars" style={{ color: '#fff' }}></i>
