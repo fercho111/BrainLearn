@@ -1,3 +1,9 @@
+.carta{
+  width: 160px;
+  height: 200px;  
+  position: relative;
+}
+
 .card{
     display: flex;
     flex-direction: column;
@@ -17,7 +23,7 @@
     transform-style: preserve-3d;
     width: 160px;
     height: 200px;
-    position: relative;
+    position: absolute;
     transition: 150ms;
     background-size: cover;
     transform: perspective(1000px) rotateY(var(--rotate-y, 0deg))
@@ -61,8 +67,8 @@
   
   .boton_delete_carta{
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 10%;
+    right: -10%;
     border: none;
     color: #e6e6eb;
     border-radius: 10px;
@@ -74,8 +80,8 @@
 
   .boton_edit_carta{
     position: absolute;
-    top: 0;
-    right: inherit;
+    top: 10%;
+    left: 20%;
     border: none;
     color: #e6e6eb;
     border-radius: 10px;
@@ -99,6 +105,8 @@
   .boton_flip{
     position: absolute;
     bottom: 0;
+    left: 60%;
+    transform: translateX(-50%);
     border: none;
     color: #e6e6eb;
     border-radius: 10px;
@@ -110,3 +118,5 @@
   .boton_flip:hover{
     background-color: rgba(182,198,26,0.5);
   }
+
+  

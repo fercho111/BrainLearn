@@ -124,3 +124,7 @@ body{
 .row-listaCarta{
     height: 100px;
 }
+
+.row_cartas{
+    gap: 1.25rem;
+}

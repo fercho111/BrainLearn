@@ -126,7 +126,7 @@ export default function ListaCartas() {
       </div>  
       <div className='body'>
         <div className="container " >
-          <div className="row">
+          <div className="row row_cartas">
             <CrearCartaDialog  modal_title={"Crear Carta"} className_icon="boton_crear_carta" submit_text="Crear" onSubmit={agregarCarta} deck_name={name} /> 
               {cartas.map((carta) => (
               <Carta className="carta"

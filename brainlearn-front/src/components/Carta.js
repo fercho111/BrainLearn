@@ -30,6 +30,8 @@ export default function Carta({id, res, pre, imgRespuesta, imgPregunta, onElimin
 
 
   return (
+    <div className="carta">
+
     <div
       className={`card ${flip ? 'flip' : ''}`}
       // style={{
@@ -48,6 +50,9 @@ export default function Carta({id, res, pre, imgRespuesta, imgPregunta, onElimin
       </div>
     )};
     
+    
+    
+    </div>
     <EditCartaDialog className_icon="boton_edit_carta"  modal_title=   {"Editar Carta"}/*onImagePregunta=  {handleImagePregunta} */
       /*onImageRespuesta={handleImageRespuesta}*/ 
       id = {id}
@@ -59,7 +64,6 @@ export default function Carta({id, res, pre, imgRespuesta, imgPregunta, onElimin
       <button className='boton_delete_carta' onClick={() => onEliminar(id)}><AiFillDelete/></button>
     
     <button className='boton_flip' onClick={() => setFlip(!flip)}>Flip</button>
-    
     </div>
   )
 }
