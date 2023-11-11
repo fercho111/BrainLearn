@@ -1,18 +1,33 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import { BiEdit} from "react-icons/bi";
+import { BiEdit } from "react-icons/bi";
 import './MazoDialog.css';
 
-export default function EditCartaDialog({id, className_icon, style_icon, submit_text, onSubmit, modal_title, onImagePregunta, onImageRespuesta, onPregunta, onRespuesta}) {
+export default function EditCartaDialog({id, className_icon, style_icon, submit_text, onSubmit, modal_title, onImagePregunta, onImageRespuesta, onPregunta, onRespuesta, preguntaInicial, respuestaInicial}) {
 
     const [show, setShow] = useState(false);
     const [selectedImagePregunta, setSelectedImagePregunta] = useState('');
     const [selectedImageRespuesta, setSelectedImageRespuesta] = useState('');
     const [pregunta, setPregunta] = useState('');
     const [respuesta, setRespuesta] = useState('');
+
+
+    // prueba
+    useEffect(() => {
+      // Set initial values when component mounts
+      // setSelectedImagePregunta(initialImagePregunta);
+      // setSelectedImageRespuesta(initialImageRespuesta);
+      setPregunta(preguntaInicial);
+      setRespuesta(respuestaInicial);
+    }, [
+      // initialImagePregunta,
+      // initialImageRespuesta,
+      preguntaInicial,
+      respuestaInicial,
+    ]);
 
     const handleClose = () => {
       setShow(false);
@@ -74,9 +89,6 @@ export default function EditCartaDialog({id, className_icon, style_icon, submit_
         onSubmit(carta_nueva);
     }
 
-
-
-
   return (
     <>
       <button className={className_icon} variant="primary" onClick={handleShow}
@@ -91,7 +103,7 @@ export default function EditCartaDialog({id, className_icon, style_icon, submit_
           <Form onSubmit={handleSaveChanges}>
             <Form.Text className="mb-3  form_pregunta formcito">
               <Form.Label>Pregunta</Form.Label>
-              <Form.Control type="text" placeholder="pregunta" onChange={handlePregunta}/>
+              <Form.Control type="text" value={pregunta} placeholder="pregunta" onChange={handlePregunta}/>
             </Form.Text>
             <Form.Group controlId="formFile" className="mb-3 formcito">
               <Form.Label>Imagen de pregunta</Form.Label>
@@ -100,7 +112,7 @@ export default function EditCartaDialog({id, className_icon, style_icon, submit_
             </Form.Group>
             <Form.Text className="mb-3  form_titulo">
               <Form.Label>Respuesta</Form.Label>
-              <Form.Control type="text" placeholder="Titulo" onChange={handleRespuesta}/>
+              <Form.Control type="text" value={respuesta} placeholder="Respuesta" onChange={handleRespuesta}/>
             </Form.Text>
             <Form.Group controlId="formFile" className="mb-3">
               <Form.Label>Imagen de Respuesta</Form.Label>

@@ -48,7 +48,7 @@ export default function Carta({id, res, pre, imgRespuesta, imgPregunta, onElimin
       <div className="front">
         <p>{pregunta}</p>
       </div>
-    )};
+    )}
     
     
     
@@ -59,7 +59,9 @@ export default function Carta({id, res, pre, imgRespuesta, imgPregunta, onElimin
       onPregunta={handlePregunta}
       onRespuesta={handleRespuesta}
       onSubmit={onEditar}
-      submit_text="Editar" 
+      submit_text="Editar"
+      preguntaInicial = {pre}
+      respuestaInicial = {res}
       /> 
       <button className='boton_delete_carta' onClick={() => onEliminar(id)}><AiFillDelete/></button>
     

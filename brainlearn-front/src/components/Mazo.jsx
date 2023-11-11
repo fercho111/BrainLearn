@@ -47,7 +47,8 @@ function Mazo({ id, titulo, imagen, onEliminar, onEditar}) {
               onImageSelect={handleImageSelect} 
               onSubmit={ onEditar }
               onTitleChange={handleTitleChange} 
-              submit_text="Editar" 
+              submit_text="Editar"
+              tituloInicial = {titulo}
               />
               
             </div>

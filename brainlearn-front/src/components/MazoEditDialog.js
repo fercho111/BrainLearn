@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
@@ -6,10 +6,19 @@ import { BiEdit} from "react-icons/bi";
 import './MazoDialog.css';
 
 
-function MazoEditDialog({onImageSelect, onTitleChange, modal_title, id, icon, className_icon, style_icon, submit_text, onSubmit}) {
+function MazoEditDialog({onImageSelect, onTitleChange, modal_title, id, icon, className_icon, style_icon, submit_text, onSubmit, tituloInicial}) {
   const [show, setShow] = useState(false);
   const [selectedImage, setSelectedImage] = useState({onImageSelect});
   const [localTitle, setLocalTitle] = useState('');
+
+
+  // prueba
+  useEffect(() => {
+    // Set initial values when component mounts
+    setLocalTitle(tituloInicial);
+  }, [
+    tituloInicial
+  ]);
 
   const handleClose = () => {
     setShow(false);
@@ -70,7 +79,7 @@ function MazoEditDialog({onImageSelect, onTitleChange, modal_title, id, icon, cl
             </Form.Group>
             <Form.Text className="mb-3  form_titulo">
               <Form.Label>Titulo</Form.Label>
-              <Form.Control type="text" placeholder="Titulo" onChange={handleTitleChange}/>
+              <Form.Control type="text" placeholder="Titulo" onChange={handleTitleChange} value={localTitle}/>
             </Form.Text>
             
           </Form>
