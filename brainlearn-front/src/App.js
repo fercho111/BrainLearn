@@ -18,7 +18,7 @@ function App() {
         <Route path="/signup" element={<SignUp/>}/>
         <Route path="/deckList" element={<DeckList/>}/>
         <Route path="/listaCartas" element={<ListaCartas/>}/>
-        <Route path="/memo" element={<Memo/>}/>
+        <Route path="/memorization/:name" element={<Memo/>}/>
         <Route path="/mazo/:name" element={<ListaCartas/>}/>
       </Routes>
     </BrowserRouter>

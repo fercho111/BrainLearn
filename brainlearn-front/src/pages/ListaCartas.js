@@ -28,6 +28,7 @@ export default function ListaCartas() {
                 }
               });
             setCartas(res.data);
+            console.log(res.data);
           } catch (error) {
             if ( error.response.status === 401 ) {
                 navigate('/home');
@@ -38,6 +39,7 @@ export default function ListaCartas() {
       navigate('/home');
     } else {
       obtenerCartas();
+      
     }
   }, []);
 
@@ -108,6 +110,10 @@ export default function ListaCartas() {
     }
   }
 
+  const handleComenzar = (name) => {
+    navigate(`/memorization/${name}`);
+  }
+
 
   return (
     <>
@@ -122,7 +128,7 @@ export default function ListaCartas() {
       </div>
       </div>
       <div className=" row-comenzar">
-          <Link to="/Memo" className="comenzar">Comenzar</Link>
+          <button onClick={ () => handleComenzar(name) } className="comenzar">Comenzar</button>
       </div>  
       <div className='body'>
         <div className="container " >
