@@ -48,9 +48,31 @@ export default function Memo() {
     }
   };
 
-  const handleClickRanking = () => {
-    // Aquí puedes agregar la lógica para cambiar a la siguiente carta
-    mostrarSiguienteCarta();
+  const handleClickRanking = async (ratingValue) => {
+    try {
+      const access = localStorage.getItem('access');
+      const res = await http.put(`/cartas/${cartas[cartaActual]?.id}/`, {
+        rating: ratingValue,
+      }, {
+        headers: {
+          'Authorization': `Bearer ${access}`,
+        },
+      });
+
+      // Actualizar el estado de cartas con la respuesta actualizada
+      setCartas((prevCartas) => {
+        const nuevasCartas = [...prevCartas];
+        nuevasCartas[cartaActual] = res.data;
+        return nuevasCartas;
+      });
+      console.log('Carta actualizada:', res.data);
+      // Cambiar a la siguiente carta
+      mostrarSiguienteCarta();
+
+    } catch (error) {
+      console.error('Error al actualizar el rating:', error);
+      // Manejar el error según tus necesidades
+    }
   };
 
   return (
@@ -61,9 +83,9 @@ export default function Memo() {
 
         {verRespuesta && (
           <div className='ranking_memo'>
-            <button className='boton_ranking' style={{ backgroundColor: '#BD3B1B' }} onClick={handleClickRanking}></button>
-            <button className='boton_ranking' style={{ backgroundColor: '#D8A800' }} onClick={handleClickRanking}></button>
-            <button className='boton_ranking' style={{ backgroundColor: '#B6C61A' }} onClick={handleClickRanking}></button>
+            <button className='boton_ranking' style={{ backgroundColor: '#BD3B1B' }} onClick={() => handleClickRanking(1)}></button>
+            <button className='boton_ranking' style={{ backgroundColor: '#D8A800' }} onClick={() => handleClickRanking(5)}></button>
+            <button className='boton_ranking' style={{ backgroundColor: '#B6C61A' }} onClick={() => handleClickRanking(10)}></button>
           </div>
         )}
 
