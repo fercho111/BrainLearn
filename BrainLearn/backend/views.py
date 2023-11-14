@@ -53,8 +53,8 @@ def actualizar_eliminar_mazo(request, mazo_id):
         return Response({"message": "Mazo eliminado correctamente"}, status=status.HTTP_204_NO_CONTENT)
 
 
-@api_view(['GET', 'POST'])
-def cartas(request):
+@api_view(['GET'])
+def memocartas(request):
     if request.method == "GET":
         if request.user is None:
             return Response({"message": "No se han proporcionado credenciales"}, status=status.HTTP_401_UNAUTHORIZED)
@@ -71,12 +71,35 @@ def cartas(request):
 
         cards_to_show = user_cards[:5]
 
-        for card in user_cards[5:]:
+        for card in cards_to_show:
+            if card.rating is None:
+                card.rating = 0
+                continue
             card.rating = max(0, card.rating - 1)
             card.save()
 
         serializer = CardSerializer(cards_to_show, many=True)
         return Response(serializer.data)
+
+@api_view(['GET', 'POST'])
+def cartas(request):
+    if request.method == "GET":
+        if request.user is None:
+            return Response({"message": "No se han proporcionado credenciales"}, status=status.HTTP_401_UNAUTHORIZED)
+        deck_name = request.query_params.get('deck_name')
+        if not deck_name:
+            return Response({"error": "El nombre del mazo no ha sido proporcionado"}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            mazo = Deck.objects.get(user=request.user, name=deck_name)
+        except Deck.DoesNotExist:
+            return Response({"error": "El mazo no existe para este usuario"}, status=status.HTTP_404_NOT_FOUND)
+
+        
+        user_cards = Card.objects.filter(deck=mazo)
+        serializer = CardSerializer(user_cards, many=True)
+        return Response(serializer.data)
+
     if request.method == "POST":
         if request.user is None:
             return Response({"message": "No se han proporcionado credenciales"}, status=status.HTTP_401_UNAUTHORIZED)
@@ -105,7 +128,6 @@ def actualizar_eliminar_carta(request, card_id):
     if request.user != card.deck.user:
         return Response({"error": "No tienes permiso para modificar esta carta"}, status=status.HTTP_403_FORBIDDEN)    
     if request.method == "PUT":
-
         if 'rating' in request.data:
             try:
                 new_rating = None
@@ -134,7 +156,6 @@ def actualizar_eliminar_carta(request, card_id):
 
  
 
-# esto tambien hay que entender como funciona
 class UserRegisterView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
     serializer_class = UserSerializer    

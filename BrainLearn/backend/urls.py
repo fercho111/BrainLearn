@@ -1,6 +1,6 @@
 # urls.py
 from django.urls import path
-from .views import UserRegisterView, UserLoginView, UserLogoutView, cartas, mazos, actualizar_eliminar_mazo, actualizar_eliminar_carta
+from .views import UserRegisterView, UserLoginView, UserLogoutView, cartas, mazos, actualizar_eliminar_mazo, actualizar_eliminar_carta, memocartas
 
 urlpatterns = [
     path('deckList/', mazos, name='mazos'),
@@ -11,6 +11,7 @@ urlpatterns = [
 
     # Cartas
     path('cartas/', cartas, name='cartas'),
+    path('memocartas/', memocartas, name='cartas'),
     path('cartas/<int:card_id>/', actualizar_eliminar_carta, name='cartas'),    
     path('listaCartas/', cartas, name='crear_cartas'),
     path('listaCartas/<int:card_id>/', actualizar_eliminar_carta, name='crear_cartas'),

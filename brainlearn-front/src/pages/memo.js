@@ -15,7 +15,7 @@ export default function Memo() {
     const obtenerCartas = async () => {
       try {
         const access = localStorage.getItem('access');
-        const res = await http.get(`/cartas/?deck_name=${name}`, {
+        const res = await http.get(`/memocartas/?deck_name=${name}`, {
           headers: {
             'Authorization': `Bearer ${access}`,
           },
